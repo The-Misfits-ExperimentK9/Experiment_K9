@@ -6,9 +6,6 @@ public class ButtonBehaviour : ReceivableParent {
     public bool IsLocked = false;
     [SerializeField] private ActivatablePuzzlePiece puzzlePieceToActivate;
 
-    //// visual path of the button
-    //[SerializeField] private GameObject glowPath;
-    //private MeshRenderer[] glowPathRenderers;
 
     [SerializeField] private float springForce = 1f;
     private Rigidbody rb;
@@ -29,13 +26,12 @@ public class ButtonBehaviour : ReceivableParent {
     void Awake() {
 
         rb = GetComponent<Rigidbody>();
-        //if (glowPath != null)
-        //    glowPathRenderers = glowPath.GetComponentsInChildren<MeshRenderer>();
     }
 
     void Update() {
         if (!IsPermanentlyPressedOnPress)
             UnPress();
+        //fix for button ascending too high
         if (transform.localPosition.y > 0) {
             transform.localPosition = new Vector3(transform.localPosition.x, 0, transform.localPosition.z);
         }
@@ -63,16 +59,11 @@ public class ButtonBehaviour : ReceivableParent {
     private void OnCollisionEnter(Collision collision) {
         //button hit the trigger cube
         //check if the button can be pressed and open door and swap material if so
-        // print(collision);
         if (collision.collider.CompareTag("EventTrigger")) {
             presser = collision.gameObject;
             if (CanPressButton()) {
                 
                 Activate();
-             //   pawMeshRenderer.SetMaterials(pressedMaterials);
-                //foreach (MeshRenderer path in glowPathRenderers) {
-                //    path.SetMaterials(pressedMaterials);
-                //}
             }
         }
         //otherwise the collision was with something trying to press it so store it as the presser
@@ -81,19 +72,15 @@ public class ButtonBehaviour : ReceivableParent {
         }
 
     }
+    //set materials to pressed and activate the puzzle piece
     protected override void Activate() {
         base.Activate();
         pawMeshRenderer.SetMaterials(pressedMaterials);
         puzzlePieceToActivate.Activate();
-        //foreach (MeshRenderer path in glowPathRenderers) {
-        //    path.SetMaterials(pressedMaterials);
-        //}
     }
+    //set materials back to unpressed and deactivate the puzzle piece
     protected override void Deactivate() {
         pawMeshRenderer.SetMaterials(unPressedMaterials);
-        //foreach (MeshRenderer path in glowPathRenderers) {
-        //    path.SetMaterials(unPressedMaterials);
-        //}
         puzzlePieceToActivate.Deactivate();
 
         base.Deactivate();

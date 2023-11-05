@@ -6,11 +6,11 @@ using System.Collections.Generic;
 using static Cinemachine.DocumentationSortingAttribute;
 
 public class LevelManager : MonoBehaviour {
-    private int lvlNum = 1;
+//    private int lvlNum = 1;
  //   [SerializeField] private GameObject player3D;
-    [SerializeField]
- //   PlayerBehaviour player;
-    string[] sceneArray;
+ //   [SerializeField]
+ ////   PlayerBehaviour player;
+ //   string[] sceneArray;
     [SerializeField]
     List<string> levelNames = new();
 

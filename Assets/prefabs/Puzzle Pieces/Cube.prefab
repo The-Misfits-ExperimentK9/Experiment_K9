@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3951483994476646461}
-  - component: {fileID: 1789070592868379724}
+  - component: {fileID: 2425542187679739804}
   m_Layer: 7
   m_Name: Cube
   m_TagString: EventTrigger
@@ -34,7 +34,7 @@ Transform:
   - {fileID: 1398983243522506347}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1789070592868379724
+--- !u!114 &2425542187679739804
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -43,14 +43,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1304167074492356921}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36e293d160212fb46ae59b88d1b96f4f, type: 3}
+  m_Script: {fileID: 11500000, guid: e083017c6f01fef4687aa68af09afb0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   interactDisplayController: {fileID: 797450111443044504}
   displayObject3D_Mesh: {fileID: 2364441406853975609}
-  HoldOffset3D: {x: 0, y: -2.5, z: 10}
   IsBeingHeld: 0
   Is3D: 1
+  isColliding: 0
+  unShrunkScale: 500
+  shrinkScale: 100
+  shrinkTime: 0.5
 --- !u!1 &1986648808456706806
 GameObject:
   m_ObjectHideFlags: 0
@@ -368,7 +371,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactIndicator_3D: {fileID: 2557506467059919449}
   objectIndicatorOffsetY: 10
-  tObject: {fileID: 1789070592868379724}
+  tObject: {fileID: 2425542187679739804}
 --- !u!1001 &6928184869222576506
 PrefabInstance:
   m_ObjectHideFlags: 0
