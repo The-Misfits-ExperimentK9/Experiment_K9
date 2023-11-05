@@ -13,7 +13,7 @@ J J J M and B
 
 <h3>Changes</h3>
 <ul>
-<li>Convert PlayerBehaviour to singleton removing a massive amount of script links<li>
+<li>Convert PlayerBehaviour to singleton removing a massive amount of script links</li>
 <li>Changed the way picking up objects works to use forces which looks a lot prettier</li>
 <li>2d camera FOV increase + change to camera transition</li>
 </ul>
