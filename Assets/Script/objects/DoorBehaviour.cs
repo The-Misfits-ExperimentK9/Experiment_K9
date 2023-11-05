@@ -5,7 +5,7 @@ using UnityEngine;
 public class DoorBehaviour : ActivatablePuzzlePiece {
     public bool IsAuto;
     public bool IsLocked;
-    ////potential future hook up to a button or something to open
+    // Hook up to a button or something to open
     [SerializeField] private List<GameObject> activator;
     //door to move
     [SerializeField] private GameObject door;
@@ -33,7 +33,7 @@ public class DoorBehaviour : ActivatablePuzzlePiece {
 
 
     // Start is called before the first frame update
-    void Start() {
+    protected virtual void Start() {
         closedLocalPosition = door.transform.localPosition;
 
 
@@ -45,13 +45,10 @@ public class DoorBehaviour : ActivatablePuzzlePiece {
             openLocalPosition = door.transform.localPosition + transform.up * doorHeight;
 
         }
-
-
-
     }
 
     // Update is called once per frame
-    void Update() {
+    protected virtual void Update() {
         if (!IsLocked && currentState != goalState) {
             currentState = DoorState.Moving;
 
