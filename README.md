@@ -23,7 +23,7 @@ J J J M and B
 <li>Removed jittery movement from moving platform</li>
 <li>Fixed Camera clipping on new scene load</li>
 <li>Fixed item duplication after having picked up items when loading a new scene</li>
- <li>Fixed Wall inbetween glitch</li>
+ <li>Fixed wall inbetween glitch</li>
 </ul>
 
 
