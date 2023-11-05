@@ -153,11 +153,11 @@ public class PlayerDimensionController : MonoBehaviour {
         Set2DSprite(collider);
     }
     public void TryTransitionTo2D() {
-        if (movementController_2D.IsProjectionSpaceClear(transform.position)) {
+        if (movementController_2D.IsProjectionSpaceClear(transform.position)&&IsProjecting==true) {
             TransitionTo2D();
         }
         else {
-            Debug.Log("Transition area blocked");
+            Debug.Log("Transition area blocked or its not projecting");
         }
     }
 

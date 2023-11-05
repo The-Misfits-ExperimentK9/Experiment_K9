@@ -36,6 +36,9 @@ public class ButtonBehaviour : ReceivableParent {
     void Update() {
         if (!IsPermanentlyPressedOnPress)
             UnPress();
+        if (transform.localPosition.y > 0) {
+            transform.localPosition = new Vector3(transform.localPosition.x, 0, transform.localPosition.z);
+        }
     }
 
 
@@ -52,8 +55,7 @@ public class ButtonBehaviour : ReceivableParent {
             var tempVec = transform.localPosition;
             tempVec.y = 0;
             transform.localPosition = tempVec;
-            //rb.velocity = Vector3.zero;
-            //rb.velocity = Vector3.zero;
+            rb.velocity = Vector3.zero;
         }
     }
 
