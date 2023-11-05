@@ -6,7 +6,7 @@ using UnityEngine;
 public class GrabbableObject : MonoBehaviour {
     [SerializeField] protected ObjectInteractDisplayController interactDisplayController;
     public MeshRenderer displayObject3D_Mesh;
-    public Vector3 HoldOffset3D = new(0, -2.5f, 8);
+  //  public Vector3 HoldOffset3D = new(0, -2.5f, 8);
 
     public bool IsBeingHeld = false;
     public bool Is3D = true;
@@ -18,7 +18,7 @@ public class GrabbableObject : MonoBehaviour {
 
     }
     //handles picking up the object when in 3d
-    public void Pickup3D(GameObject holder, Transform holdArea) {
+    public virtual void Pickup3D(GameObject holder, Transform holdArea) {
         //get the rigid body, disable gravity, set drag to 10, freeze rotation, set parent to the hold area
         var rb3D = displayObject3D_Mesh.GetComponent<Rigidbody>();
         rb3D.useGravity = false;
@@ -35,7 +35,7 @@ public class GrabbableObject : MonoBehaviour {
     public virtual void DropObject() {
         Drop3D();
     }
-    protected void Drop3D() {
+    protected virtual void Drop3D() {
        //reset the rigid body, enable gravity, set drag to 1, unfreeze rotation, set parent to null
         var rb3D = displayObject3D_Mesh.GetComponent<Rigidbody>();
         displayObject3D_Mesh.transform.parent = transform;

@@ -14,7 +14,7 @@ public class PickupController : MonoBehaviour {
     private Rigidbody heldObjectRigidbody;
 
     [Header("Physics Params")]
-    [SerializeField] float pickupRange = 5f;
+    //[SerializeField] float pickupRange = 5f;
     [SerializeField] float pickupForce = 150f;
     private bool canInteract = true;                        //disable or enable player interactions
     KeyControl interactKey;
@@ -29,7 +29,8 @@ public class PickupController : MonoBehaviour {
 
 
     private void Update() {
-        HandleInteractionInput();
+        if (canInteract)
+            HandleInteractionInput();
     }
 
 
@@ -72,6 +73,7 @@ public class PickupController : MonoBehaviour {
 
     private void DropHeldObject() {
         Debug.Log("pickupController Drop Object");
+        AddObjectToInRangeList(HeldObject);
         HeldObject.DropObject();
         HeldObject = null;
         heldObjectRigidbody = null;
@@ -88,12 +90,12 @@ public class PickupController : MonoBehaviour {
             HeldObject.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
             //swap parent and add offset when moving back to 3D with object
             if (PlayerBehaviour.Instance.IsIn3D()) {
-                tObject.SetHolderAndOffset(gameObject, HeldObject.HoldOffset3D);
+                tObject.SetHoldArea(gameObject, holdArea);
 
                 tObject.Enable3D();
             }
             else {
-                tObject.SetHolderAndOffset(PlayerBehaviour.Instance.player2D, Vector3.zero);
+                tObject.SetHolder(PlayerBehaviour.Instance.player2D);
                 tObject.Disable3D();
             }
         }

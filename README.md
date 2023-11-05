@@ -1,7 +1,11 @@
 # Experiment_K9
 
 by 
-J J J M and B
+Jolie
+Jordan
+John
+Billy
+Mike
  
 
 
@@ -9,6 +13,7 @@ J J J M and B
 
 <h3>New</h3>
 <ul>
+<li>Cube will now shrink when picking it up and expand back to original size upon drop</li>
 </ul>
 
 <h3>Changes</h3>
@@ -23,7 +28,8 @@ J J J M and B
 <li>Removed jittery movement from moving platform</li>
 <li>Fixed Camera clipping on new scene load</li>
 <li>Fixed item duplication after having picked up items when loading a new scene</li>
- <li>Fixed wall inbetween glitch</li>
+<li>Fixed wall inbetween glitch</li>
+<li>Fixed button ascending to the heavens</li>
 </ul>
 
 

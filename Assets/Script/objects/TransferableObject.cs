@@ -53,13 +53,17 @@ public class TransferableObject : GrabbableObject {
         displayObject_2D.SetActive(false);
         Is3D = true;
     }
-    
-    public void SetHolderAndOffset(GameObject holder, Vector3 offset) {
-        Debug.Log("setting hold: " + holder.name);
+    public void SetHolder(GameObject holder) {
+        this.holder = holder;
+    }
+
+
+    public void SetHoldArea(GameObject holder, Transform holdArea) {
+        //Debug.Log("setting hold: " + holder.name);
         
         this.holder = holder;   
-        transform.parent = holder.transform;
-        transform.localPosition = offset;
+        transform.parent = holdArea;
+      //  transform.localPosition = offset;
     }
     public void Pickup2D(GameObject holder) {
         
