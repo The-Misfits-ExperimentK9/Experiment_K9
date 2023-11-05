@@ -80,10 +80,10 @@ public class DoorBehaviour : ActivatablePuzzlePiece {
         }
     }
 
-    private void OpenDoor() {
+    protected void OpenDoor() {
         goalState = DoorState.Open;
     }
-    private void CloseDoor() {
+    protected void CloseDoor() {
         goalState = DoorState.Closed;
     }
     public bool IsOpen() {
