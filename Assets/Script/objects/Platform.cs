@@ -16,12 +16,12 @@ public class Platform : ActivatablePuzzlePiece {
 
     private int currentTargetIndex = 0;
     private bool isMovingForward = true;
-    [SerializeField] private bool playerOnPlatform = false;
+  //  [SerializeField] private bool playerOnPlatform = false;
     private float distanceToCheck = .05f;
     [SerializeField] private bool unlocked = false;
 
     [SerializeField] private bool unlockedByPlayerCollision = true;
-    [SerializeField] private bool dontMoveWithoutPlayer = true;
+ //   [SerializeField] private bool dontMoveWithoutPlayer = true;
 
     private Vector3 currentTravelTarget;
 
@@ -138,7 +138,7 @@ public class Platform : ActivatablePuzzlePiece {
             if (!unlocked && unlockedByPlayerCollision) {
                 unlocked = true;
             }
-            playerOnPlatform = true;
+          //  playerOnPlatform = true;
             player = collision.gameObject;
             playerRb = player.GetComponent<Rigidbody>();
             StartMoving();
@@ -146,7 +146,7 @@ public class Platform : ActivatablePuzzlePiece {
     }
     private void OnCollisionExit(Collision collision) {
         if (collision.gameObject.layer == LayerInfo.PLAYER) {
-            playerOnPlatform = false;
+           // playerOnPlatform = false;
 
         }
     }
