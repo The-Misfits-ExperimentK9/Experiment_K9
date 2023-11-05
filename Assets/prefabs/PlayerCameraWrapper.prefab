@@ -1331,7 +1331,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player3D: {fileID: 5023980225577663842}
-  controller3D: {fileID: 4271325807188534916}
   player2D: {fileID: 266677610665238099}
   movementController_2D: {fileID: 5895966758457165437}
   dog2DHitbox: {fileID: 7203371137855413276}
@@ -1355,7 +1354,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   holdArea: {fileID: 8413178250063108687}
   HeldObject: {fileID: 0}
-  pickupRange: 5
   pickupForce: 10
 --- !u!1 &4155157953602829011
 GameObject:
@@ -3663,7 +3661,7 @@ Transform:
   m_GameObject: {fileID: 9213924658487128220}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.9899998, z: 9.44}
+  m_LocalPosition: {x: 0, y: -1.36, z: 3.25}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
