@@ -14,6 +14,7 @@ Mike
 <h3>New</h3>
 <ul>
 <li>Cube will now shrink when picking it up and expand back to original size upon drop</li>
+<li>New tutorial messages</li>
 </ul>
 
 <h3>Changes</h3>
