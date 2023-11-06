@@ -147,8 +147,8 @@ public class MovementController_2D : MonoBehaviour {
                 //print("test");
                 //playerController.ChangeDimension();
 
-                PlayerBehaviour.Instance.playerDimensionController.TransitionTo3D();
-               // UpdateWallStatus();
+               // PlayerBehaviour.Instance.playerDimensionController.TransitionTo3D();
+                UpdateWallStatus();
 
             }
             else if (PlayerBehaviour.Instance.IsIn3D()) {
@@ -172,7 +172,8 @@ public class MovementController_2D : MonoBehaviour {
             return false;
         }
 
-        if (Physics.Raycast(transform.position, -transform.forward, out var hit, wallCheckDistance, LayerMask.GetMask("Walls"))) {
+        if (Physics.Raycast(transform.position, -transform.forward, 
+            out var hit, wallCheckDistance, LayerMask.GetMask("Walls"))) {
             if (hit.collider.gameObject == currentWall.gameObject) {
                 return true;
             }

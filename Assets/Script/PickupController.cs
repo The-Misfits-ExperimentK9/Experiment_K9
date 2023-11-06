@@ -64,7 +64,7 @@ public class PickupController : MonoBehaviour {
         }
     }
     private void MoveObject() {
-        if (transform.localPosition.magnitude > 0.2f && !HeldObject.isColliding) {
+        if (transform.localPosition.magnitude > 0.2f) {
 
             var moveDirection = holdArea.position - heldObjectRigidbody.transform.position;
             heldObjectRigidbody.AddForce(moveDirection * pickupForce);
