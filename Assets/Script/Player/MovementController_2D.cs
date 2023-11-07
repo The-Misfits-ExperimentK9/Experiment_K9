@@ -7,22 +7,44 @@ using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
 
 public class MovementController_2D : MonoBehaviour {
-   // [SerializeField] PlayerBehaviour playerController;
+    // [SerializeField] PlayerBehaviour playerController;
     //[SerializeField] PlayerDimensionController playerDimensionController;
+
+    [Header("Physics")]
     [SerializeField] private Rigidbody rb;
     [SerializeField] private Rigidbody playerRigidBody3D;
-    [SerializeField] private float offSetAmount = 5.5f;
-    [SerializeField] float wallCheckDistance = 0.8f;
     private Collider dogCollider2D;
 
+    [Tooltip("The character uses its own gravity value. The engine default is -9.81f")]
+    public float Gravity = -60.0f;
+    public float Friction = 10f;
+
+    [Header("Wall Collision")]
+    [SerializeField] private float offSetAmount = 5.5f;
+    [SerializeField] float wallCheckDistance = 0.8f;
+    public WallBehaviour currentWall;
+
+    [Header("Settings")]
     public bool Is2DPlayerActive = false;
+    public bool CanMove = true;
+    bool gravityEnabled = false;
+    public float maxSpeed2D = 15.0f;
+    [SerializeField] private float movementForceMultiplier = 20f;
+    [Space(10)]
+    [Tooltip("The height the player can jump")]
+    public float JumpHeight = 10.25f;
+    [Space(10)]
+    [Tooltip("Time required to pass before being able to jump again. Set to 0f to instantly jump again")]
+    public float JumpTimeout = 0.50f;
+
+    [Tooltip("Time required to pass before entering the fall state. Useful for walking down stairs")]
+    public float FallTimeout = 0.15f;
 
     private KeyControl jumpKey1, jumpKey2;
 
-    public bool CanMove = true;
+    
 
     private Vector3 gizmoDrawLoc;
-    public WallBehaviour currentWall;
     Vector3 forward;                                    //used to check which wall object is in the foreground to use that as the movement override
    
     public enum ProjectionState {
@@ -32,26 +54,21 @@ public class MovementController_2D : MonoBehaviour {
         In2DHoldingObject
     }
     private ProjectionState projectionState;
-    public float moveSpeed2D = 15.0f;
-    public float jumpPower2D = 20f;
+    
     [SerializeField] private List<Sprite> sprites = new();
 
     private Vector3 newSpritePos;
-   
-    bool gravityEnabled = false;
 
-
-
+    [Header("Ground checks")]
     public float GroundedRadius = 0.2f;
     public float GroundedOffset = new();
     public LayerMask GroundLayers = new();
+    [Tooltip("If the character is grounded or not. Not part of the CharacterController built in grounded check")]
+    public bool Grounded = true;
 
-
-    [Tooltip("Acceleration and deceleration")]
-    public float SpeedChangeRate = 10.0f;
-
+    [Space(10)]
     [SerializeField] private SpriteRenderer spriteRenderer;
-    [SerializeField] private float movementForceMultiplier = 20f;
+    
     //player movement
     private float _verticalVelocity;
     private float _terminalVelocity = 53.0f;
@@ -62,25 +79,8 @@ public class MovementController_2D : MonoBehaviour {
     private float _jumpTimeoutDelta;
     private float _fallTimeoutDelta;
 
-    [Space(10)]
-    [Tooltip("Time required to pass before being able to jump again. Set to 0f to instantly jump again")]
-    public float JumpTimeout = 0.50f;
-
-    [Tooltip("Time required to pass before entering the fall state. Useful for walking down stairs")]
-    public float FallTimeout = 0.15f;
-
-    [Header("Player Grounded")]
-    [Tooltip("If the character is grounded or not. Not part of the CharacterController built in grounded check")]
-    public bool Grounded = true;
-
-    [Space(10)]
-    [Tooltip("The height the player can jump")]
-    public float JumpHeight = 10.25f;
-
-    [Tooltip("The character uses its own gravity value. The engine default is -9.81f")]
-    public float Gravity = -60.0f;
-
-    public float Friction = 10f;
+    
+    
 
     // Start is called before the first frame update
     void Awake() {
@@ -180,7 +180,7 @@ public class MovementController_2D : MonoBehaviour {
     }
 
     private void Move() {
-        float targetSpeed = moveSpeed2D;
+        float targetSpeed = maxSpeed2D;
 
         var input = GetInput();
 
@@ -202,7 +202,7 @@ public class MovementController_2D : MonoBehaviour {
             if (input.y < .01f && input.y > -.01f)
                 targetSpeed = 0.0f;
             else {
-                targetSpeed = moveSpeed2D;
+                targetSpeed = maxSpeed2D;
             }
             _speedVertical = targetSpeed;
 
@@ -215,8 +215,8 @@ public class MovementController_2D : MonoBehaviour {
                         directionY * _speedVertical) * movementForceMultiplier);
 
             //clamp overal velocity at moveSpeed2D
-            if (rb.velocity.magnitude > moveSpeed2D) {
-                rb.velocity = rb.velocity.normalized * moveSpeed2D;
+            if (rb.velocity.magnitude > maxSpeed2D) {
+                rb.velocity = rb.velocity.normalized * maxSpeed2D;
             }
 
 
@@ -226,8 +226,8 @@ public class MovementController_2D : MonoBehaviour {
             rb.AddForce(directionX * (_speedHorizontal * movementForceMultiplier));
 
             //clamp horizontal velocity at moveSpeed2D
-            if (Mathf.Abs(rb.velocity.x) > moveSpeed2D) {
-                rb.velocity = new Vector3(Mathf.Clamp(rb.velocity.x, -moveSpeed2D, moveSpeed2D), rb.velocity.y, Mathf.Clamp(rb.velocity.z, -moveSpeed2D, moveSpeed2D));
+            if (Mathf.Abs(rb.velocity.x) > maxSpeed2D) {
+                rb.velocity = new Vector3(Mathf.Clamp(rb.velocity.x, -maxSpeed2D, maxSpeed2D), rb.velocity.y, Mathf.Clamp(rb.velocity.z, -maxSpeed2D, maxSpeed2D));
             }
 
 
