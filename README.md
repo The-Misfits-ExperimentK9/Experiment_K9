@@ -31,6 +31,10 @@ Mike
 <li>Fixed item duplication after having picked up items when loading a new scene</li>
 <li>Fixed wall inbetween glitch</li>
 <li>Fixed button ascending to the heavens</li>
+<li>Fixed 2d ball disappearing</li>
+<li>Fixed 2d ball collider</li>
+<li>(potentially) Fixed Jiggly 2d sprite</li>
+ 
 </ul>
 
 
