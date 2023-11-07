@@ -19,6 +19,7 @@ public class GrabbableObject : MonoBehaviour {
     }
     //handles picking up the object when in 3d
     public virtual void Pickup3D(GameObject holder, Transform holdArea) {
+     //   displayObject3D_Mesh.gameObject.layer = LayerInfo.PHYSICS_DISBALE;
         //get the rigid body, disable gravity, set drag to 10, freeze rotation, set parent to the hold area
         var rb3D = displayObject3D_Mesh.GetComponent<Rigidbody>();
         rb3D.useGravity = false;
@@ -32,6 +33,7 @@ public class GrabbableObject : MonoBehaviour {
         interactDisplayController.SetInteractIndicatorActive(false);
         this.holder = holder;
 
+
     }
     public virtual void DropObject() {
         Drop3D();
@@ -40,6 +42,8 @@ public class GrabbableObject : MonoBehaviour {
         //reset the rigid body, enable gravity, set drag to 1, unfreeze rotation, set parent to null
         var rb3D = displayObject3D_Mesh.GetComponent<Rigidbody>();
         var sphere = displayObject3D_Mesh.GetComponent<SphereCollider>();
+        //displayObject3D_Mesh.gameObject.layer = LayerInfo.INTERACTABLE_OBJECT;
+
         //prevent errors with sphere
         if (displayObject3D_Mesh.name != "actual_cube")
         {

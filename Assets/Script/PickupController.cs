@@ -145,6 +145,7 @@ public class PickupController : MonoBehaviour {
         }
     }
     //returns the interactable object closest to where the player is looking at with the camera
+    //TODO not working 100% of the time sometimes choses object closeset to camera even if player isnt looking at it
     private GrabbableObject GetObjectClosestToCameraLookAt() {
         if (!objectsInInteractRange.Any()) {
             return null;
