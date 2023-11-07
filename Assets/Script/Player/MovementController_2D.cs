@@ -42,11 +42,11 @@ public class MovementController_2D : MonoBehaviour {
 
     private KeyControl jumpKey1, jumpKey2;
 
-    
+
 
     private Vector3 gizmoDrawLoc;
     Vector3 forward;                                    //used to check which wall object is in the foreground to use that as the movement override
-   
+
     public enum ProjectionState {
         OutOfRange,
         HoldingObject,
@@ -54,7 +54,7 @@ public class MovementController_2D : MonoBehaviour {
         In2DHoldingObject
     }
     private ProjectionState projectionState;
-    
+
     [SerializeField] private List<Sprite> sprites = new();
 
     private Vector3 newSpritePos;
@@ -68,7 +68,7 @@ public class MovementController_2D : MonoBehaviour {
 
     [Space(10)]
     [SerializeField] private SpriteRenderer spriteRenderer;
-    
+
     //player movement
     private float _verticalVelocity;
     private float _terminalVelocity = 53.0f;
@@ -79,8 +79,8 @@ public class MovementController_2D : MonoBehaviour {
     private float _jumpTimeoutDelta;
     private float _fallTimeoutDelta;
 
-    
-    
+
+
 
     // Start is called before the first frame update
     void Awake() {
@@ -94,11 +94,7 @@ public class MovementController_2D : MonoBehaviour {
     void FixedUpdate() {
         if (!PlayerBehaviour.Instance.IsIn3D()) {
             ApplyFriction();
-            if (gravityEnabled) {
-                GroundedCheck();
-                JumpAndGravity();
-
-            }
+            
             if (CanMove)
                 Move();
             //Move2D();
@@ -108,6 +104,13 @@ public class MovementController_2D : MonoBehaviour {
         }
         else {
             //HandleWallCollision
+        }
+    }
+    private void Update() {
+        if (gravityEnabled) {
+            GroundedCheck();
+            JumpAndGravity();
+
         }
     }
     //handles player movement in 2D
@@ -239,7 +242,7 @@ public class MovementController_2D : MonoBehaviour {
     }
 
     private void JumpAndGravity() {
-
+        
         if (Grounded) {
             // reset the fall timeout timer
             _fallTimeoutDelta = FallTimeout;
@@ -256,7 +259,7 @@ public class MovementController_2D : MonoBehaviour {
             if (jumpKey2.wasPressedThisFrame && _jumpTimeoutDelta <= 0.0f) {
                 // the square root of H * -2 * G = how much velocity needed to reach desired height
                 _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
-
+                Debug.Log("jumping" + _verticalVelocity);
                 // update animator if using character
 
             }
@@ -284,13 +287,13 @@ public class MovementController_2D : MonoBehaviour {
 
         // apply gravity over time if under terminal (multiply by delta time twice to linearly speed up over time)
         if (_verticalVelocity < _terminalVelocity) {
-            _verticalVelocity += Gravity * .02f;//fixed delta time
+            _verticalVelocity += Gravity * Time.deltaTime;//fixed delta time
         }
 
     }
     //handles player movement in 2D
-   
-   
+
+
     public Vector2 GetInput() {
         var keyboard = Keyboard.current;
         return new Vector2(keyboard.dKey.isPressed ? 1 : keyboard.aKey.isPressed ? -1 : 0,
@@ -333,7 +336,7 @@ public class MovementController_2D : MonoBehaviour {
                 //print("test");
                 //playerController.ChangeDimension();
 
-               // PlayerBehaviour.Instance.playerDimensionController.TransitionTo3D();
+                // PlayerBehaviour.Instance.playerDimensionController.TransitionTo3D();
                 UpdateWallStatus();
 
             }
@@ -358,7 +361,7 @@ public class MovementController_2D : MonoBehaviour {
             return false;
         }
 
-        if (Physics.Raycast(transform.position, -transform.forward, 
+        if (Physics.Raycast(transform.position, -transform.forward,
             out var hit, wallCheckDistance, LayerMask.GetMask("Walls"))) {
             if (hit.collider.gameObject == currentWall.gameObject) {
                 return true;

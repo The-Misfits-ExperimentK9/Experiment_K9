@@ -209,20 +209,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 5030094346641154242}
   playerRigidBody3D: {fileID: 3976565469633831111}
+  Gravity: -60
+  Friction: 10
   offSetAmount: 6
   wallCheckDistance: 0.8
+  currentWall: {fileID: 0}
   Is2DPlayerActive: 0
   CanMove: 1
-  currentWall: {fileID: 0}
-  moveSpeed2D: 15
-  jumpPower2D: 20
+  maxSpeed2D: 15
+  movementForceMultiplier: 20
+  JumpHeight: 10.25
+  JumpTimeout: 0.5
+  FallTimeout: 0.15
   sprites:
   - {fileID: 21300000, guid: 2643cbf3a2614bf4fb863e26df2f1921, type: 3}
   - {fileID: 21300000, guid: a60c095fa53280448994615b855e8aa2, type: 3}
   - {fileID: 21300000, guid: 32d9befca69c6a740ad0d95084087f20, type: 3}
   - {fileID: 21300000, guid: 7e187630eaff06e4b9d0a594fa2afa6e, type: 3}
   - {fileID: 21300000, guid: 842905a4efc4f4e4cb807f8e9531ebd1, type: 3}
-  grounded: 0
+  GroundedRadius: 5
+  GroundedOffset: 0.3
+  GroundLayers:
+    serializedVersion: 2
+    m_Bits: 256
+  Grounded: 1
   spriteRenderer: {fileID: 641710048873724522}
 --- !u!65 &7203371137855413276
 BoxCollider:
@@ -2543,7 +2553,7 @@ Transform:
   m_GameObject: {fileID: 6774737294069508098}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: 34.568604, y: -17.599066, z: 82.105675}
+  m_LocalPosition: {x: 28.53302, y: 5.560933, z: -63.59999}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
