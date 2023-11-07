@@ -37,16 +37,50 @@ public class MovementController_2D : MonoBehaviour {
     [SerializeField] private List<Sprite> sprites = new();
 
     private Vector3 newSpritePos;
-    private bool[] moveDirEnabled = { true, true, true, true };
-
-    private int dirIn;
+   
     bool gravityEnabled = false;
-    public bool grounded = false;
+
+
+
+    public float GroundedRadius = 0.2f;
+    public float GroundedOffset = new();
+    public LayerMask GroundLayers = new();
+
+
+    [Tooltip("Acceleration and deceleration")]
+    public float SpeedChangeRate = 10.0f;
 
     [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private float movementForceMultiplier = 20f;
+    //player movement
+    private float _verticalVelocity;
+    private float _terminalVelocity = 53.0f;
+    private float _speedHorizontal;
+    private float _speedVertical;
 
+    // timeout deltatime
+    private float _jumpTimeoutDelta;
+    private float _fallTimeoutDelta;
 
+    [Space(10)]
+    [Tooltip("Time required to pass before being able to jump again. Set to 0f to instantly jump again")]
+    public float JumpTimeout = 0.50f;
 
+    [Tooltip("Time required to pass before entering the fall state. Useful for walking down stairs")]
+    public float FallTimeout = 0.15f;
+
+    [Header("Player Grounded")]
+    [Tooltip("If the character is grounded or not. Not part of the CharacterController built in grounded check")]
+    public bool Grounded = true;
+
+    [Space(10)]
+    [Tooltip("The height the player can jump")]
+    public float JumpHeight = 10.25f;
+
+    [Tooltip("The character uses its own gravity value. The engine default is -9.81f")]
+    public float Gravity = -60.0f;
+
+    public float Friction = 10f;
 
     // Start is called before the first frame update
     void Awake() {
@@ -57,17 +91,17 @@ public class MovementController_2D : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update() {
+    void FixedUpdate() {
         if (!PlayerBehaviour.Instance.IsIn3D()) {
-            // Move2D();
+            ApplyFriction();
+            if (gravityEnabled) {
+                GroundedCheck();
+                JumpAndGravity();
+
+            }
             if (CanMove)
-                Move2D();
-            //if (Mathf.Abs(rb.velocity.y) > .001) {
-            //    grounded = false;
-            //}
-            //else {
-            //    grounded = true;
-            //}
+                Move();
+            //Move2D();
             if (currentWall.AllowsDimensionTransition && !PlayerBehaviour.Instance.playerDimensionController.DOGEnabled) {
                 PlayerBehaviour.Instance.playerDimensionController.TransitionTo3D();
             }
@@ -77,34 +111,186 @@ public class MovementController_2D : MonoBehaviour {
         }
     }
     //handles player movement in 2D
-    void Move2D() {
-        var input = GetInput();
-        var up = transform.up;
-        var left = -transform.right;
-        Vector3 direction;
-        if (!gravityEnabled)
-            direction = up * input.y + left * input.x;
-        else {
-            direction = left * input.x;
-            if (jumpKey1.wasPressedThisFrame || jumpKey2.wasPressedThisFrame) {
-                Jump2D();
-            }
-         
+    //void Move2D() {
+    //    var input = GetInput();
+    //    var up = transform.up;
+    //    var left = -transform.right;
+    //    Vector3 direction;
+    //    if (!gravityEnabled)
+    //        direction = up * input.y + left * input.x;
+    //    else {
+    //        direction = left * input.x;
+    //        if (jumpKey2.wasPressedThisFrame) {
+    //            Jump2D();
+    //        }
+
+    //    }
+    //    rb.velocity = direction * moveSpeed2D;
+    //    // Flip the sprite when the dog moves the other way
+    //    if (input.x < 0) {
+    //        spriteRenderer.flipX = true;
+    //    }
+    //    else if (input.x > 0) {
+    //        spriteRenderer.flipX = false;
+    //    }
+    //}
+    private void ApplyFriction() {
+        Vector3 frictionDirection;
+
+        if (gravityEnabled) {
+            frictionDirection = new(-rb.velocity.x, 0f, -rb.velocity.z);
         }
-        rb.velocity = direction * moveSpeed2D;
-        // Flip the sprite when the dog moves the other way
+        else {
+            frictionDirection = new(-rb.velocity.x, -rb.velocity.y, -rb.velocity.z);
+        }
+        rb.AddForce(frictionDirection * Friction);
+    }
+    private void GroundedCheck() {
+        // set sphere position, with offset
+        Vector3 spherePosition = new Vector3(transform.position.x, transform.position.y - GroundedOffset,
+            transform.position.z);
+        var hits = Physics.OverlapSphere(spherePosition, GroundedRadius, GroundLayers,
+            QueryTriggerInteraction.Ignore);
+
+        if (hits.Length > 0) {
+            if (hits.Length == 1) {
+                if (hits[0] == currentWall) {
+                    Grounded = false;
+                    return;
+                }
+            }
+            Grounded = true;
+        }
+        else {
+            Grounded = false;
+        }
+
+    }
+    private void OnDrawGizmosSelected() {
+        Color transparentGreen = new Color(0.0f, 1.0f, 0.0f, 0.35f);
+        Color transparentRed = new Color(1.0f, 0.0f, 0.0f, 0.35f);
+
+        if (Grounded) Gizmos.color = transparentGreen;
+        else Gizmos.color = transparentRed;
+
+        // when selected, draw a gizmo in the position of, and matching radius of, the grounded collider
+        Gizmos.DrawSphere(
+            new Vector3(transform.position.x, transform.position.y - GroundedOffset, transform.position.z),
+            GroundedRadius);
+    }
+
+    private void Move() {
+        float targetSpeed = moveSpeed2D;
+
+        var input = GetInput();
+
         if (input.x < 0) {
             spriteRenderer.flipX = true;
         }
         else if (input.x > 0) {
             spriteRenderer.flipX = false;
         }
+        if (input.x < .01f && input.x > -.01f) targetSpeed = 0.0f;
+        // accelerate or decelerate to target speed
+
+        _speedHorizontal = targetSpeed;
+
+        var left = -transform.right;
+        Vector3 directionX = left * input.x;
+
+        if (!gravityEnabled) {
+            if (input.y < .01f && input.y > -.01f)
+                targetSpeed = 0.0f;
+            else {
+                targetSpeed = moveSpeed2D;
+            }
+            _speedVertical = targetSpeed;
+
+
+            var up = transform.up;
+            Vector3 directionY = up * input.y;
+            // move the player in x and y direction
+
+            rb.AddForce((directionX * _speedHorizontal +
+                        directionY * _speedVertical) * movementForceMultiplier);
+
+            //clamp overal velocity at moveSpeed2D
+            if (rb.velocity.magnitude > moveSpeed2D) {
+                rb.velocity = rb.velocity.normalized * moveSpeed2D;
+            }
+
+
+        }
+        else {
+            //add horizontal force
+            rb.AddForce(directionX * (_speedHorizontal * movementForceMultiplier));
+
+            //clamp horizontal velocity at moveSpeed2D
+            if (Mathf.Abs(rb.velocity.x) > moveSpeed2D) {
+                rb.velocity = new Vector3(Mathf.Clamp(rb.velocity.x, -moveSpeed2D, moveSpeed2D), rb.velocity.y, Mathf.Clamp(rb.velocity.z, -moveSpeed2D, moveSpeed2D));
+            }
+
+
+            rb.velocity = new Vector3(rb.velocity.x, _verticalVelocity, rb.velocity.x); //apply gravity
+
+
+        }
+
     }
-    void Jump2D() {
-        Debug.Log("jumping");
-        if (grounded)
-            rb.AddForce(transform.up * jumpPower2D);
+
+    private void JumpAndGravity() {
+
+        if (Grounded) {
+            // reset the fall timeout timer
+            _fallTimeoutDelta = FallTimeout;
+
+            // update animator if using character
+
+
+            // stop our velocity dropping infinitely when grounded
+            if (_verticalVelocity < 0.0f) {
+                _verticalVelocity = -2f;
+            }
+
+            // Jump
+            if (jumpKey2.wasPressedThisFrame && _jumpTimeoutDelta <= 0.0f) {
+                // the square root of H * -2 * G = how much velocity needed to reach desired height
+                _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
+
+                // update animator if using character
+
+            }
+
+            // jump timeout
+            if (_jumpTimeoutDelta >= 0.0f) {
+                _jumpTimeoutDelta -= Time.deltaTime;
+            }
+        }
+        else {
+            // reset the jump timeout timer
+            _jumpTimeoutDelta = JumpTimeout;
+
+            // fall timeout
+            if (_fallTimeoutDelta >= 0.0f) {
+                _fallTimeoutDelta -= Time.deltaTime;
+            }
+            else {
+                // update animator if using character
+
+            }
+
+
+        }
+
+        // apply gravity over time if under terminal (multiply by delta time twice to linearly speed up over time)
+        if (_verticalVelocity < _terminalVelocity) {
+            _verticalVelocity += Gravity * .02f;//fixed delta time
+        }
+
     }
+    //handles player movement in 2D
+   
+   
     public Vector2 GetInput() {
         var keyboard = Keyboard.current;
         return new Vector2(keyboard.dKey.isPressed ? 1 : keyboard.aKey.isPressed ? -1 : 0,
