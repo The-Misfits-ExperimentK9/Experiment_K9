@@ -61,7 +61,7 @@ Transform:
   m_GameObject: {fileID: 74397854644777205}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: 33.619312, y: -10.329067, z: 82.105675}
+  m_LocalPosition: {x: 33.619312, y: -10.329067, z: 66.60769}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1355,6 +1355,7 @@ MonoBehaviour:
   holdArea: {fileID: 8413178250063108687}
   HeldObject: {fileID: 0}
   pickupForce: 10
+  objectsInInteractRange: []
 --- !u!1 &4155157953602829011
 GameObject:
   m_ObjectHideFlags: 0
@@ -1827,7 +1828,7 @@ MonoBehaviour:
   LandingAudioClip: {fileID: 0}
   FootstepAudioClips: []
   FootstepAudioVolume: 0.5
-  JumpHeight: 4.5
+  JumpHeight: 6
   Gravity: -60
   JumpTimeout: 0.3
   FallTimeout: 0.05
@@ -2001,7 +2002,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 116
   m_CollisionDetection: 0
 --- !u!114 &492798257549359658
 MonoBehaviour:
@@ -2542,7 +2543,7 @@ Transform:
   m_GameObject: {fileID: 6774737294069508098}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: 71.84166, y: 4.7909327, z: -273.6}
+  m_LocalPosition: {x: 34.568604, y: -17.599066, z: 82.105675}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
