@@ -25,7 +25,8 @@ public class GrabbableObject : MonoBehaviour {
         rb3D.drag = 10;
         rb3D.constraints = RigidbodyConstraints.FreezeRotation;
         IsBeingHeld = true;
-        displayObject3D_Mesh.transform.parent = holdArea;
+        //displayObject3D_Mesh.transform.parent = holdArea
+        transform.parent = holdArea;
 
         //disable interaction indicator
         interactDisplayController.SetInteractIndicatorActive(false);
@@ -36,9 +37,16 @@ public class GrabbableObject : MonoBehaviour {
         Drop3D();
     }
     protected virtual void Drop3D() {
-       //reset the rigid body, enable gravity, set drag to 1, unfreeze rotation, set parent to null
+        //reset the rigid body, enable gravity, set drag to 1, unfreeze rotation, set parent to null
         var rb3D = displayObject3D_Mesh.GetComponent<Rigidbody>();
-        displayObject3D_Mesh.transform.parent = transform;
+        var sphere = displayObject3D_Mesh.GetComponent<SphereCollider>();
+        //prevent errors with sphere
+        if (displayObject3D_Mesh.name != "actual_cube")
+        {
+            sphere.enabled = true;
+            displayObject3D_Mesh.transform.parent = transform;
+        }
+        
         transform.position = displayObject3D_Mesh.transform.position;
         displayObject3D_Mesh.transform.localPosition = Vector3.zero;
         rb3D.useGravity = true;

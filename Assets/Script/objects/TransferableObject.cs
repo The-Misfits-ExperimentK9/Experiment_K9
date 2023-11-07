@@ -7,12 +7,15 @@ public class TransferableObject : GrabbableObject {
     [SerializeField] private GameObject displayObject_2D;
     [SerializeField] private SpriteRenderer spriteRenderer2D;
     [SerializeField] private float objectDrawOffset = 4f;
+    [SerializeField] private SphereCollider sphere;
 
-    
-    
+
+
+
 
     private void Awake() {
         spriteRenderer2D = displayObject_2D.GetComponent<SpriteRenderer>();
+        sphere = displayObject3D_Mesh.GetComponent<SphereCollider>();
         //turn off the physics if the object starts as 2D
         //interactDisplayController.SetInteractIndicatorActive(true);
         if (!Is3D) { 
@@ -22,13 +25,14 @@ public class TransferableObject : GrabbableObject {
     }
     private void Update() {
         if (!Is3D) {
-            if (displayObject_2D.transform.localPosition != Vector3.zero) {
+            //if (displayObject_2D.transform.localPosition != Vector3.zero) {
                 //reset position of sphere and this objec to the location of the 2d sprite while in 2d mode
                 //reset position of the 3d object to the 2d object location
                 transform.position = displayObject_2D.transform.position;
-                displayObject_2D.transform.localPosition = Vector3.zero;
+                displayObject3D_Mesh.transform.position= displayObject_2D.transform.position;
+            displayObject_2D.transform.localPosition = Vector3.zero;
                 
-            }
+           // }
         }
     }
 
@@ -37,15 +41,20 @@ public class TransferableObject : GrabbableObject {
 
     }
     public void Enable3D() {
+        sphere.enabled = false;
         Set3DDisplayMode(true);
         displayObject3D_Mesh.enabled = true;
     }
     public void Enable2D() {
+        
         displayObject_2D.SetActive(true);
        
     }
     public void Disable3D() {
         //TogglePhysics(disable: true);
+        //turn off colliders so it doesn't drag theplayer
+        
+        sphere.enabled = false;
         displayObject3D_Mesh.enabled = false;
         Is3D = false;
     }
@@ -65,7 +74,8 @@ public class TransferableObject : GrabbableObject {
         
         this.holder = holder;   
         transform.parent = holdArea;
-      //transform.localPosition = offset;
+        transform.position = holdArea.position;
+        //transform.localPosition = offset;
     }
     public void Pickup2D(GameObject holder) {
         
@@ -73,7 +83,7 @@ public class TransferableObject : GrabbableObject {
         //set the hold as the parent to carry it around
         transform.SetParent(holder.transform);
         spriteRenderer2D.enabled = false;
-
+        sphere.enabled = false;
         //disable interaction indicator
         interactDisplayController.SetInteractIndicatorActive(false);
         this.holder = holder;
@@ -103,7 +113,7 @@ public class TransferableObject : GrabbableObject {
   
         displayObject_2D.SetActive(true);   
         spriteRenderer2D.enabled = true;
-
+        sphere.enabled = true;
         
 
         holder = null;

@@ -9,17 +9,17 @@ using UnityEngine.InputSystem.Controls;
 public class PickupController : MonoBehaviour {
     [Header("Pickup Settings")]
     [SerializeField] Transform holdArea;
-    [HideInInspector] public GrabbableObject HeldObject;
+   public GrabbableObject HeldObject;
   //  [SerializeField] private PlayerBehaviour playerBehaviour;
     private Rigidbody heldObjectRigidbody;
-
+    private SphereCollider sphere;
     [Header("Physics Params")]
     //[SerializeField] float pickupRange = 5f;
     [SerializeField] float pickupForce = 150f;
     private bool canInteract = true;                        //disable or enable player interactions
     KeyControl interactKey;
 
-    private List<GrabbableObject> objectsInInteractRange;    //a list of all the objects that are in interactable range
+    [SerializeField]private List<GrabbableObject> objectsInInteractRange;    //a list of all the objects that are in interactable range
 
     private Vector3 forceDir;
     private void Awake() {
@@ -48,7 +48,8 @@ public class PickupController : MonoBehaviour {
                 PickupObject();
             }
         }
-        if (IsHoldingObject()) {
+        //only do this if its in 3d 2d won't work
+        if (IsHoldingObject()&& PlayerBehaviour.Instance.IsIn3D()) {
             MoveObject();
         }
     }
@@ -68,6 +69,8 @@ public class PickupController : MonoBehaviour {
 
             var moveDirection = holdArea.position - heldObjectRigidbody.transform.position;
             heldObjectRigidbody.AddForce(moveDirection * pickupForce);
+            //Debug.Log(transform.parent);
+            //transform.parent = holdArea;
         }
     }
 
@@ -96,6 +99,7 @@ public class PickupController : MonoBehaviour {
             }
             else {
                 tObject.SetHolder(PlayerBehaviour.Instance.player2D);
+                
                 tObject.Disable3D();
             }
         }
@@ -106,7 +110,7 @@ public class PickupController : MonoBehaviour {
 
     //handle picking up objects while in 2d
     private void Pickup2DObject() {
-        Debug.Log("trying to drop 2d");
+       // Debug.Log("trying to drop 2d");
         var tObject = GetObjectClosestTo2DPlayer();
 
         if (tObject != null && !tObject.Is3D) {
@@ -125,6 +129,14 @@ public class PickupController : MonoBehaviour {
 
             HeldObject = tObject;
             heldObjectRigidbody = HeldObject.displayObject3D_Mesh.GetComponent<Rigidbody>();
+            if(HeldObject.displayObject3D_Mesh.name!= "actual_cube")
+            {
+                sphere = HeldObject.displayObject3D_Mesh.GetComponent<SphereCollider>();
+
+                //so it doesn't bump into dog
+                sphere.enabled = false;
+            }
+            
             var moveDirection = holdArea.position - heldObjectRigidbody.transform.position;
             heldObjectRigidbody.AddForce(moveDirection * pickupForce);
             //pick up the object that was found to be the closest
@@ -175,10 +187,8 @@ public class PickupController : MonoBehaviour {
     private TransferableObject GetObjectClosestTo2DPlayer() {
 
         var objectsInRange = Physics.OverlapSphere(PlayerBehaviour.Instance.player2D.transform.position, PlayerBehaviour.Instance.interactDisplayRadius, LayerMask.GetMask("Interactable Objects"));
-        var walltest = Physics.OverlapSphere(PlayerBehaviour.Instance.player2D.transform.position, PlayerBehaviour.Instance.interactDisplayRadius, LayerMask.GetMask("Walls"));
-        Debug.Log(LayerMask.GetMask("Interactable Objects"));
-        Debug.Log(LayerMask.GetMask("Walls"));
-        Debug.Log(walltest);
+        
+      
         if (!objectsInRange.Any()) return null;
 
         float closestToPlayer = float.MaxValue;
