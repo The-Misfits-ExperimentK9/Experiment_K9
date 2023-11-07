@@ -44,6 +44,7 @@ public class GrabbableObject : MonoBehaviour {
         if (displayObject3D_Mesh.name != "actual_cube")
         {
             sphere.enabled = true;
+            sphere.excludeLayers = LayerMask.GetMask("Nothing");
             displayObject3D_Mesh.transform.parent = transform;
         }
         

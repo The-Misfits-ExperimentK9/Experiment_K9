@@ -41,7 +41,8 @@ public class TransferableObject : GrabbableObject {
 
     }
     public void Enable3D() {
-        sphere.enabled = false;
+        //sphere.enabled = false;
+        sphere.excludeLayers = LayerMask.GetMask("Player");
         Set3DDisplayMode(true);
         displayObject3D_Mesh.enabled = true;
     }
@@ -55,6 +56,7 @@ public class TransferableObject : GrabbableObject {
         //turn off colliders so it doesn't drag theplayer
         
         sphere.enabled = false;
+        sphere.excludeLayers = LayerMask.GetMask("Player");
         displayObject3D_Mesh.enabled = false;
         Is3D = false;
     }
@@ -84,6 +86,7 @@ public class TransferableObject : GrabbableObject {
         transform.SetParent(holder.transform);
         spriteRenderer2D.enabled = false;
         sphere.enabled = false;
+        sphere.excludeLayers = LayerMask.GetMask("Player");
         //disable interaction indicator
         interactDisplayController.SetInteractIndicatorActive(false);
         this.holder = holder;
@@ -114,7 +117,7 @@ public class TransferableObject : GrabbableObject {
         displayObject_2D.SetActive(true);   
         spriteRenderer2D.enabled = true;
         sphere.enabled = true;
-        
+        sphere.excludeLayers = LayerMask.GetMask("");
 
         holder = null;
         IsBeingHeld = false;

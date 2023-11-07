@@ -134,7 +134,8 @@ public class PickupController : MonoBehaviour {
                 sphere = HeldObject.displayObject3D_Mesh.GetComponent<SphereCollider>();
 
                 //so it doesn't bump into dog
-                sphere.enabled = false;
+                //sphere.enabled = false;
+                sphere.excludeLayers = LayerMask.GetMask("Player");
             }
             
             var moveDirection = holdArea.position - heldObjectRigidbody.transform.position;
