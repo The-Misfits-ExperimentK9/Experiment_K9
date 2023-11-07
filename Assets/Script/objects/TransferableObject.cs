@@ -45,7 +45,7 @@ public class TransferableObject : GrabbableObject {
        
     }
     public void Disable3D() {
-       // TogglePhysics(disable: true);
+        //TogglePhysics(disable: true);
         displayObject3D_Mesh.enabled = false;
         Is3D = false;
     }
@@ -55,15 +55,17 @@ public class TransferableObject : GrabbableObject {
     }
     public void SetHolder(GameObject holder) {
         this.holder = holder;
+        transform.parent = holder.transform;
+        transform.localPosition = Vector3.zero;
     }
 
 
     public void SetHoldArea(GameObject holder, Transform holdArea) {
-        //Debug.Log("setting hold: " + holder.name);
+        Debug.Log("setting hold: " + holder.name);
         
         this.holder = holder;   
         transform.parent = holdArea;
-      //  transform.localPosition = offset;
+      //transform.localPosition = offset;
     }
     public void Pickup2D(GameObject holder) {
         

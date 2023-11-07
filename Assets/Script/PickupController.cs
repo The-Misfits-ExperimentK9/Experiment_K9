@@ -175,7 +175,10 @@ public class PickupController : MonoBehaviour {
     private TransferableObject GetObjectClosestTo2DPlayer() {
 
         var objectsInRange = Physics.OverlapSphere(PlayerBehaviour.Instance.player2D.transform.position, PlayerBehaviour.Instance.interactDisplayRadius, LayerMask.GetMask("Interactable Objects"));
-
+        var walltest = Physics.OverlapSphere(PlayerBehaviour.Instance.player2D.transform.position, PlayerBehaviour.Instance.interactDisplayRadius, LayerMask.GetMask("Walls"));
+        Debug.Log(LayerMask.GetMask("Interactable Objects"));
+        Debug.Log(LayerMask.GetMask("Walls"));
+        Debug.Log(walltest);
         if (!objectsInRange.Any()) return null;
 
         float closestToPlayer = float.MaxValue;
