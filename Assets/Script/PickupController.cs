@@ -75,7 +75,6 @@ public class PickupController : MonoBehaviour {
     }
 
     private void DropHeldObject() {
-        Debug.Log("pickupController Drop Object");
         AddObjectToInRangeList(HeldObject);
         HeldObject.DropObject();
         HeldObject = null;
@@ -90,6 +89,7 @@ public class PickupController : MonoBehaviour {
     public void ChangeDimension() {
         if (IsHoldingObject() && HeldObject is TransferableObject) {
             var tObject = HeldObject as TransferableObject;
+            heldObjectRigidbody = HeldObject.displayObject3D_Mesh.GetComponent<Rigidbody>();
             HeldObject.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
             //swap parent and add offset when moving back to 3D with object
             if (PlayerBehaviour.Instance.IsIn3D()) {
