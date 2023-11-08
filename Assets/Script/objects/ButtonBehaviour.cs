@@ -73,13 +73,13 @@ public class ButtonBehaviour : ReceivableParent {
 
     }
     //set materials to pressed and activate the puzzle piece
-    protected override void Activate() {
+    public override void Activate() {
         base.Activate();
         pawMeshRenderer.SetMaterials(pressedMaterials);
         puzzlePieceToActivate.Activate();
     }
     //set materials back to unpressed and deactivate the puzzle piece
-    protected override void Deactivate() {
+    public override void Deactivate() {
         pawMeshRenderer.SetMaterials(unPressedMaterials);
         puzzlePieceToActivate.Deactivate();
 

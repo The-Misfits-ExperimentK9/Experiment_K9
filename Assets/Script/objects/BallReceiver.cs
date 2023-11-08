@@ -25,7 +25,7 @@ public class BallReceiver : ReceivableParent {
             }
         }
     }
-    protected override void Activate() {
+    public override void Activate() {
         base.Activate();
         onLeds.SetActive(true);
         offLeds.SetActive(false);
@@ -33,7 +33,7 @@ public class BallReceiver : ReceivableParent {
         isOn = true;
 
     }
-    protected override void Deactivate() {
+    public override void Deactivate() {
         base.Deactivate();
         onLeds.SetActive(false);
         offLeds.SetActive(true);

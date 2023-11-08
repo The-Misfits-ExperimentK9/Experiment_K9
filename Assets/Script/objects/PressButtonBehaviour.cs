@@ -5,26 +5,24 @@ using UnityEngine;
 public class PressButtonBehaviour : ReceivableParent {
     [SerializeField] private ActivatablePuzzlePiece activatablePuzzlePiece;
     [SerializeField] private GameObject button;
-    private float pressAmount;
-    private float pressTimer = .5f;
-    private float pressDelay = 1f;
-    // Start is called before the first frame update
-    void Start() {
+    private readonly float pressAmount = .3f;
+    private readonly float pressTimer = .1f;
+    private readonly float pressDelay = .5f;
+    private bool isPressed = false;
+    
 
-    }
-
-    // Update is called once per frame
-    void Update() {
-
-    }
     //set materials to pressed and activate the puzzle piece
-    protected override void Activate() {
-        StartCoroutine(PressButton(true));
-        base.Activate();
+    public override void Activate() {
+        if (!isPressed) {
+            isPressed = true;
+            StartCoroutine(PressButton(true));
+            base.Activate();
+            activatablePuzzlePiece.Activate();
+        }
 
     }
     //set materials back to unpressed and deactivate the puzzle piece
-    protected override void Deactivate() {
+    public override void Deactivate() {
 
         StartCoroutine(PressButton(false));
         base.Deactivate();
@@ -32,20 +30,27 @@ public class PressButtonBehaviour : ReceivableParent {
 
     IEnumerator PressButton(bool press) {
 
+        Vector3 endPos = button.transform.localPosition;
+
+        if (press)
+            endPos -= new Vector3(0, pressAmount, 0);
+        else
+            endPos += new Vector3(0, pressAmount, 0);
+
         for (float t = 0; t < pressTimer; t += Time.deltaTime) {
-            if (press) {
-                pressAmount = Mathf.Lerp(0, 1, t / pressTimer);
-            }
-            else {
-                pressAmount = Mathf.Lerp(1, 0, t / pressTimer);
-            }
-            button.transform.localPosition = new Vector3(0, -pressAmount, 0);
+
+
+            button.transform.localPosition = Vector3.Lerp(button.transform.localPosition, endPos, t / pressTimer);
+
             yield return null;
         }
         if (press) {
             yield return new WaitForSeconds(pressDelay);
             Deactivate();
 
+        }
+        else {
+            isPressed = false;
         }
     }
 

@@ -5,13 +5,21 @@ using UnityEngine;
 public abstract class ReceivableParent : MonoBehaviour {
 
     [SerializeField] GlowPath glowPath;
-    protected virtual void Activate() {
-        if (glowPath == null) return;
-        glowPath.Activate();
+    [SerializeField] AudioSource audioSource;
+
+
+    public virtual void Activate() {
+        if (glowPath != null) {
+            glowPath.Activate();
+        }
+        if (audioSource != null) {
+            audioSource.Play();
+        }
     }
-    protected virtual void Deactivate() {
-        if (glowPath == null) return;
-        glowPath.Deactivate();
+    public virtual void Deactivate() {
+        if (glowPath != null) {
+            glowPath.Deactivate();
+        }
     }
 
 }

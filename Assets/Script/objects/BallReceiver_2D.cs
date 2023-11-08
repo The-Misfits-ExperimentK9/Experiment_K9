@@ -8,13 +8,13 @@ public class BallReceiver_2D : ReceivableParent {
     [SerializeField] ActivatablePuzzlePiece puzzlePieceToActivate;
     [SerializeField] bool Allow3DActivation = false;
 
-    protected override void Activate() {
+    public override void Activate() {
         base.Activate();
         puzzlePieceToActivate.Activate();
         outsideOff.SetActive(false);
         outsideOn.SetActive(true);
     }
-    protected override void Deactivate() {
+    public override void Deactivate() {
         base.Deactivate();
         puzzlePieceToActivate.Deactivate();
         outsideOff.SetActive(true);

@@ -163,12 +163,6 @@ public class PlayerBehaviour : MonoBehaviour {
             }
         }
 
-        if (closestObject == null)
-            Debug.Log("no object found");
-        else {
-            Debug.Log(closestObject.name);
-        }
-        
         // Return the closest interactable object or null if none was found.
         return closestObject;
     }

@@ -148,8 +148,9 @@ public class PickupController : MonoBehaviour {
             }
         }
         //closest object to camera is a Interactable object no pickup (button)
-        else {
-            //interact with the button TODO
+        else if (closestGOToCamera.layer == LayerInfo.INTERACTABLE_OBJECT_NO_PICKUP) {
+            //interact with the button
+            closestGOToCamera.GetComponent<ReceivableParent>().Activate();  
         }
 
         
