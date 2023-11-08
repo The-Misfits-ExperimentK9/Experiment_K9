@@ -29,6 +29,7 @@ public class MovementController_2D : MonoBehaviour {
     public bool CanMove = true;
     bool gravityEnabled = false;
     public float maxSpeed2D = 15.0f;
+    
     [SerializeField] private float movementForceMultiplier = 20f;
     [Space(10)]
     [Tooltip("The height the player can jump")]
@@ -224,9 +225,10 @@ public class MovementController_2D : MonoBehaviour {
 
 
         }
+        //gravity is enabled
         else {
             //add horizontal force
-            rb.AddForce(directionX * (_speedHorizontal * movementForceMultiplier));
+            rb.AddForce(directionX * (_speedHorizontal * movementForceMultiplier * 6f));
 
             //clamp horizontal velocity at moveSpeed2D
             if (Mathf.Abs(rb.velocity.x) > maxSpeed2D) {
@@ -235,7 +237,7 @@ public class MovementController_2D : MonoBehaviour {
 
 
             rb.velocity = new Vector3(rb.velocity.x, _verticalVelocity, rb.velocity.x); //apply gravity
-
+            Debug.Log(rb.velocity);
 
         }
 

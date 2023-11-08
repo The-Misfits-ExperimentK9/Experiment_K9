@@ -49,12 +49,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDisplayController: {fileID: 2617706958035673109}
   displayObject3D_Mesh: {fileID: 5916222978909152376}
-  HoldOffset3D: {x: 0, y: -2.5, z: 5}
   IsBeingHeld: 0
   Is3D: 1
+  isColliding: 0
   displayObject_2D: {fileID: 3426124303402463909}
   spriteRenderer2D: {fileID: 0}
   objectDrawOffset: 4
+  sphere: {fileID: 0}
 --- !u!1 &3426124303402463909
 GameObject:
   m_ObjectHideFlags: 0

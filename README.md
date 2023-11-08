@@ -38,6 +38,7 @@ Mike
 <li>Fixed 2d ball collider</li>
 <li>(potentially) Fixed Jiggly 2d sprite</li>
 <li>Picking up items should more reliably pickup the item you are looking at</li>
+<li>Gravity Wall is now functional</li>
  
 </ul>
 
