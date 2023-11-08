@@ -19,26 +19,39 @@ public class GrabbableObject : MonoBehaviour {
     }
     //handles picking up the object when in 3d
     public virtual void Pickup3D(GameObject holder, Transform holdArea) {
+     //   displayObject3D_Mesh.gameObject.layer = LayerInfo.PHYSICS_DISBALE;
         //get the rigid body, disable gravity, set drag to 10, freeze rotation, set parent to the hold area
         var rb3D = displayObject3D_Mesh.GetComponent<Rigidbody>();
         rb3D.useGravity = false;
         rb3D.drag = 10;
         rb3D.constraints = RigidbodyConstraints.FreezeRotation;
         IsBeingHeld = true;
-        displayObject3D_Mesh.transform.parent = holdArea;
+        //displayObject3D_Mesh.transform.parent = holdArea
+        transform.parent = holdArea;
 
         //disable interaction indicator
         interactDisplayController.SetInteractIndicatorActive(false);
         this.holder = holder;
+
 
     }
     public virtual void DropObject() {
         Drop3D();
     }
     protected virtual void Drop3D() {
-       //reset the rigid body, enable gravity, set drag to 1, unfreeze rotation, set parent to null
+        //reset the rigid body, enable gravity, set drag to 1, unfreeze rotation, set parent to null
         var rb3D = displayObject3D_Mesh.GetComponent<Rigidbody>();
-        displayObject3D_Mesh.transform.parent = transform;
+        var sphere = displayObject3D_Mesh.GetComponent<SphereCollider>();
+        //displayObject3D_Mesh.gameObject.layer = LayerInfo.INTERACTABLE_OBJECT;
+
+        //prevent errors with sphere
+        if (displayObject3D_Mesh.name != "actual_cube")
+        {
+            sphere.enabled = true;
+            sphere.excludeLayers = LayerMask.GetMask("Nothing");
+            displayObject3D_Mesh.transform.parent = transform;
+        }
+        
         transform.position = displayObject3D_Mesh.transform.position;
         displayObject3D_Mesh.transform.localPosition = Vector3.zero;
         rb3D.useGravity = true;

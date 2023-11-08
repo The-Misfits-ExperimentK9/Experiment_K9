@@ -21,7 +21,7 @@ public class BallReceiver_2D : ReceivableParent {
         outsideOn.SetActive(false);
     }
     private void OnTriggerEnter(Collider other) {
-        // Debug.Log("2d ball receive hit " + other.name);
+        //Debug.Log("2d ball receive hit " + other.name);
         //check object layer
         if (other.gameObject.layer == LayerInfo.INTERACTABLE_OBJECT) {
 

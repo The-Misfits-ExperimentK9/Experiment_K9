@@ -61,7 +61,7 @@ Transform:
   m_GameObject: {fileID: 74397854644777205}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: 33.619312, y: -10.329067, z: 82.105675}
+  m_LocalPosition: {x: 33.619312, y: -10.329067, z: 66.60769}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -209,20 +209,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 5030094346641154242}
   playerRigidBody3D: {fileID: 3976565469633831111}
+  Gravity: -60
+  Friction: 10
   offSetAmount: 6
   wallCheckDistance: 0.8
+  currentWall: {fileID: 0}
   Is2DPlayerActive: 0
   CanMove: 1
-  currentWall: {fileID: 0}
-  moveSpeed2D: 15
-  jumpPower2D: 20
+  maxSpeed2D: 15
+  movementForceMultiplier: 20
+  JumpHeight: 10.25
+  JumpTimeout: 0.5
+  FallTimeout: 0.15
   sprites:
   - {fileID: 21300000, guid: 2643cbf3a2614bf4fb863e26df2f1921, type: 3}
   - {fileID: 21300000, guid: a60c095fa53280448994615b855e8aa2, type: 3}
   - {fileID: 21300000, guid: 32d9befca69c6a740ad0d95084087f20, type: 3}
   - {fileID: 21300000, guid: 7e187630eaff06e4b9d0a594fa2afa6e, type: 3}
   - {fileID: 21300000, guid: 842905a4efc4f4e4cb807f8e9531ebd1, type: 3}
-  grounded: 0
+  GroundedRadius: 5
+  GroundedOffset: 0.3
+  GroundLayers:
+    serializedVersion: 2
+    m_Bits: 256
+  Grounded: 1
   spriteRenderer: {fileID: 641710048873724522}
 --- !u!65 &7203371137855413276
 BoxCollider:
@@ -269,7 +279,7 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!1 &835726313623458955
@@ -1355,6 +1365,7 @@ MonoBehaviour:
   holdArea: {fileID: 8413178250063108687}
   HeldObject: {fileID: 0}
   pickupForce: 10
+  objectsInInteractRange: []
 --- !u!1 &4155157953602829011
 GameObject:
   m_ObjectHideFlags: 0
@@ -1827,7 +1838,7 @@ MonoBehaviour:
   LandingAudioClip: {fileID: 0}
   FootstepAudioClips: []
   FootstepAudioVolume: 0.5
-  JumpHeight: 4.5
+  JumpHeight: 6
   Gravity: -60
   JumpTimeout: 0.3
   FallTimeout: 0.05
@@ -2001,7 +2012,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 116
   m_CollisionDetection: 0
 --- !u!114 &492798257549359658
 MonoBehaviour:
@@ -2541,8 +2552,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6774737294069508098}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: 71.84166, y: 4.7909327, z: -273.6}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -28.75, y: 3.375, z: -3.6000004}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2582,7 +2593,7 @@ Camera:
     height: 1
   near clip plane: 0.2
   far clip plane: 500
-  field of view: 60
+  field of view: 40
   orthographic: 0
   orthographic size: 10
   m_Depth: -1
