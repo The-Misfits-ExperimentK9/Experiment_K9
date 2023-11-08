@@ -350,10 +350,11 @@ public class MovementController_2D : MonoBehaviour {
 
     private void UpdateWallStatus() {
         if (CheckIfInCurrentWall()) {
+            Debug.Log("still in wall"); 
             //do nothing still in the wall
         }
         else {
-            Debug.Log("leaving wall");
+            Debug.Log("leaving wall via UpdateWallStatus()");
             PlayerBehaviour.Instance.playerDimensionController.TransitionTo3D();
         }
     }
@@ -369,8 +370,8 @@ public class MovementController_2D : MonoBehaviour {
                 return true;
             }
             else {
-
-                return false;
+                currentWall = hit.collider.GetComponent<WallBehaviour>();
+                return true;
             }
         }
         return false;

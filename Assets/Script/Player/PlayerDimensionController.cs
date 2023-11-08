@@ -22,7 +22,7 @@ public class PlayerDimensionController : MonoBehaviour {
 
     [Header("Launch")]
     [SerializeField] private float playerLeaveWallOffset = 6f;
-    [SerializeField] private float launchForce = 10f;
+   // [SerializeField] private float launchForce = 10f;
 
     [Header("Settings")]
     public bool IsProjecting = false;
@@ -185,6 +185,7 @@ public class PlayerDimensionController : MonoBehaviour {
 
         //adjust the player 3d model to be in front of the wall offset by a small amount
         MovePlayerOutOfWall(player2D.transform.position + player2D.transform.forward * playerLeaveWallOffset);
+        Debug.Log("turning physics back on");
         Physics.IgnoreLayerCollision(LayerInfo.PLAYER, LayerInfo.INTERACTABLE_OBJECT, false);
 
 
@@ -216,9 +217,10 @@ public class PlayerDimensionController : MonoBehaviour {
         Rigidbody player3DRigidbody = player3D.GetComponent<Rigidbody>();
        
 
-        player3DRigidbody.AddForce(launchDirection * launchForce, ForceMode.Impulse);
+        player3DRigidbody.AddForce(launchDirection * PlayerBehaviour.Instance.player2DMovementController.currentWall.LaunchForce, ForceMode.Impulse);
         DOGEnabled = !DOGEnabled;
         player3DRigidbody.AddForce(launchDirection * 0, ForceMode.Impulse);
+        Physics.IgnoreLayerCollision(LayerInfo.PLAYER, LayerInfo.INTERACTABLE_OBJECT, false);
     }
     //handle enable/disasble of DOG device while in auto mode
     private void HandleAutoModeInput() {

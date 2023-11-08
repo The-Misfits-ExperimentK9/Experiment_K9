@@ -9,7 +9,8 @@ public class WallBehaviour : MonoBehaviour {
     public bool IsWalkThroughEnabled = true;
     //to check if the player can pass through the wall while in 2D
     public bool IsPassthrough = false;
-    
-    public float pushForce = 1f;
-    
+
+    //public float pushForce = 1f;
+    public float LaunchForce = 10f;
+
 }
