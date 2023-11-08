@@ -15,6 +15,9 @@ Mike
 <ul>
 <li>Cube will now shrink when picking it up and expand back to original size upon drop</li>
 <li>New tutorial messages</li>
+<li>Item spawner that can spawn 1 of any object type at time - activatable puzzle piece</li>
+<li>Pressable Button that can activate puzzle pieces</li>
+<li>Support for playing sound on puzzle piece activation</li>
 </ul>
 
 <h3>Changes</h3>
@@ -34,6 +37,7 @@ Mike
 <li>Fixed 2d ball disappearing</li>
 <li>Fixed 2d ball collider</li>
 <li>(potentially) Fixed Jiggly 2d sprite</li>
+<li>Picking up items should more reliably pickup the item you are looking at</li>
  
 </ul>
 
