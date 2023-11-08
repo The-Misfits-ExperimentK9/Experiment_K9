@@ -49,7 +49,7 @@ public class GrabbableObject : MonoBehaviour {
         {
             sphere.enabled = true;
             sphere.excludeLayers = LayerMask.GetMask("Nothing");
-            displayObject3D_Mesh.transform.parent = transform;
+          //  displayObject3D_Mesh.transform.parent = transform;
         }
         
         transform.position = displayObject3D_Mesh.transform.position;

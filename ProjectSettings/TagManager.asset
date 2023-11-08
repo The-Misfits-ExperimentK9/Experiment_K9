@@ -28,7 +28,7 @@ TagManager:
   - Cube
   - PlayerBehavior
   - Triggers
-  - 
+  - InteractableObjectNoPickup
   - 
   - 
   - 

@@ -29,7 +29,7 @@ public class PlayerBehaviour : MonoBehaviour {
     public InterfaceBehaviour interfaceScript;
 
     [Header("Settings")]
-    public float interactDisplayRadius = 20f; //radius of the collider to determine the range at which the player can interact
+    
     [SerializeField] private bool canResetLocation = true;
     public bool is3D = true;                               //handles checking if the player is in 3d or 2d mode
 
@@ -41,7 +41,11 @@ public class PlayerBehaviour : MonoBehaviour {
 
     bool paused = false;
 
-    
+    [Header("Interacting")]
+    public float interactDisplayRadius = 20f; //radius of the collider to determine the range at which the player can interact
+    [SerializeField] private LayerMask interactableLayerMask; //layer mask for the interactable objects
+
+
 
     private void Start() {
         //set singleton
@@ -136,6 +140,38 @@ public class PlayerBehaviour : MonoBehaviour {
     }
     //returns true if the game is in 3d mode
     public bool IsIn3D() { return is3D; }
+
+    public GameObject GetClosestInteractable3D() {
+        // Perform the overlap sphere and get the colliders within the specified radius.
+        Collider[] interactableColliders = Physics.OverlapSphere(player3D.transform.position, interactDisplayRadius, interactableLayerMask);
+
+        // Initialize variables to keep track of the closest object.
+        GameObject closestObject = null;
+        float smallestOrthogonalDistance = float.MaxValue;
+        Ray cameraRay = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
+
+        foreach (var collider in interactableColliders) {
+            // Get the closest point on the camera ray to the object's position.
+            Vector3 closestPointOnRay = cameraRay.GetPoint(Vector3.Dot(collider.transform.position - cameraRay.origin, cameraRay.direction));
+            // Calculate the orthogonal distance from the object to the ray.
+            float orthogonalDistance = Vector3.Distance(collider.transform.position, closestPointOnRay);
+
+            // Check if this collider is closer to the camera's forward direction than the previous ones.
+            if (orthogonalDistance < smallestOrthogonalDistance) {
+                smallestOrthogonalDistance = orthogonalDistance;
+                closestObject = collider.gameObject;
+            }
+        }
+
+        if (closestObject == null)
+            Debug.Log("no object found");
+        else {
+            Debug.Log(closestObject.name);
+        }
+        
+        // Return the closest interactable object or null if none was found.
+        return closestObject;
+    }
 
 }
 

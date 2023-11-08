@@ -21,7 +21,7 @@ public class PickupController : MonoBehaviour {
 
     [SerializeField]private List<GrabbableObject> objectsInInteractRange;    //a list of all the objects that are in interactable range
 
-    private Vector3 forceDir;
+   
     private void Awake() {
         interactKey = Keyboard.current.eKey;
         objectsInInteractRange = new();
@@ -123,26 +123,36 @@ public class PickupController : MonoBehaviour {
     }
     //handle picking up 3d objects while in 3d 
     private void Handle3DInteractions() {
-        var tObject = GetObjectClosestToCameraLookAt();
-        //only process interactions with 3d objects while in 3d
-        if (tObject != null && tObject.Is3D) {
+        var closestGOToCamera = PlayerBehaviour.Instance.GetClosestInteractable3D();
 
-            HeldObject = tObject;
-            heldObjectRigidbody = HeldObject.displayObject3D_Mesh.GetComponent<Rigidbody>();
-            if(HeldObject.displayObject3D_Mesh.name!= "actual_cube")
-            {
-                sphere = HeldObject.displayObject3D_Mesh.GetComponent<SphereCollider>();
+        //handle picking up objects
+        if (closestGOToCamera.layer == LayerInfo.INTERACTABLE_OBJECT) {
+            var tObject = closestGOToCamera.transform.parent.GetComponent<GrabbableObject>();
+            //only process interactions with 3d objects while in 3d
+            if (tObject != null && tObject.Is3D) {
 
-                //so it doesn't bump into dog
-                //sphere.enabled = false;
-                sphere.excludeLayers = LayerMask.GetMask("Player");
+                HeldObject = tObject;
+                heldObjectRigidbody = HeldObject.displayObject3D_Mesh.GetComponent<Rigidbody>();
+                if (HeldObject.displayObject3D_Mesh.name != "actual_cube") {
+                    sphere = HeldObject.displayObject3D_Mesh.GetComponent<SphereCollider>();
+
+                    //so it doesn't bump into dog
+                    //sphere.enabled = false;
+                    sphere.excludeLayers = LayerMask.GetMask("Player");
+                }
+
+                var moveDirection = holdArea.position - heldObjectRigidbody.transform.position;
+                heldObjectRigidbody.AddForce(moveDirection * pickupForce);
+                //pick up the object that was found to be the closest
+                HeldObject.Pickup3D(gameObject, holdArea);
             }
-            
-            var moveDirection = holdArea.position - heldObjectRigidbody.transform.position;
-            heldObjectRigidbody.AddForce(moveDirection * pickupForce);
-            //pick up the object that was found to be the closest
-            HeldObject.Pickup3D(gameObject, holdArea);
         }
+        //closest object to camera is a Interactable object no pickup (button)
+        else {
+            //interact with the button TODO
+        }
+
+        
     }
     //returns the interactable object closest to where the player is looking at with the camera
     //TODO not working 100% of the time sometimes choses object closeset to camera even if player isnt looking at it
