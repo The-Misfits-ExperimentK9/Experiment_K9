@@ -177,6 +177,7 @@ public class PlayerDimensionController : MonoBehaviour {
         if (player3D.TryGetComponent(out StarterAssetsInputs sAssetsInput)) {
             sAssetsInput.ClearInput();
         }
+        Physics.IgnoreLayerCollision(LayerInfo.PLAYER, LayerInfo.INTERACTABLE_OBJECT);
 
     }
     public void TransitionTo3D() {
@@ -184,7 +185,8 @@ public class PlayerDimensionController : MonoBehaviour {
 
         //adjust the player 3d model to be in front of the wall offset by a small amount
         MovePlayerOutOfWall(player2D.transform.position + player2D.transform.forward * playerLeaveWallOffset);
-        
+        Physics.IgnoreLayerCollision(LayerInfo.PLAYER, LayerInfo.INTERACTABLE_OBJECT, false);
+
 
     }
     private void MovePlayerOutOfWall(Vector3 newPos) {

@@ -40,6 +40,7 @@ public class BallReceiver_2D : ReceivableParent {
 
         }
     }
+    
     private void OnTriggerExit(Collider other) {
         if (other.gameObject.layer == LayerInfo.INTERACTABLE_OBJECT) {
             Deactivate();
