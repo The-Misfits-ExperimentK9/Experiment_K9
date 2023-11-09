@@ -61,7 +61,7 @@ Transform:
   m_GameObject: {fileID: 74397854644777205}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: 33.619312, y: -10.329067, z: 66.60769}
+  m_LocalPosition: {x: 33.619312, y: -10.329067, z: 82.105675}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1350,7 +1350,6 @@ MonoBehaviour:
   Camera3D: {fileID: 2817393637023723959}
   Camera2D: {fileID: 74397854644777205}
   playerLeaveWallOffset: 6
-  launchForce: 10
   IsProjecting: 0
   DOGEnabled: 0
 --- !u!114 &8754400608702510881
@@ -1834,15 +1833,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26e54e5a728a9234ab24fcf1460ed8a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoveSpeed: 20
-  SprintSpeed: 24
+  MoveSpeed: 30
+  SprintSpeed: 40
   RotationSmoothTime: 0.12
   SpeedChangeRate: 10
   LandingAudioClip: {fileID: 0}
   FootstepAudioClips: []
   FootstepAudioVolume: 0.5
-  JumpHeight: 6
-  Gravity: -60
+  JumpHeight: 10.75
+  Gravity: -110
   JumpTimeout: 0.3
   FallTimeout: 0.05
   Grounded: 1
@@ -1850,7 +1849,7 @@ MonoBehaviour:
   GroundedRadius: 4.5
   GroundLayers:
     serializedVersion: 2
-    m_Bits: 257
+    m_Bits: 8576
   CinemachineCameraTarget: {fileID: 3784293241610158376}
   TopClamp: 70
   BottomClamp: -30
@@ -2556,7 +2555,7 @@ Transform:
   m_GameObject: {fileID: 6774737294069508098}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: 28.53302, y: 5.560933, z: -63.59999}
+  m_LocalPosition: {x: -80.390686, y: -28.839067, z: 18.905674}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
