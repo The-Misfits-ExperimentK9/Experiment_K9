@@ -2,6 +2,7 @@ using StarterAssets;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
+using Cinemachine;
 
 public class PlayerDimensionController : MonoBehaviour {
     public const float WALL_DRAW_OFFSET = .21f;
@@ -17,6 +18,8 @@ public class PlayerDimensionController : MonoBehaviour {
 
 
     [Header("Cameras")]
+    [SerializeField] private GameObject playerCamRoot;
+    [SerializeField] private CinemachineVirtualCamera VirtualCamera3D;
     [SerializeField] private GameObject Camera3D;
     [SerializeField] private GameObject Camera2D;
 
@@ -168,10 +171,10 @@ public class PlayerDimensionController : MonoBehaviour {
         player3D.SetActive(false);
 
         PlayerBehaviour.Instance.ChangeDimension();
-
-
         Camera3D.SetActive(false);
         Camera2D.SetActive(true);
+        VirtualCamera3D.LookAt = player2D.transform;
+        VirtualCamera3D.Follow = Camera2D.transform;
         //tell the movement controller to lock axes
         movementController_2D.ProcessAxisChange();
         if (player3D.TryGetComponent(out StarterAssetsInputs sAssetsInput)) {
@@ -187,8 +190,6 @@ public class PlayerDimensionController : MonoBehaviour {
         MovePlayerOutOfWall(player2D.transform.position + player2D.transform.forward * playerLeaveWallOffset);
         Debug.Log("turning physics back on");
         Physics.IgnoreLayerCollision(LayerInfo.PLAYER, LayerInfo.INTERACTABLE_OBJECT, false);
-
-
     }
     private void MovePlayerOutOfWall(Vector3 newPos) {
         player2D.SetActive(false);
@@ -201,6 +202,8 @@ public class PlayerDimensionController : MonoBehaviour {
         PlayerBehaviour.Instance.ChangeDimension();
         Camera3D.SetActive(true);
         Camera2D.SetActive(false);
+        VirtualCamera3D.LookAt = null;
+        VirtualCamera3D.Follow = playerCamRoot.transform;
         if (player3D.TryGetComponent(out StarterAssetsInputs sAssetsInput)) {
             sAssetsInput.ClearInput();
         }
