@@ -126,33 +126,39 @@ public class PickupController : MonoBehaviour {
         var closestGOToCamera = PlayerBehaviour.Instance.GetClosestInteractable3D();
 
         //handle picking up objects
-        if (closestGOToCamera.layer == LayerInfo.INTERACTABLE_OBJECT) {
-            var tObject = closestGOToCamera.transform.parent.GetComponent<GrabbableObject>();
-            //only process interactions with 3d objects while in 3d
-            if (tObject != null && tObject.Is3D) {
+        if (closestGOToCamera != null)
+        {
+            if (closestGOToCamera.layer == LayerInfo.INTERACTABLE_OBJECT)
+            {
+                var tObject = closestGOToCamera.transform.parent.GetComponent<GrabbableObject>();
+                //only process interactions with 3d objects while in 3d
+                if (tObject != null && tObject.Is3D)
+                {
 
-                HeldObject = tObject;
-                heldObjectRigidbody = HeldObject.displayObject3D_Mesh.GetComponent<Rigidbody>();
-                if (HeldObject.displayObject3D_Mesh.name != "actual_cube") {
-                    sphere = HeldObject.displayObject3D_Mesh.GetComponent<SphereCollider>();
+                    HeldObject = tObject;
+                    heldObjectRigidbody = HeldObject.displayObject3D_Mesh.GetComponent<Rigidbody>();
+                    if (HeldObject.displayObject3D_Mesh.name != "actual_cube")
+                    {
+                        sphere = HeldObject.displayObject3D_Mesh.GetComponent<SphereCollider>();
 
-                    //so it doesn't bump into dog
-                    //sphere.enabled = false;
-                    sphere.excludeLayers = LayerMask.GetMask("Player");
+                        //so it doesn't bump into dog
+                        //sphere.enabled = false;
+                        sphere.excludeLayers = LayerMask.GetMask("Player");
+                    }
+
+                    var moveDirection = holdArea.position - heldObjectRigidbody.transform.position;
+                    heldObjectRigidbody.AddForce(moveDirection * pickupForce);
+                    //pick up the object that was found to be the closest
+                    HeldObject.Pickup3D(gameObject, holdArea);
                 }
-
-                var moveDirection = holdArea.position - heldObjectRigidbody.transform.position;
-                heldObjectRigidbody.AddForce(moveDirection * pickupForce);
-                //pick up the object that was found to be the closest
-                HeldObject.Pickup3D(gameObject, holdArea);
+            }
+            //closest object to camera is a Interactable object no pickup (button)
+            else if (closestGOToCamera.layer == LayerInfo.INTERACTABLE_OBJECT_NO_PICKUP)
+            {
+                //interact with the button
+                closestGOToCamera.GetComponent<ReceivableParent>().Activate();
             }
         }
-        //closest object to camera is a Interactable object no pickup (button)
-        else if (closestGOToCamera.layer == LayerInfo.INTERACTABLE_OBJECT_NO_PICKUP) {
-            //interact with the button
-            closestGOToCamera.GetComponent<ReceivableParent>().Activate();  
-        }
-
         
     }
     //returns the interactable object closest to where the player is looking at with the camera
