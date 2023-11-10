@@ -142,6 +142,11 @@ namespace StarterAssets
             _cinemachineTargetYaw = CinemachineCameraTarget.transform.rotation.eulerAngles.y;
             _rigidbody = GetComponent<Rigidbody>();
             _hasAnimator = TryGetComponent(out _animator);
+            _animator=GetComponentInChildren<Animator>();
+            if (_animator != null)
+            {
+                _hasAnimator = true;
+            }
             _controller = GetComponent<CharacterController>();
             _input = GetComponent<StarterAssetsInputs>();
 #if ENABLE_INPUT_SYSTEM 
@@ -161,11 +166,18 @@ namespace StarterAssets
         {
             if (!paused) {
                 _hasAnimator = TryGetComponent(out _animator);
-
+                _animator = GetComponentInChildren<Animator>();
+                if (_animator != null)
+                {
+                    _hasAnimator = true;
+                }
                 JumpAndGravity();
                 GroundedCheck();
                 if (canMove)
+                {
                     Move();
+                }
+
             }
         }
 
@@ -180,11 +192,11 @@ namespace StarterAssets
 
         private void AssignAnimationIDs()
         {
-            _animIDSpeed = Animator.StringToHash("Speed");
-            _animIDGrounded = Animator.StringToHash("Grounded");
-            _animIDJump = Animator.StringToHash("Jump");
-            _animIDFreeFall = Animator.StringToHash("FreeFall");
-            _animIDMotionSpeed = Animator.StringToHash("MotionSpeed");
+            //_animIDSpeed = Animator.StringToHash("issWalking");
+            //_animIDGrounded = Animator.StringToHash("Grounded");
+            //_animIDJump = Animator.StringToHash("Jump");
+            //_animIDFreeFall = Animator.StringToHash("FreeFall");
+            //_animIDMotionSpeed = Animator.StringToHash("MotionSpeed");
         }
 
         private void GroundedCheck()
@@ -299,8 +311,18 @@ namespace StarterAssets
             // update animator if using character
             if (_hasAnimator)
             {
-                _animator.SetFloat(_animIDSpeed, _animationBlend);
-                _animator.SetFloat(_animIDMotionSpeed, inputMagnitude);
+                if (_input.move != Vector2.zero)
+                {
+                   // _animator.SetFloat(_animIDSpeed, _animationBlend);
+                    _animator.SetBool("isWalking", true);
+                    //_animator.SetFloat(_animIDMotionSpeed, inputMagnitude);
+                }
+                else
+                {
+                    //_animator.SetFloat(_animIDSpeed, _animationBlend);
+                    _animator.SetBool("isWalking", false);
+                    //_animator.SetFloat(_animIDMotionSpeed, inputMagnitude);
+                }
             }
         }
 
@@ -314,8 +336,8 @@ namespace StarterAssets
                 // update animator if using character
                 if (_hasAnimator)
                 {
-                    _animator.SetBool(_animIDJump, false);
-                    _animator.SetBool(_animIDFreeFall, false);
+                    //_animator.SetBool(_animIDJump, false);
+                    //_animator.SetBool(_animIDFreeFall, false);
                 }
 
                 // stop our velocity dropping infinitely when grounded
