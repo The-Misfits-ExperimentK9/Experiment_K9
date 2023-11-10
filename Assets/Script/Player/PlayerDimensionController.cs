@@ -173,8 +173,7 @@ public class PlayerDimensionController : MonoBehaviour {
         PlayerBehaviour.Instance.ChangeDimension();
         Camera3D.SetActive(false);
         Camera2D.SetActive(true);
-        VirtualCamera3D.LookAt = player2D.transform;
-        VirtualCamera3D.Follow = Camera2D.transform;
+
         //tell the movement controller to lock axes
         movementController_2D.ProcessAxisChange();
         if (player3D.TryGetComponent(out StarterAssetsInputs sAssetsInput)) {
@@ -185,7 +184,8 @@ public class PlayerDimensionController : MonoBehaviour {
     }
     public void TransitionTo3D() {
 
-
+        VirtualCamera3D.LookAt = player2D.transform;
+        VirtualCamera3D.Follow = Camera2D.transform;
         //adjust the player 3d model to be in front of the wall offset by a small amount
         MovePlayerOutOfWall(player2D.transform.position + player2D.transform.forward * playerLeaveWallOffset);
         Debug.Log("turning physics back on");
