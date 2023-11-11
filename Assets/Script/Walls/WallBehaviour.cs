@@ -11,6 +11,6 @@ public class WallBehaviour : MonoBehaviour {
     public bool IsPassthrough = false;
 
     //public float pushForce = 1f;
-    public float LaunchForce = 10f;
+    public float LaunchForce = 20f;
 
 }
