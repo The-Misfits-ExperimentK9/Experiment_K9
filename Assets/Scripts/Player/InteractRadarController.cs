@@ -103,17 +103,17 @@ public class InteractRadarController : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other) {
         //found an object the player can interact with so add it to the pickupController list
-        if (other.gameObject.layer == LayerInfo.INTERACTABLE_OBJECT) {
-            var tGObject = other.transform.parent;
-            if (tGObject == null) {
-                tGObject = other.transform;
-            }
-            if (tGObject.TryGetComponent(out GrabbableObject grabbableObject)) {
-                PlayerBehaviour.Instance.pickupController.AddObjectToInRangeList(grabbableObject);
-            }
-        }
+        //if (other.gameObject.layer == LayerInfo.INTERACTABLE_OBJECT) {
+        //    var tGObject = other.transform.parent;
+        //    if (tGObject == null) {
+        //        tGObject = other.transform;
+        //    }
+        //    if (tGObject.TryGetComponent(out GrabbableObject grabbableObject)) {
+        //        PlayerBehaviour.Instance.pickupController.AddObjectToInRangeList(grabbableObject);
+        //    }
+        //}
         //tell projection to enable
-        else if (other.gameObject.layer == LayerInfo.WALL) {
+       if (other.gameObject.layer == LayerInfo.WALL) {
 
             if (potentialProjectionSurfaces.Contains(other)) return;
             potentialProjectionSurfaces.Add(other);
@@ -121,18 +121,18 @@ public class InteractRadarController : MonoBehaviour {
     }
     private void OnTriggerExit(Collider other) {
         //found an object the player can interact with so remove it from pickupController list
-        if (other.gameObject.layer == LayerInfo.INTERACTABLE_OBJECT) {
-            var tGObject = other.transform.parent;
-            if (tGObject == null) {
-                tGObject = other.transform;
-            }
-            Debug.Log(tGObject.name);
-            if (tGObject.TryGetComponent(out GrabbableObject tObject)) {
-                PlayerBehaviour.Instance.pickupController.RemoveObjectFromRangeList(tObject);
-            }
-        }
+        //if (other.gameObject.layer == LayerInfo.INTERACTABLE_OBJECT) {
+        //    var tGObject = other.transform.parent;
+        //    if (tGObject == null) {
+        //        tGObject = other.transform;
+        //    }
+        //    Debug.Log(tGObject.name);
+        //    if (tGObject.TryGetComponent(out GrabbableObject tObject)) {
+        //        PlayerBehaviour.Instance.pickupController.RemoveObjectFromRangeList(tObject);
+        //    }
+        //}
         //tell projection to disasble
-        else if (other.gameObject.layer == LayerInfo.WALL) {
+        if (other.gameObject.layer == LayerInfo.WALL) {
             if (other.gameObject.GetComponent<WallBehaviour>().AllowsDimensionTransition) {
                 potentialProjectionSurfaces.Remove(other);
             }

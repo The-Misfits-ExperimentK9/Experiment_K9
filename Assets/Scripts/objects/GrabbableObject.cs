@@ -17,6 +17,21 @@ public class GrabbableObject : MonoBehaviour {
         Is3D = true;
 
     }
+    // Call this method to set the layer of a GameObject and all of its children
+    public void SetLayerRecursively(GameObject obj, int newLayer) {
+        if (obj == null) {
+            return;
+        }
+
+        obj.layer = newLayer;
+
+        foreach (Transform child in obj.transform) {
+            if (child == null)
+                continue;
+
+            SetLayerRecursively(child.gameObject, newLayer);
+        }
+    }
     //handles picking up the object when in 3d
     public virtual void Pickup3D(GameObject holder, Transform holdArea) {
      //   displayObject3D_Mesh.gameObject.layer = LayerInfo.PHYSICS_DISBALE;

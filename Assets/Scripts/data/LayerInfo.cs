@@ -12,4 +12,5 @@ public static class LayerInfo
     public const int PLAYER_BEHAVIOR = 14;
     public const int TUTORIAL_TRIGGER = 15;
     public const int INTERACTABLE_OBJECT_NO_PICKUP = 16;
+    public const int IGNORE_PLAYER_COLLISION = 17;
 }

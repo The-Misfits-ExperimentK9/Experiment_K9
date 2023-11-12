@@ -27,6 +27,7 @@ public class PickupController : MonoBehaviour {
         objectsInInteractRange = new();
     }
 
+    
 
     private void Update() {
         if (canInteract)
@@ -75,10 +76,13 @@ public class PickupController : MonoBehaviour {
     }
 
     private void DropHeldObject() {
-        AddObjectToInRangeList(HeldObject);
+        //AddObjectToInRangeList(HeldObject);
+        //reset the layer to interactable object
+        HeldObject.SetLayerRecursively(HeldObject.gameObject, LayerInfo.INTERACTABLE_OBJECT);
         HeldObject.DropObject();
         HeldObject = null;
         heldObjectRigidbody = null;
+
 
         //set the sprite to not holding the object
         if (!PlayerBehaviour.Instance.IsIn3D()) {
@@ -117,6 +121,7 @@ public class PickupController : MonoBehaviour {
             HeldObject = tObject;
             //pick up the object that was found to be the closest
             (HeldObject as TransferableObject).Pickup2D(PlayerBehaviour.Instance.player2D);
+            HeldObject.SetLayerRecursively(HeldObject.gameObject, LayerInfo.IGNORE_PLAYER_COLLISION);
             PlayerBehaviour.Instance.player2DMovementController.SetProjectionState(MovementController_2D.ProjectionState.In2DHoldingObject);
 
         }
@@ -129,10 +134,16 @@ public class PickupController : MonoBehaviour {
         if (closestGOToCamera != null)
         {
             //perform raycast to the object from the camera
-            var ray = new Ray(Camera.main.transform.position, closestGOToCamera.transform.position - Camera.main.transform.position);
+            //var ray = new Ray(Camera.main.transform.position, closestGOToCamera.transform.position - Camera.main.transform.position);
+
+            var position = PlayerBehaviour.Instance.player3D.transform.position;
+            var ray = new Ray(position, closestGOToCamera.transform.position - position);
+
+
+
             //if the raycast hits something that wasnt the object then return
             if (Physics.Raycast(ray, out var hit, 
-                (closestGOToCamera.transform.position - Camera.main.transform.position).magnitude, PickupBlockingLayers) && hit.collider.gameObject != closestGOToCamera) {
+                100f, PickupBlockingLayers) && hit.collider.gameObject != closestGOToCamera) {
                 Debug.Log(hit.rigidbody.gameObject.name);
                 return;
             }
@@ -146,14 +157,9 @@ public class PickupController : MonoBehaviour {
 
                     HeldObject = tObject;
                     heldObjectRigidbody = HeldObject.displayObject3D_Mesh.GetComponent<Rigidbody>();
-                    if (HeldObject.displayObject3D_Mesh.name != "actual_cube")
-                    {
-                        sphere = HeldObject.displayObject3D_Mesh.GetComponent<SphereCollider>();
 
-                        //so it doesn't bump into dog
-                        //sphere.enabled = false;
-                        sphere.excludeLayers = LayerMask.GetMask("Player");
-                    }
+                    HeldObject.SetLayerRecursively(HeldObject.gameObject, LayerInfo.IGNORE_PLAYER_COLLISION);
+                    
 
                     var moveDirection = holdArea.position - heldObjectRigidbody.transform.position;
                     heldObjectRigidbody.AddForce(moveDirection * pickupForce);
@@ -172,44 +178,44 @@ public class PickupController : MonoBehaviour {
     }
     //returns the interactable object closest to where the player is looking at with the camera
     //TODO not working 100% of the time sometimes choses object closeset to camera even if player isnt looking at it
-    private GrabbableObject GetObjectClosestToCameraLookAt() {
-        if (!objectsInInteractRange.Any()) {
-            return null;
-        }
-        float closestToCameraLookDirection = float.MaxValue;
-        GrabbableObject gObject = null;
-        //iterate each object
-        foreach (var obj in objectsInInteractRange) {
-            //get the vector from the object to the main camera
-            var vecToObject = obj.transform.position - Camera.main.transform.position;
-            //use the dot product to project the vector onto the camera's right axis
-            var dist = Mathf.Abs(
-                Vector3.Dot(
-                    vecToObject,
-                    Camera.main.transform.right));
-            //compare the distance to camera and find the smallest one
-            if (dist < closestToCameraLookDirection) {
-                closestToCameraLookDirection = dist;
-                gObject = obj;
-            }
-        }
-        return gObject;
-    }
+    //private GrabbableObject GetObjectClosestToCameraLookAt() {
+    //    if (!objectsInInteractRange.Any()) {
+    //        return null;
+    //    }
+    //    float closestToCameraLookDirection = float.MaxValue;
+    //    GrabbableObject gObject = null;
+    //    //iterate each object
+    //    foreach (var obj in objectsInInteractRange) {
+    //        //get the vector from the object to the main camera
+    //        var vecToObject = obj.transform.position - Camera.main.transform.position;
+    //        //use the dot product to project the vector onto the camera's right axis
+    //        var dist = Mathf.Abs(
+    //            Vector3.Dot(
+    //                vecToObject,
+    //                Camera.main.transform.right));
+    //        //compare the distance to camera and find the smallest one
+    //        if (dist < closestToCameraLookDirection) {
+    //            closestToCameraLookDirection = dist;
+    //            gObject = obj;
+    //        }
+    //    }
+    //    return gObject;
+    //}
 
     //only allows one copy of each object
-    public void AddObjectToInRangeList(GrabbableObject tObject) {
+    //public void AddObjectToInRangeList(GrabbableObject tObject) {
 
 
-        if (objectsInInteractRange.Contains(tObject)) return;
+    //    if (objectsInInteractRange.Contains(tObject)) return;
 
-        objectsInInteractRange.Add(tObject);
+    //    objectsInInteractRange.Add(tObject);
 
-    }
+    //}
 
-    public void RemoveObjectFromRangeList(GrabbableObject tObject) {
+    //public void RemoveObjectFromRangeList(GrabbableObject tObject) {
 
-        objectsInInteractRange.Remove(tObject);
-    }
+    //    objectsInInteractRange.Remove(tObject);
+    //}
     //returns the object to pick up that is closest to the player transform
     //this behaviour might want to be changed later
     private TransferableObject GetObjectClosestTo2DPlayer() {

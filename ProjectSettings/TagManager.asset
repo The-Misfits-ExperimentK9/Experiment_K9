@@ -29,7 +29,7 @@ TagManager:
   - PlayerBehavior
   - Triggers
   - InteractableObjectNoPickup
-  - 
+  - IgnorePlayerCollision
   - 
   - 
   - 
