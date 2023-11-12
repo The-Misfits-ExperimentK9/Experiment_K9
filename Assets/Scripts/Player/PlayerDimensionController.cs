@@ -12,7 +12,7 @@ public class PlayerDimensionController : MonoBehaviour {
     [SerializeField] private GameObject player3D;
     [SerializeField] private Vector3 directionVectorFromNearestWall;
     [SerializeField] private Collider currentProjectionSurface;
-
+    [SerializeField] private List<Collider> potentialProjectionSurfaces;
 
     [Header("Player 2D")]
     [SerializeField] private GameObject player2D;
@@ -48,12 +48,14 @@ public class PlayerDimensionController : MonoBehaviour {
         DOGToggleKey = Keyboard.current.fKey;
         DOGLeaveKey = Keyboard.current.spaceKey;
         pauseKey = Keyboard.current.escapeKey;
-
+        potentialProjectionSurfaces = new();
     }
     private void Update() {
 
         HandlePauseInput();
         HandleAutoModeInput();
+        if (PlayerBehaviour.Instance.IsIn3D() && DOGEnabled)
+            HandleSurfaceProjection();
     }
     private void HandlePauseInput() {
         if (pauseKey.wasPressedThisFrame) {
@@ -77,6 +79,13 @@ public class PlayerDimensionController : MonoBehaviour {
 
             }
         }
+    }
+    public void AddWallToPotentialSurfaces(Collider wallCollider) {
+        if (potentialProjectionSurfaces.Contains(wallCollider)) return;
+        potentialProjectionSurfaces.Add(wallCollider);
+    }
+    public void RemoveWallFromPotentialSurfaces(Collider wallCollider) {
+        potentialProjectionSurfaces.Remove(wallCollider);
     }
 
     private Vector3 GetOrthogonalVectorTo3DPlayer(Collider collider) {
@@ -145,6 +154,11 @@ public class PlayerDimensionController : MonoBehaviour {
     }
     public void UpdateProjectionPosition(Collider collider, Vector3 closestPointOnBounds) {
         //dont project onto the forward or -forward of walls
+        if (!PlayerBehaviour.Instance.IsIn3D()) {
+            Debug.LogWarning("Updating projection position when not in 3d");
+            return;
+        }
+
         if (IsVectorClose(directionVectorFromNearestWall, collider.transform.forward, .01f)) {
             DisableProjections();
             return;
@@ -251,6 +265,7 @@ public class PlayerDimensionController : MonoBehaviour {
 
         movementController_2D.GetComponent<Rigidbody>().isKinematic = false;
         movementController_2D.SetCurrentWall(currentProjectionSurface.GetComponent<WallBehaviour>());
+        
         SetWallProjectionToActive();
         player3D.SetActive(false);
 
@@ -276,7 +291,7 @@ public class PlayerDimensionController : MonoBehaviour {
     private void MovePlayerOutOfWall(Vector3 newPos) {
         player2D.SetActive(false);
         PlayerBehaviour.Instance.pickupController.ClearList();
-        PlayerBehaviour.Instance.interactRadar.clearsurfaces();
+        ClearSurfaces();
         //set its rotation so its not clipping into the wall hopefully
         player3D.transform.position = newPos;
         player3D.transform.forward = player2D.transform.right;
@@ -324,6 +339,7 @@ public class PlayerDimensionController : MonoBehaviour {
                     DisableProjections();
                 }
                 else {
+                    HandleSurfaceProjection();
                     IsProjecting = true;
                 }
             }
@@ -346,7 +362,7 @@ public class PlayerDimensionController : MonoBehaviour {
 
 
     }
-    private void HandleOneSurfaceNearby(List<Collider> potentialProjectionSurfaces) {
+    private void HandleOneSurfaceNearby() {
         //if the only surface found is not transferable disable project and quit out
         if (!potentialProjectionSurfaces[0].GetComponent<WallBehaviour>().AllowsDimensionTransition) {
             DisableProjections();
@@ -366,7 +382,7 @@ public class PlayerDimensionController : MonoBehaviour {
             EnableProjection(currentProjectionSurface, currentProjectionSurface.ClosestPointOnBounds(PlayerBehaviour.Instance.player3D.transform.position));
         }
     }
-    private void HandleMultipleSurfacesNearby(List<Collider> potentialProjectionSurfaces) {
+    private void HandleMultipleSurfacesNearby() {
 
         float distance = float.MaxValue;
         Collider closest = null;
@@ -374,7 +390,6 @@ public class PlayerDimensionController : MonoBehaviour {
 
         var transferableSurfaces = potentialProjectionSurfaces.FindAll(collider => {
             if (collider.TryGetComponent(out WallBehaviour wallB)) {
-                //return wallB.AllowsDimensionTransition;
                 return wallB;
             }
             return false;
@@ -408,13 +423,20 @@ public class PlayerDimensionController : MonoBehaviour {
         }
     }
 
-    public void HandleSurfaceProjection(List<Collider> potentialProjectionSurfaces) {
+    public void HandleSurfaceProjection() {
+        if (potentialProjectionSurfaces.Count == 0) {
+            DisableProjections();
+            return;
+        }
         if (potentialProjectionSurfaces.Count == 1) {
-            HandleOneSurfaceNearby(potentialProjectionSurfaces);
+            HandleOneSurfaceNearby();
         }
         //more than 1 potential surface need to find the closest one to the player
         else {
-            HandleMultipleSurfacesNearby(potentialProjectionSurfaces);
+            HandleMultipleSurfacesNearby();
         }
+    }
+    public void ClearSurfaces() {
+        potentialProjectionSurfaces.Clear();
     }
 }

@@ -54,7 +54,7 @@ public class MovementController_2D : MonoBehaviour {
         In2D,
         In2DHoldingObject
     }
-    private ProjectionState projectionState;
+    [SerializeField] private ProjectionState projectionState;
 
     [SerializeField] private List<Sprite> sprites = new();
 
@@ -114,30 +114,6 @@ public class MovementController_2D : MonoBehaviour {
 
         }
     }
-    //handles player movement in 2D
-    //void Move2D() {
-    //    var input = GetInput();
-    //    var up = transform.up;
-    //    var left = -transform.right;
-    //    Vector3 direction;
-    //    if (!gravityEnabled)
-    //        direction = up * input.y + left * input.x;
-    //    else {
-    //        direction = left * input.x;
-    //        if (jumpKey2.wasPressedThisFrame) {
-    //            Jump2D();
-    //        }
-
-    //    }
-    //    rb.velocity = direction * moveSpeed2D;
-    //    // Flip the sprite when the dog moves the other way
-    //    if (input.x < 0) {
-    //        spriteRenderer.flipX = true;
-    //    }
-    //    else if (input.x > 0) {
-    //        spriteRenderer.flipX = false;
-    //    }
-    //}
     private void ApplyFriction() {
         Vector3 frictionDirection;
 
