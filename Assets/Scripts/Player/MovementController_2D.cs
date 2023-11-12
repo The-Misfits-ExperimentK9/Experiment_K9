@@ -22,7 +22,7 @@ public class MovementController_2D : MonoBehaviour {
     [Header("Wall Collision")]
     [SerializeField] private float offSetAmount = 5.5f;
     [SerializeField] float wallCheckDistance = 0.8f;
-    public WallBehaviour currentWall;
+    [SerializeField] private WallBehaviour currentWall;
 
     [Header("Settings")]
     public bool Is2DPlayerActive = false;
@@ -356,6 +356,13 @@ public class MovementController_2D : MonoBehaviour {
 
             return false;
         }
+        var ray = new Ray(transform.position, -transform.forward);
+        var hits = Physics.RaycastAll(ray, 10f, LayerMask.GetMask("Walls"));
+
+        foreach (var item in hits)
+        {
+            Debug.Log("wall hit " + item.rigidbody.gameObject.name);
+        }
 
         if (Physics.Raycast(transform.position, -transform.forward,
             out var hit, wallCheckDistance, LayerMask.GetMask("Walls"))) {
@@ -371,16 +378,19 @@ public class MovementController_2D : MonoBehaviour {
     }
 
     private void HandleWallCollision(Collider collider, WallBehaviour wallB) {
+
+        if (PlayerBehaviour.Instance.IsIn3D()) return;
+
         var closestPoint = collider.ClosestPointOnBounds(transform.position);
 
         if (wallB.IsWalkThroughEnabled) {
             WallBehaviour pastwall = currentWall;
-            UpdateCurrentWall(wallB);
+            SetCurrentWall(wallB);
             if (pastwall == null || IsPerpendicular(wallB.transform, pastwall.transform)) {
                 //print("its on wall5");
                 
-                UpdateCurrentWall(wallB);
-                TransitionToNewAxis(collider.ClosestPointOnBounds(transform.position), wallB);
+                SetCurrentWall(wallB);
+                TransitionToNewAxis(closestPoint, wallB);
 
             }
         }
@@ -414,6 +424,8 @@ public class MovementController_2D : MonoBehaviour {
         return true;
     }
     private Vector3 GetOrthogonalVectorTo2DPlayer(Collider collider) {
+        
+
         Vector3 closestPoint = collider.ClosestPointOnBounds(transform.position);
 
         // Calculate the direction from the closest point to the player
@@ -443,7 +455,7 @@ public class MovementController_2D : MonoBehaviour {
        // Debug.Log($"Transitioning to {wall.name} and setting forward to {transform.forward}");
 
         ProcessAxisChange();
-        UpdateCurrentWall(wall);
+        SetCurrentWall(wall);
 
 
         //only supports changing x/z plane not y (ceiling/floor)
@@ -460,7 +472,7 @@ public class MovementController_2D : MonoBehaviour {
         Gizmos.color = Color.red;
         Gizmos.DrawSphere(gizmoDrawLoc, 1f);
     }
-    void UpdateCurrentWall(WallBehaviour wall) {
+    public void SetCurrentWall(WallBehaviour wall) {
         currentWall = wall;
         if (currentWall is GravityWall) {
             EnableGravity();
@@ -468,6 +480,9 @@ public class MovementController_2D : MonoBehaviour {
         else {
             DisableGravity();
         }
+    }
+    public WallBehaviour GetCurrentWall() {
+        return currentWall;
     }
 
     public int GetDirection(WallBehaviour other) {
@@ -514,11 +529,9 @@ public class MovementController_2D : MonoBehaviour {
         return spriteRenderer.flipX;
     }
     public void EnableGravity() {
-        rb.useGravity = true;
         gravityEnabled = true;
     }
     public void DisableGravity() {
-        rb.useGravity = false;
         gravityEnabled = false;
     }
 

@@ -18,82 +18,22 @@ public class InteractRadarController : MonoBehaviour {
         }
         CheckForPotentialSurfaces();
     }
-    private void HandleOneSurfaceNearby() {
-        //if the only surface found is not transferable disable project and quit out
-        if (!potentialProjectionSurfaces[0].GetComponent<WallBehaviour>().AllowsDimensionTransition) {
-            PlayerBehaviour.Instance.playerDimensionController.DisableProjections();
-            return;
-        }
-
-        currentProjectionSurface = potentialProjectionSurfaces[0];
-        if (PlayerBehaviour.Instance.playerDimensionController.IsProjecting) {
-            //update the position if currently projecting\
-            PlayerBehaviour.Instance.playerDimensionController.EnableProjection(currentProjectionSurface,
-                currentProjectionSurface.ClosestPointOnBounds(PlayerBehaviour.Instance.player3D.transform.position));
-            PlayerBehaviour.Instance.playerDimensionController.UpdateProjectionPosition(
-                currentProjectionSurface,
-                currentProjectionSurface.ClosestPointOnBounds(PlayerBehaviour.Instance.player3D.transform.position));
-        }
-        //found a surface and wasnt projecting before
-        else {
-            //so enable the projection at the closest point
-            PlayerBehaviour.Instance.playerDimensionController.EnableProjection(currentProjectionSurface,
-                currentProjectionSurface.ClosestPointOnBounds(PlayerBehaviour.Instance.player3D.transform.position));
-        }
-    }
-    private void HandleMultipleSurfacesNearby() {
-        float distance = float.MaxValue;
-        Collider closest = null;
-        Vector3 closestPointOnBounds = Vector3.zero;
-
-        var transferableSurfaces = potentialProjectionSurfaces.FindAll(collider => {
-            if (collider.TryGetComponent(out WallBehaviour wallB)) {
-                //return wallB.AllowsDimensionTransition;
-                return wallB;
-            }
-            return false;
-        });
-        //iterate colliders that are currently in range of the player's interaction range
-        foreach (Collider c in transferableSurfaces) {
-            var closePoint = c.ClosestPointOnBounds(PlayerBehaviour.Instance.player3D.transform.position);
-            var distToCollider = Vector3.Distance(closePoint, PlayerBehaviour.Instance.player3D.transform.position);
-
-            //looking for the closest one to the player
-            if (distToCollider < distance) {
-                gizmoDrawLoc = PlayerBehaviour.Instance.player3D.transform.position;
-                distance = distToCollider;
-                closest = c;
-                closestPointOnBounds = closePoint;
-            }
-        }
-        //enable the projection on the closest wall
-        closest.TryGetComponent(out WallBehaviour wallB);
-        if (closest != null && wallB.AllowsDimensionTransition) {
-            currentProjectionSurface = closest;
-            PlayerBehaviour.Instance.player2DMovementController.currentWall = wallB;
-            PlayerBehaviour.Instance.playerDimensionController.EnableProjection(currentProjectionSurface,
-                closestPointOnBounds);
-            PlayerBehaviour.Instance.playerDimensionController.UpdateProjectionPosition(
-                currentProjectionSurface,
-                closestPointOnBounds);
-        }
-        else {
-            PlayerBehaviour.Instance.playerDimensionController.DisableProjections();
-        }
-    }
+    
     //Checks through potentialSurfaces list to see if there are any to project onto
     //calls helper methods to handle one of multiple surfaces nearby
     //disables projections if there are no surfaces found
     private void CheckForPotentialSurfaces() {
         //theres at least 1 wall to project to
         if (potentialProjectionSurfaces.Any()) {
-            if (potentialProjectionSurfaces.Count == 1) {
-                HandleOneSurfaceNearby();
-            }
-            //more than 1 potential surface need to find the closest one to the player
-            else {
-                HandleMultipleSurfacesNearby();
-            }
+            PlayerBehaviour.Instance.playerDimensionController.HandleSurfaceProjection(potentialProjectionSurfaces);
+
+            //if (potentialProjectionSurfaces.Count == 1) {
+            //    HandleOneSurfaceNearby();
+            //}
+            ////more than 1 potential surface need to find the closest one to the player
+            //else {
+            //    HandleMultipleSurfacesNearby();
+            //}
         }
         //no surface was found so disable all projections
         else {
@@ -113,7 +53,7 @@ public class InteractRadarController : MonoBehaviour {
         //    }
         //}
         //tell projection to enable
-       if (other.gameObject.layer == LayerInfo.WALL) {
+        if (other.gameObject.layer == LayerInfo.WALL) {
 
             if (potentialProjectionSurfaces.Contains(other)) return;
             potentialProjectionSurfaces.Add(other);
