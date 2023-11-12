@@ -413,5 +413,13 @@ namespace StarterAssets
                 AudioSource.PlayClipAtPoint(LandingAudioClip, transform.TransformPoint(_controller.center), FootstepAudioVolume);
             }
         }
+        private void OnControllerColliderHit(ControllerColliderHit hit) {
+            if (hit.gameObject.TryGetComponent(out WallBehaviour wallB)) {
+                if (wallB.AllowsDimensionTransition && PlayerBehaviour.Instance.IsIn3D() && PlayerBehaviour.Instance.playerDimensionController.DOGEnabled) {
+                    PlayerBehaviour.Instance.playerDimensionController.TryTransitionTo2D();
+
+                }
+            }
+        }
     }
 }
