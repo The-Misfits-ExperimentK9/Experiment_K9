@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class Player3DHitboxTrigger : MonoBehaviour
 {
-    [SerializeField] private PlayerDimensionController playerDimensionController;
-    [SerializeField] private PlayerBehaviour playerBehaviour;
+    
     
     // Start is called before the first frame update
     void Start()
@@ -19,8 +18,8 @@ public class Player3DHitboxTrigger : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision) {
         if (collision.gameObject.TryGetComponent(out WallBehaviour wallB)) {
-            if (wallB.AllowsDimensionTransition && playerBehaviour.IsIn3D() && playerDimensionController.DOGEnabled) {
-                playerDimensionController.TryTransitionTo2D();
+            if (wallB.AllowsDimensionTransition && PlayerBehaviour.Instance.IsIn3D() && PlayerBehaviour.Instance.playerDimensionController.DOGEnabled) {
+                PlayerBehaviour.Instance.playerDimensionController.TryTransitionTo2D();
 
             }
         }
