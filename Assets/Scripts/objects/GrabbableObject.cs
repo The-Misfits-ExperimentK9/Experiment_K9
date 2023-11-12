@@ -33,12 +33,12 @@ public class GrabbableObject : MonoBehaviour {
         }
     }
     //handles picking up the object when in 3d
-    public virtual void Pickup3D(GameObject holder, Transform holdArea) {
+    public virtual void Pickup3D(GameObject holder, Transform holdArea, float dragAmount) {
      //   displayObject3D_Mesh.gameObject.layer = LayerInfo.PHYSICS_DISBALE;
         //get the rigid body, disable gravity, set drag to 10, freeze rotation, set parent to the hold area
         var rb3D = displayObject3D_Mesh.GetComponent<Rigidbody>();
         rb3D.useGravity = false;
-        rb3D.drag = 10;
+        rb3D.drag = dragAmount;
         rb3D.constraints = RigidbodyConstraints.FreezeRotation;
         IsBeingHeld = true;
         //displayObject3D_Mesh.transform.parent = holdArea

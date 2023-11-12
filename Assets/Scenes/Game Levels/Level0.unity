@@ -304,7 +304,6 @@ GameObject:
   - component: {fileID: 18183858}
   - component: {fileID: 18183861}
   - component: {fileID: 18183860}
-  - component: {fileID: 18183859}
   m_Layer: 0
   m_Name: GlowPath1 (2)
   m_TagString: Untagged
@@ -327,27 +326,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1851289502}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
---- !u!65 &18183859
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 18183857}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &18183860
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1149,7 +1127,6 @@ GameObject:
   - component: {fileID: 162007425}
   - component: {fileID: 162007428}
   - component: {fileID: 162007427}
-  - component: {fileID: 162007426}
   m_Layer: 0
   m_Name: GlowPath1 (2)
   m_TagString: Untagged
@@ -1172,27 +1149,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1358761001}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
---- !u!65 &162007426
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 162007424}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &162007427
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1254,7 +1210,6 @@ GameObject:
   - component: {fileID: 185772922}
   - component: {fileID: 185772925}
   - component: {fileID: 185772924}
-  - component: {fileID: 185772923}
   m_Layer: 0
   m_Name: GlowPath3
   m_TagString: Untagged
@@ -1277,27 +1232,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1255690797}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
---- !u!65 &185772923
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 185772921}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &185772924
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2459,7 +2393,6 @@ GameObject:
   - component: {fileID: 451645654}
   - component: {fileID: 451645653}
   - component: {fileID: 451645652}
-  - component: {fileID: 451645651}
   m_Layer: 0
   m_Name: GlowPath3
   m_TagString: Untagged
@@ -2467,27 +2400,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!65 &451645651
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 451645650}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &451645652
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -3312,7 +3224,6 @@ GameObject:
   - component: {fileID: 619487596}
   - component: {fileID: 619487599}
   - component: {fileID: 619487598}
-  - component: {fileID: 619487597}
   m_Layer: 0
   m_Name: GlowPath2
   m_TagString: Untagged
@@ -3335,27 +3246,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1255690797}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
---- !u!65 &619487597
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 619487595}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &619487598
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -3417,7 +3307,6 @@ GameObject:
   - component: {fileID: 642088078}
   - component: {fileID: 642088081}
   - component: {fileID: 642088080}
-  - component: {fileID: 642088079}
   m_Layer: 0
   m_Name: GlowPath1 (5)
   m_TagString: Untagged
@@ -3440,27 +3329,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1851289502}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
---- !u!65 &642088079
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 642088077}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &642088080
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -3688,7 +3556,6 @@ GameObject:
   - component: {fileID: 701023036}
   - component: {fileID: 701023039}
   - component: {fileID: 701023038}
-  - component: {fileID: 701023037}
   m_Layer: 0
   m_Name: GlowPath1 (5)
   m_TagString: Untagged
@@ -3711,27 +3578,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1358761001}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
---- !u!65 &701023037
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 701023035}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &701023038
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -3963,7 +3809,6 @@ GameObject:
   - component: {fileID: 748474425}
   - component: {fileID: 748474428}
   - component: {fileID: 748474427}
-  - component: {fileID: 748474426}
   m_Layer: 0
   m_Name: GlowPath1 (4)
   m_TagString: Untagged
@@ -3986,27 +3831,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1851289502}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: -90}
---- !u!65 &748474426
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 748474424}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &748474427
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -4152,7 +3976,6 @@ GameObject:
   - component: {fileID: 796818629}
   - component: {fileID: 796818632}
   - component: {fileID: 796818631}
-  - component: {fileID: 796818630}
   m_Layer: 0
   m_Name: GlowPath1 (3)
   m_TagString: Untagged
@@ -4175,27 +3998,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1851289502}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 90}
---- !u!65 &796818630
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 796818628}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &796818631
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -4572,7 +4374,6 @@ GameObject:
   - component: {fileID: 888687949}
   - component: {fileID: 888687948}
   - component: {fileID: 888687947}
-  - component: {fileID: 888687946}
   m_Layer: 0
   m_Name: GlowPath2
   m_TagString: Untagged
@@ -4580,27 +4381,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!65 &888687946
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 888687945}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &888687947
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -5634,7 +5414,6 @@ GameObject:
   - component: {fileID: 1067973181}
   - component: {fileID: 1067973180}
   - component: {fileID: 1067973179}
-  - component: {fileID: 1067973178}
   m_Layer: 0
   m_Name: GlowPath1
   m_TagString: Untagged
@@ -5642,27 +5421,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!65 &1067973178
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1067973177}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &1067973179
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -6971,7 +6729,6 @@ GameObject:
   - component: {fileID: 1446214420}
   - component: {fileID: 1446214423}
   - component: {fileID: 1446214422}
-  - component: {fileID: 1446214421}
   m_Layer: 0
   m_Name: GlowPath1 (4)
   m_TagString: Untagged
@@ -6994,27 +6751,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1358761001}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: -90}
---- !u!65 &1446214421
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1446214419}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &1446214422
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -7076,7 +6812,6 @@ GameObject:
   - component: {fileID: 1459888619}
   - component: {fileID: 1459888622}
   - component: {fileID: 1459888621}
-  - component: {fileID: 1459888620}
   m_Layer: 0
   m_Name: GlowPath1 (3)
   m_TagString: Untagged
@@ -7099,27 +6834,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1358761001}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 90}
---- !u!65 &1459888620
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1459888618}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &1459888621
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -7666,7 +7380,6 @@ GameObject:
   - component: {fileID: 1574019596}
   - component: {fileID: 1574019599}
   - component: {fileID: 1574019598}
-  - component: {fileID: 1574019597}
   m_Layer: 0
   m_Name: GlowPath1 (1)
   m_TagString: Untagged
@@ -7689,27 +7402,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1851289502}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &1574019597
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1574019595}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &1574019598
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -8003,23 +7695,23 @@ PrefabInstance:
       objectReference: {fileID: 1895889953157971715}
     - target: {fileID: 4976584202734474264, guid: 10b144c380968504d935c9e3949f6f80, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.1091805
+      value: 182.90002
       objectReference: {fileID: 0}
     - target: {fileID: 4976584202734474264, guid: 10b144c380968504d935c9e3949f6f80, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.34578514
+      value: 17.574999
       objectReference: {fileID: 0}
     - target: {fileID: 4976584202734474264, guid: 10b144c380968504d935c9e3949f6f80, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 80.63581
+      value: -249.70001
       objectReference: {fileID: 0}
     - target: {fileID: 4976584202734474264, guid: 10b144c380968504d935c9e3949f6f80, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4976584202734474264, guid: 10b144c380968504d935c9e3949f6f80, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 1
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 5647112630155608246, guid: 10b144c380968504d935c9e3949f6f80, type: 3}
       propertyPath: MainCamera
@@ -8083,7 +7775,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7290586444352009121, guid: 10b144c380968504d935c9e3949f6f80, type: 3}
       propertyPath: field of view
-      value: 60
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 9009892228891423777, guid: 10b144c380968504d935c9e3949f6f80, type: 3}
       propertyPath: m_Transitions.m_InheritPosition
@@ -9268,7 +8960,6 @@ GameObject:
   - component: {fileID: 2018389890}
   - component: {fileID: 2018389893}
   - component: {fileID: 2018389892}
-  - component: {fileID: 2018389891}
   m_Layer: 0
   m_Name: GlowPath1
   m_TagString: Untagged
@@ -9291,27 +8982,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1255690797}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &2018389891
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2018389889}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &2018389892
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -9797,7 +9467,6 @@ GameObject:
   - component: {fileID: 2144694831}
   - component: {fileID: 2144694834}
   - component: {fileID: 2144694833}
-  - component: {fileID: 2144694832}
   m_Layer: 0
   m_Name: GlowPath1 (1)
   m_TagString: Untagged
@@ -9820,27 +9489,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1358761001}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &2144694832
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2144694830}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &2144694833
 MeshRenderer:
   m_ObjectHideFlags: 0

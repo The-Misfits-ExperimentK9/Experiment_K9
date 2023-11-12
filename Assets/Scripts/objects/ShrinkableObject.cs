@@ -12,8 +12,8 @@ public class ShrinkableObject : GrabbableObject {
         StartCoroutine(ChangeScale(unShrunkScale));
         //ChangeScaleInstant(1);
     }
-    public override void Pickup3D(GameObject holder, Transform holdArea) {
-        base.Pickup3D(holder, holdArea);
+    public override void Pickup3D(GameObject holder, Transform holdArea, float dragAmount) {
+        base.Pickup3D(holder, holdArea, dragAmount);
         StartCoroutine(ChangeScale(shrinkScale));
         // ChangeScaleInstant(.2f);
     }

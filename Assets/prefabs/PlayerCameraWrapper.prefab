@@ -61,7 +61,7 @@ Transform:
   m_GameObject: {fileID: 74397854644777205}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: 33.619312, y: -10.329067, z: 66.60769}
+  m_LocalPosition: {x: 33.619312, y: -10.329067, z: 82.105675}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -722,7 +722,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2817393637023723959}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -28.75, y: 3.375, z: -3.6000004}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1370,10 +1370,16 @@ MonoBehaviour:
   holdArea: {fileID: 8413178250063108687}
   HeldObject: {fileID: 0}
   pickupForce: 10
+  pickupDrag: 20
   objectsInInteractRange: []
   PickupBlockingLayers:
     serializedVersion: 2
     m_Bits: 12737
+  HoldBlockingLayers:
+    serializedVersion: 2
+    m_Bits: 4417
+  holdSpaceBlockedMoveOffset: 5
+  holdAreaMoveSpeed: 5
 --- !u!1 &4155157953602829011
 GameObject:
   m_ObjectHideFlags: 0
@@ -2546,7 +2552,7 @@ Transform:
   m_GameObject: {fileID: 6774737294069508098}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: 28.53302, y: 5.560933, z: -134.3}
+  m_LocalPosition: {x: 71.84166, y: 4.7909327, z: -273.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

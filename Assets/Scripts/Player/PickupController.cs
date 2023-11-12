@@ -9,29 +9,36 @@ using UnityEngine.InputSystem.Controls;
 public class PickupController : MonoBehaviour {
     [Header("Pickup Settings")]
     [SerializeField] Transform holdArea;
-   public GrabbableObject HeldObject;
-  //  [SerializeField] private PlayerBehaviour playerBehaviour;
+    public GrabbableObject HeldObject;
     private Rigidbody heldObjectRigidbody;
-    private SphereCollider sphere;
+    
     [Header("Physics Params")]
-    //[SerializeField] float pickupRange = 5f;
-    [SerializeField] float pickupForce = 150f;
+    [SerializeField] float pickupForce = 100f;
+    [SerializeField] float pickupDrag = 20f;
     private bool canInteract = true;                        //disable or enable player interactions
     KeyControl interactKey;
 
-    [SerializeField]private List<GrabbableObject> objectsInInteractRange;    //a list of all the objects that are in interactable range
+    [SerializeField] private List<GrabbableObject> objectsInInteractRange;    //a list of all the objects that are in interactable range
     [SerializeField] LayerMask PickupBlockingLayers;
-   
+    [SerializeField] LayerMask HoldBlockingLayers;
+
+    [SerializeField] private float holdSpaceBlockedMoveOffset = 10f;
+    [SerializeField] private float holdAreaMoveSpeed = 10f;
+    private Vector3 holdAreaStartLocalPosition;
+
     private void Awake() {
         interactKey = Keyboard.current.eKey;
         objectsInInteractRange = new();
+        holdAreaStartLocalPosition = holdArea.localPosition;
     }
 
-    
+
 
     private void Update() {
         if (canInteract)
             HandleInteractionInput();
+
+        
     }
 
 
@@ -50,7 +57,7 @@ public class PickupController : MonoBehaviour {
             }
         }
         //only do this if its in 3d 2d won't work
-        if (IsHoldingObject()&& PlayerBehaviour.Instance.IsIn3D()) {
+        if (IsHoldingObject() && PlayerBehaviour.Instance.IsIn3D()) {
             MoveObject();
         }
     }
@@ -87,6 +94,7 @@ public class PickupController : MonoBehaviour {
         //set the sprite to not holding the object
         if (!PlayerBehaviour.Instance.IsIn3D()) {
             PlayerBehaviour.Instance.player2DMovementController.SetProjectionState(MovementController_2D.ProjectionState.In2D);
+          //  ResetHoldAreaPosition();
         }
     }
 
@@ -103,7 +111,7 @@ public class PickupController : MonoBehaviour {
             }
             else {
                 tObject.SetHolder(PlayerBehaviour.Instance.player2D);
-                
+
                 tObject.Disable3D();
             }
         }
@@ -114,7 +122,7 @@ public class PickupController : MonoBehaviour {
 
     //handle picking up objects while in 2d
     private void Pickup2DObject() {
-       // Debug.Log("trying to drop 2d");
+        // Debug.Log("trying to drop 2d");
         var tObject = GetObjectClosestTo2DPlayer();
 
         if (tObject != null && !tObject.Is3D) {
@@ -131,8 +139,7 @@ public class PickupController : MonoBehaviour {
         var closestGOToCamera = PlayerBehaviour.Instance.GetClosestInteractable3D();
 
         //handle picking up objects
-        if (closestGOToCamera != null)
-        {
+        if (closestGOToCamera != null) {
             //perform raycast to the object from the camera
             //var ray = new Ray(Camera.main.transform.position, closestGOToCamera.transform.position - Camera.main.transform.position);
 
@@ -142,39 +149,79 @@ public class PickupController : MonoBehaviour {
 
 
             //if the raycast hits something that wasnt the object then return
-            if (Physics.Raycast(ray, out var hit, 
+            if (Physics.Raycast(ray, out var hit,
                 100f, PickupBlockingLayers) && hit.collider.gameObject != closestGOToCamera) {
-                Debug.Log(hit.rigidbody.gameObject.name);
+                
                 return;
             }
 
-            if (closestGOToCamera.layer == LayerInfo.INTERACTABLE_OBJECT)
-            {
+            if (closestGOToCamera.layer == LayerInfo.INTERACTABLE_OBJECT) {
                 var tObject = closestGOToCamera.transform.parent.GetComponent<GrabbableObject>();
                 //only process interactions with 3d objects while in 3d
-                if (tObject != null && tObject.Is3D)
-                {
+                if (tObject != null && tObject.Is3D) {
 
                     HeldObject = tObject;
                     heldObjectRigidbody = HeldObject.displayObject3D_Mesh.GetComponent<Rigidbody>();
 
                     HeldObject.SetLayerRecursively(HeldObject.gameObject, LayerInfo.IGNORE_PLAYER_COLLISION);
-                    
+
 
                     var moveDirection = holdArea.position - heldObjectRigidbody.transform.position;
                     heldObjectRigidbody.AddForce(moveDirection * pickupForce);
                     //pick up the object that was found to be the closest
-                    HeldObject.Pickup3D(gameObject, holdArea);
+                    HeldObject.Pickup3D(gameObject, holdArea, pickupDrag);
                 }
             }
             //closest object to camera is a Interactable object no pickup (button)
-            else if (closestGOToCamera.layer == LayerInfo.INTERACTABLE_OBJECT_NO_PICKUP)
-            {
+            else if (closestGOToCamera.layer == LayerInfo.INTERACTABLE_OBJECT_NO_PICKUP) {
                 //interact with the button
                 closestGOToCamera.GetComponent<ReceivableParent>().Activate();
             }
         }
-        
+
+    }
+    private bool IsHoldSpaceClear() {
+        return !Physics.OverlapSphere(holdArea.position, 0.5f, HoldBlockingLayers).Any();
+    }
+    private bool IsOriginalHoldSpaceClear() {
+        return !Physics.OverlapSphere(transform.position + holdAreaStartLocalPosition, 0.5f, HoldBlockingLayers).Any();
+    }
+    private void ResetHoldAreaPosition() {
+        holdArea.localPosition = holdAreaStartLocalPosition;
+    }
+
+    private void AdjustHoldAreaPosition() {
+        // Check if the hold area is clear
+        if (IsHoldSpaceClear()) {
+            // Slowly return to the start position
+            holdArea.localPosition = Vector3.MoveTowards(holdArea.localPosition, holdAreaStartLocalPosition, Time.deltaTime * holdAreaMoveSpeed * 2f);
+            return;
+        }
+
+        // Check space availability in both directions
+        float rightClearance = CheckClearance(transform.right);
+        float leftClearance = CheckClearance(-transform.right);
+
+        // Choose the direction with more space
+        Vector3 moveDirection = rightClearance > leftClearance ? transform.right : -transform.right;
+
+        // Move the hold area
+        Vector3 newPosition = holdArea.localPosition + moveDirection * (Time.deltaTime * holdAreaMoveSpeed);
+        //Debug.Log("moving hold area");
+
+        // Ensure the movement is within the allowed offset
+        if ((newPosition - holdAreaStartLocalPosition).magnitude <= holdSpaceBlockedMoveOffset) {
+            holdArea.localPosition = newPosition;
+        }
+    }
+
+    private float CheckClearance(Vector3 direction) {
+        if (Physics.Raycast(holdArea.position, direction, out RaycastHit hit)) {
+            return hit.distance;
+        }
+        else {
+            return Mathf.Infinity;
+        }
     }
     //returns the interactable object closest to where the player is looking at with the camera
     //TODO not working 100% of the time sometimes choses object closeset to camera even if player isnt looking at it
@@ -216,13 +263,15 @@ public class PickupController : MonoBehaviour {
 
     //    objectsInInteractRange.Remove(tObject);
     //}
+
+
     //returns the object to pick up that is closest to the player transform
     //this behaviour might want to be changed later
     private TransferableObject GetObjectClosestTo2DPlayer() {
 
         var objectsInRange = Physics.OverlapSphere(PlayerBehaviour.Instance.player2D.transform.position, PlayerBehaviour.Instance.interactDisplayRadius, LayerMask.GetMask("Interactable Objects"));
-        
-      
+
+
         if (!objectsInRange.Any()) return null;
 
         float closestToPlayer = float.MaxValue;
