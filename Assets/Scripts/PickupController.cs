@@ -20,7 +20,7 @@ public class PickupController : MonoBehaviour {
     KeyControl interactKey;
 
     [SerializeField]private List<GrabbableObject> objectsInInteractRange;    //a list of all the objects that are in interactable range
-
+    [SerializeField] LayerMask PickupBlockingLayers;
    
     private void Awake() {
         interactKey = Keyboard.current.eKey;
@@ -128,6 +128,15 @@ public class PickupController : MonoBehaviour {
         //handle picking up objects
         if (closestGOToCamera != null)
         {
+            //perform raycast to the object from the camera
+            var ray = new Ray(Camera.main.transform.position, closestGOToCamera.transform.position - Camera.main.transform.position);
+            //if the raycast hits something that wasnt the object then return
+            if (Physics.Raycast(ray, out var hit, 
+                (closestGOToCamera.transform.position - Camera.main.transform.position).magnitude, PickupBlockingLayers) && hit.collider.gameObject != closestGOToCamera) {
+                Debug.Log(hit.rigidbody.gameObject.name);
+                return;
+            }
+
             if (closestGOToCamera.layer == LayerInfo.INTERACTABLE_OBJECT)
             {
                 var tObject = closestGOToCamera.transform.parent.GetComponent<GrabbableObject>();

@@ -25,6 +25,7 @@ Mike
 <li>Convert PlayerBehaviour to singleton removing a massive amount of script links</li>
 <li>Changed the way picking up objects works to use forces which looks a lot prettier</li>
 <li>2d camera FOV increase + change to camera transition</li>
+<li>Changed the way the forward transform of the 2d player is set to allow for projection/2d traversal of the backside of walls (should make level creation a bit less tedious)</li>
 </ul>
 
 <h3>Bugfixes</h3>
@@ -40,6 +41,8 @@ Mike
 <li>Picking up items should more reliably pickup the item you are looking at</li>
 <li>Gravity Wall is now functional</li>
 <li>Conveyer Wall is now functional</li>
+<li>Fixed player picking up items through walls</li>
+<li>Fixed player jumping to incorrect wall when in contact with the ground in some scenarios</li>
  
 </ul>
 
