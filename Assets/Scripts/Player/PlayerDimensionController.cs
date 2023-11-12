@@ -9,6 +9,7 @@ public class PlayerDimensionController : MonoBehaviour {
 
     [Header("Player 3D")]
     [SerializeField] private GameObject player3D;
+    [SerializeField] private Vector3 directionVectorFromNearestWall;
     
 
     [Header("Player 2D")]
@@ -75,17 +76,44 @@ public class PlayerDimensionController : MonoBehaviour {
             }
         }
     }
+    public void SetDirectionToNearestWall(Vector3 direction) {
+        directionVectorFromNearestWall = direction;
+    }
+    private Vector3 GetOrthogonalVectorTo3DPlayer(Collider collider) {
+        Vector3 closestPoint = collider.ClosestPointOnBounds(player3D.transform.position);
+
+        // Calculate the direction from the closest point to the player
+        Vector3 direction = player3D.transform.position - closestPoint;
+
+        // Zero out the y component to ensure the direction is only in the x or z direction
+        direction.y = 0;
+
+        // Normalize the vector to make it a unit vector
+        direction.Normalize();
+
+        // Ensure the vector points outwards from the collider
+        if (Vector3.Dot(direction, collider.transform.forward) > 0) {
+            direction = -direction;
+        }
+
+        return direction;
+    }
     public void EnableProjection(Collider collider, Vector3 position) {
         if (!IsProjecting || player2D.activeSelf == false) {
             //offset the drawing a bit
             //goal should be to set it just outside the moveable wall collider 
-            position += collider.transform.up * wallDrawOffset;
+
+            //Debug.Log(GetOrthogonalVectorTo(collider));
+
+            var directionToWall = GetOrthogonalVectorTo3DPlayer(collider);
+
+            position += directionToWall * wallDrawOffset;
 
             IsProjecting = true;
 
             //move 2d player to this position
             player2D.transform.position = position;
-            player2D.transform.forward = collider.transform.up;
+            player2D.transform.forward = directionToWall;
 
             Set2DSprite(collider);
             player2D.SetActive(true);
@@ -95,6 +123,8 @@ public class PlayerDimensionController : MonoBehaviour {
             //handle potentially changing the projection to the other wall
         }
     }
+    
+
     void Set2DSprite(Collider collider) {
         if (collider.TryGetComponent(out WallBehaviour wallB)) {
             //player is allowed to transition to the wall
@@ -124,7 +154,12 @@ public class PlayerDimensionController : MonoBehaviour {
         }
     }
     public void UpdateProjectionPosition(Collider collider, Vector3 position) {
-        position += collider.transform.up * wallDrawOffset;
+        Vector3 directionToWall = GetOrthogonalVectorTo3DPlayer(collider);
+        //if (PlayerBehaviour.Instance.is3D) {
+            
+           
+        //}
+        position += directionToWall * wallDrawOffset;
 
         //perform a physics overlap test to see if the space is free of walls that arent transferable
         var boxHits = Physics.OverlapBox(position, dog2DHitbox.bounds.extents, Quaternion.identity, LayerMask.GetMask("Walls", "Doors"));
@@ -151,7 +186,7 @@ public class PlayerDimensionController : MonoBehaviour {
         }
 
         player2D.transform.position = position;
-        player2D.transform.forward = collider.transform.up;
+        player2D.transform.forward = directionToWall;
 
         Set2DSprite(collider);
     }
@@ -188,7 +223,6 @@ public class PlayerDimensionController : MonoBehaviour {
         VirtualCamera3D.Follow = Camera2D.transform;
         //adjust the player 3d model to be in front of the wall offset by a small amount
         MovePlayerOutOfWall(player2D.transform.position + player2D.transform.forward * playerLeaveWallOffset);
-        Debug.Log("turning physics back on");
         Physics.IgnoreLayerCollision(LayerInfo.PLAYER, LayerInfo.INTERACTABLE_OBJECT, false);
     }
     private void MovePlayerOutOfWall(Vector3 newPos) {

@@ -333,12 +333,7 @@ public class MovementController_2D : MonoBehaviour {
         if (collision.gameObject.TryGetComponent(out WallBehaviour wallB)) {
 
             if (currentWall == wallB && !PlayerBehaviour.Instance.IsIn3D() || currentWall == null && !PlayerBehaviour.Instance.IsIn3D()) {
-                //  Debug.Log("leaving wall");
-                //currentWall = null;
-                //print("test");
-                //playerController.ChangeDimension();
-
-                // PlayerBehaviour.Instance.playerDimensionController.TransitionTo3D();
+              
                 UpdateWallStatus();
 
             }
@@ -350,11 +345,9 @@ public class MovementController_2D : MonoBehaviour {
 
     private void UpdateWallStatus() {
         if (CheckIfInCurrentWall()) {
-            Debug.Log("still in wall"); 
             //do nothing still in the wall
         }
         else {
-            Debug.Log("leaving wall via UpdateWallStatus()");
             PlayerBehaviour.Instance.playerDimensionController.TransitionTo3D();
         }
     }
@@ -383,14 +376,19 @@ public class MovementController_2D : MonoBehaviour {
         if (wallB.IsWalkThroughEnabled) {
             WallBehaviour pastwall = currentWall;
             UpdateCurrentWall(wallB);
-            if (pastwall == null || wallB.transform.up != pastwall.transform.up) {
+            if (pastwall == null || IsPerpendicular(wallB.transform, pastwall.transform)) {
                 //print("its on wall5");
+                
                 UpdateCurrentWall(wallB);
                 TransitionToNewAxis(collider.ClosestPointOnBounds(transform.position), wallB);
 
             }
         }
 
+    }
+    bool IsPerpendicular(Transform obj1, Transform obj2) {
+        float dot = Vector3.Dot(obj1.forward, obj2.forward);
+        return Mathf.Approximately(dot, 0);
     }
     public bool IsProjectionSpaceClear(Vector3 position) {
         if (dogCollider2D == null) { dogCollider2D = GetComponent<Collider>(); }
@@ -408,30 +406,59 @@ public class MovementController_2D : MonoBehaviour {
             }
             else {
                 //something that wasnt a wall is blocking 
+                Debug.Log("something that wasnt a wall is blocking " + hit.name);
                 return false;
             }
         }
 
         return true;
     }
+    private Vector3 GetOrthogonalVectorTo2DPlayer(Collider collider) {
+        Vector3 closestPoint = collider.ClosestPointOnBounds(transform.position);
+
+        // Calculate the direction from the closest point to the player
+        Vector3 direction = transform.position - closestPoint;
+
+        // Zero out the y component to ensure the direction is only in the x or z direction
+        direction.y = 0;
+
+        // Normalize the vector to make it a unit vector
+        direction.Normalize();
+
+        // Ensure the vector points outwards from the collider
+        if (Vector3.Dot(direction, collider.transform.forward) > 0) {
+            direction = -direction;
+        }
+
+        return direction;
+    }
 
     //handles transitioning to anew axis when encountering another wall at a 90 degree angle
-    void TransitionToNewAxis(Vector3 pos, WallBehaviour wall) {
+    void TransitionToNewAxis(Vector3 closestPointOnBounds, WallBehaviour wall) {
 
+        bool flipOffset = transform.forward.x < 0 || transform.forward.z < 0;
         //rotate first to get correct transform.right
-        transform.forward = wall.transform.up;
+        transform.forward = GetOrthogonalVectorTo2DPlayer(wall.GetComponent<Collider>());
+
+       // Debug.Log($"Transitioning to {wall.name} and setting forward to {transform.forward}");
 
         ProcessAxisChange();
         UpdateCurrentWall(wall);
 
 
         //only supports changing x/z plane not y (ceiling/floor)
-        var offsetDirection = GetDirection(wall) == 1 ? -transform.right : transform.right;
-        newSpritePos = pos + offsetDirection * offSetAmount;
+        var offsetDirection = (transform.forward.x < 0 || transform.forward.z > 0) ? transform.right : -transform.right;
+        offsetDirection = flipOffset ? -offsetDirection : offsetDirection;
+        newSpritePos = closestPointOnBounds + offsetDirection * offSetAmount;
+        gizmoDrawLoc = newSpritePos;
         newSpritePos += transform.forward * PlayerDimensionController.WALL_DRAW_OFFSET;
 
         //move to offset position
         transform.position = newSpritePos;
+    }
+    private void OnDrawGizmos() {
+        Gizmos.color = Color.red;
+        Gizmos.DrawSphere(gizmoDrawLoc, 1f);
     }
     void UpdateCurrentWall(WallBehaviour wall) {
         currentWall = wall;
