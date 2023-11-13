@@ -274,7 +274,7 @@ public class PlayerDimensionController : MonoBehaviour {
         Camera2D.SetActive(true);
 
         //tell the movement controller to lock axes
-        movementController_2D.ProcessAxisChange();
+        movementController_2D.LockPlayerMovementInForwardDirection();
         if (player3D.TryGetComponent(out StarterAssetsInputs sAssetsInput)) {
             sAssetsInput.ClearInput();
         }

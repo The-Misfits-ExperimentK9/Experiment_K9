@@ -1,14 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 //using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
 
 public class MovementController_2D : MonoBehaviour {
-    // [SerializeField] PlayerBehaviour playerController;
-    //[SerializeField] PlayerDimensionController playerDimensionController;
+    #region Variables
 
     [Header("Physics")]
     [SerializeField] private Rigidbody rb;
@@ -23,6 +23,7 @@ public class MovementController_2D : MonoBehaviour {
     [SerializeField] private float offSetAmount = 5.5f;
     [SerializeField] float wallCheckDistance = 0.8f;
     [SerializeField] private WallBehaviour currentWall;
+    private Collider currentWallCollider;
     [Space(10)]
     [Header("2D Camera")]
     [SerializeField] private bool AllowCameraRotation2D = false;
@@ -90,8 +91,9 @@ public class MovementController_2D : MonoBehaviour {
     private float _fallTimeoutDelta;
 
 
+    #endregion
 
-
+    #region Start and Update
     // Start is called before the first frame update
     void Awake() {
         // dog2DSprite = GetComponent<SpriteRenderer>();
@@ -124,8 +126,12 @@ public class MovementController_2D : MonoBehaviour {
         if (AllowCameraRotation2D) {
             RotateCamera2dLookAt();
         }
+        if (Is2DPlayerActive)
+            AABBCheckForWallLeaving();
 
     }
+    #endregion
+    #region camera rotation 2d
     private void RotateCamera2dLookAt() {
         // Get mouse X movement
         float mouseX = Input.GetAxis("Mouse X");
@@ -150,6 +156,23 @@ public class MovementController_2D : MonoBehaviour {
         // Update the total rotation
         cameraTotalRotation += newYRotation;
     }
+    #endregion
+    #region gizmos
+    private void OnDrawGizmosSelected() {
+        Color transparentGreen = new Color(0.0f, 1.0f, 0.0f, 0.35f);
+        Color transparentRed = new Color(1.0f, 0.0f, 0.0f, 0.35f);
+
+        if (Grounded) Gizmos.color = transparentGreen;
+        else Gizmos.color = transparentRed;
+
+        // when selected, draw a gizmo in the position of, and matching radius of, the grounded collider
+        Gizmos.DrawSphere(
+            new Vector3(transform.position.x, transform.position.y - GroundedOffset, transform.position.z),
+            GroundedRadius);
+    }
+    #endregion
+    #region GroundedCheck, Friction, Move, Jump, Gravity
+
     private void ApplyFriction() {
         Vector3 frictionDirection;
 
@@ -182,18 +205,7 @@ public class MovementController_2D : MonoBehaviour {
         }
 
     }
-    private void OnDrawGizmosSelected() {
-        Color transparentGreen = new Color(0.0f, 1.0f, 0.0f, 0.35f);
-        Color transparentRed = new Color(1.0f, 0.0f, 0.0f, 0.35f);
-
-        if (Grounded) Gizmos.color = transparentGreen;
-        else Gizmos.color = transparentRed;
-
-        // when selected, draw a gizmo in the position of, and matching radius of, the grounded collider
-        Gizmos.DrawSphere(
-            new Vector3(transform.position.x, transform.position.y - GroundedOffset, transform.position.z),
-            GroundedRadius);
-    }
+    
 
     private void Move() {
         float targetSpeed = maxSpeed2D;
@@ -321,17 +333,35 @@ public class MovementController_2D : MonoBehaviour {
 
     }
     //handles player movement in 2D
+    #endregion
+    #region transition to a new axis
+    void TransitionToNewAxis(Vector3 closestPointOnBounds, WallBehaviour wall) {
+        AllowCameraRotation2D = false;
+        StartCoroutine(EnableCameraRotationAfterSeconds(2f));
+        cameraTotalRotation = 0f;
+        bool flipOffset = transform.forward.x < 0 || transform.forward.z < 0;
+        //rotate first to get correct transform.right
+        transform.forward = GetOrthogonalVectorTo2DPlayer(wall.GetComponent<Collider>());
+
+        // Debug.Log($"Transitioning to {wall.name} and setting forward to {transform.forward}");
+
+        LockPlayerMovementInForwardDirection();
+        SetCurrentWall(wall);
 
 
-    public Vector2 GetInput() {
-        var keyboard = Keyboard.current;
-        return new Vector2(keyboard.dKey.isPressed ? 1 : keyboard.aKey.isPressed ? -1 : 0,
-                           keyboard.wKey.isPressed ? 1 : keyboard.sKey.isPressed ? -1 : 0);
+        //only supports changing x/z plane not y (ceiling/floor)
+        var offsetDirection = (transform.forward.x < 0 || transform.forward.z > 0) ? transform.right : -transform.right;
+        offsetDirection = flipOffset ? -offsetDirection : offsetDirection;
+        newSpritePos = closestPointOnBounds + offsetDirection * offSetAmount;
+        gizmoDrawLoc = newSpritePos;
+        newSpritePos += transform.forward * PlayerDimensionController.WALL_DRAW_OFFSET;
+
+        //move to offset position
+        transform.position = newSpritePos;
     }
-
     //locks the axes to the up/down/left/right on the wall
-    //should prevent the dog from slipping into the or out of the wall
-    public void ProcessAxisChange() {
+    //prevents the dog from slipping into the or out of the wall
+    public void LockPlayerMovementInForwardDirection() {
         var right = transform.right;
 
         //crazy floating point errors
@@ -345,6 +375,24 @@ public class MovementController_2D : MonoBehaviour {
             rb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezeRotation;
         }
     }
+    #endregion
+    #region Unity Collision Methods
+    private void HandleWallCollision(Collider collider, WallBehaviour wallB) {
+
+        if (PlayerBehaviour.Instance.IsIn3D()) return;
+
+        var closestPoint = collider.ClosestPointOnBounds(transform.position);
+
+        if (wallB.IsWalkThroughEnabled) {
+            WallBehaviour pastwall = currentWall;
+            SetCurrentWall(wallB);
+            if (pastwall == null || IsPerpendicular(wallB.transform, pastwall.transform)) {
+                SetCurrentWall(wallB);
+                TransitionToNewAxis(closestPoint, wallB);
+
+            }
+        }
+    }
     private void OnCollisionEnter(Collision collision) {
 
         if (collision.gameObject.TryGetComponent(out WallBehaviour wallB)) {
@@ -356,6 +404,7 @@ public class MovementController_2D : MonoBehaviour {
         }
     }
     private void OnCollisionExit(Collision collision) {
+        Debug.Log("On COllision Exit called");
 
         if (collision.gameObject.TryGetComponent(out WallBehaviour wallB)) {
 
@@ -369,6 +418,44 @@ public class MovementController_2D : MonoBehaviour {
             }
         }
     }
+    #endregion
+    #region Custom Collision for if the player is within the wall bounds
+    private void AABBCheckForWallLeaving() {
+        if (!IsWithinAllowedWallBounds()) {
+            HandleWallExit();
+        }
+    }
+
+    private bool IsWithinAllowedWallBounds() {
+        var wallBounds = currentWallCollider.bounds;
+        var playerBounds = dogCollider2D.bounds;
+
+        // Check the direction of transform.right to determine which bounds to check
+        if (Mathf.Abs(transform.right.x) > Mathf.Abs(transform.right.z)) {
+            // Movement in X and Y directions
+            return IsWithinBounds(wallBounds, playerBounds, checkX: true, checkY: true, checkZ: false);
+        }
+        else {
+            // Movement in Z and Y directions
+            return IsWithinBounds(wallBounds, playerBounds, checkX: false, checkY: true, checkZ: true);
+        }
+    }
+
+    private bool IsWithinBounds(Bounds wallBounds, Bounds playerBounds, bool checkX, bool checkY, bool checkZ) {
+        // Check each axis individually based on the boolean flags
+        bool withinX = !checkX || (playerBounds.min.x >= wallBounds.min.x && playerBounds.max.x <= wallBounds.max.x);
+        bool withinY = !checkY || (playerBounds.min.y >= wallBounds.min.y && playerBounds.max.y <= wallBounds.max.y);
+        bool withinZ = !checkZ || (playerBounds.min.z >= wallBounds.min.z && playerBounds.max.z <= wallBounds.max.z);
+
+        return withinX && withinY && withinZ;
+    }
+
+    private void HandleWallExit() {
+        // Handle the wall exit logic here
+        Debug.Log("Exited wall bounds");
+    }
+    #endregion
+    #region checking if in current wall
 
     private void UpdateWallStatus() {
         if (CheckIfInCurrentWall()) {
@@ -403,25 +490,12 @@ public class MovementController_2D : MonoBehaviour {
         }
         return false;
     }
-
-    private void HandleWallCollision(Collider collider, WallBehaviour wallB) {
-
-        if (PlayerBehaviour.Instance.IsIn3D()) return;
-
-        var closestPoint = collider.ClosestPointOnBounds(transform.position);
-
-        if (wallB.IsWalkThroughEnabled) {
-            WallBehaviour pastwall = currentWall;
-            SetCurrentWall(wallB);
-            if (pastwall == null || IsPerpendicular(wallB.transform, pastwall.transform)) {
-                //print("its on wall5");
-                
-                SetCurrentWall(wallB);
-                TransitionToNewAxis(closestPoint, wallB);
-
-            }
-        }
-
+    #endregion
+    #region helper methods
+    public Vector2 GetInput() {
+        var keyboard = Keyboard.current;
+        return new Vector2(keyboard.dKey.isPressed ? 1 : keyboard.aKey.isPressed ? -1 : 0,
+                           keyboard.wKey.isPressed ? 1 : keyboard.sKey.isPressed ? -1 : 0);
     }
     bool IsPerpendicular(Transform obj1, Transform obj2) {
         float dot = Vector3.Dot(obj1.forward, obj2.forward);
@@ -475,37 +549,8 @@ public class MovementController_2D : MonoBehaviour {
         yield return new WaitForSeconds(seconds);
         AllowCameraRotation2D = true;
     }
-
-    //handles transitioning to anew axis when encountering another wall at a 90 degree angle
-    void TransitionToNewAxis(Vector3 closestPointOnBounds, WallBehaviour wall) {
-        AllowCameraRotation2D = false;
-        StartCoroutine(EnableCameraRotationAfterSeconds(2f));
-        cameraTotalRotation = 0f;
-        bool flipOffset = transform.forward.x < 0 || transform.forward.z < 0;
-        //rotate first to get correct transform.right
-        transform.forward = GetOrthogonalVectorTo2DPlayer(wall.GetComponent<Collider>());
-
-       // Debug.Log($"Transitioning to {wall.name} and setting forward to {transform.forward}");
-
-        ProcessAxisChange();
-        SetCurrentWall(wall);
-
-
-        //only supports changing x/z plane not y (ceiling/floor)
-        var offsetDirection = (transform.forward.x < 0 || transform.forward.z > 0) ? transform.right : -transform.right;
-        offsetDirection = flipOffset ? -offsetDirection : offsetDirection;
-        newSpritePos = closestPointOnBounds + offsetDirection * offSetAmount;
-        gizmoDrawLoc = newSpritePos;
-        newSpritePos += transform.forward * PlayerDimensionController.WALL_DRAW_OFFSET;
-
-        //move to offset position
-        transform.position = newSpritePos;
-    }
-    private void OnDrawGizmos() {
-        Gizmos.color = Color.red;
-        Gizmos.DrawSphere(gizmoDrawLoc, 1f);
-    }
     public void SetCurrentWall(WallBehaviour wall) {
+        currentWallCollider = wall.GetComponent<Collider>();  
         currentWall = wall;
         if (currentWall is GravityWall) {
             EnableGravity();
@@ -516,22 +561,6 @@ public class MovementController_2D : MonoBehaviour {
     }
     public WallBehaviour GetCurrentWall() {
         return currentWall;
-    }
-
-    public int GetDirection(WallBehaviour other) {
-        Vector3 toOther = other.transform.position - transform.position;
-
-        float dotUp = Vector3.Dot(toOther.normalized, transform.up);
-        float dotRight = Vector3.Dot(toOther.normalized, transform.right);
-
-        //checks +/- 45 degrees to check if object is more above or below than left or right
-        if (dotUp > 0.7071) return 0; // Above
-        if (dotUp < -0.7071) return 2; // Below
-
-        if (dotRight > 0) return 3; // Right
-        if (dotRight < 0) return 1; // Left
-
-        return -1; // Error or the object is too close
     }
     public void SetProjectionState(ProjectionState state) {
         projectionState = state;
@@ -552,7 +581,6 @@ public class MovementController_2D : MonoBehaviour {
                 spriteRenderer.sprite = sprites[4];
                 Is2DPlayerActive = true;
                 break;
-
         }
     }
     public bool CanTransitionOutOfCurrentWall() {
@@ -567,6 +595,5 @@ public class MovementController_2D : MonoBehaviour {
     public void DisableGravity() {
         gravityEnabled = false;
     }
-
-
+    #endregion
 }
