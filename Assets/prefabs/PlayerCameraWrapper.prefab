@@ -61,7 +61,7 @@ Transform:
   m_GameObject: {fileID: 74397854644777205}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: 33.619312, y: -10.329067, z: 66.60769}
+  m_LocalPosition: {x: 33.619312, y: -10.329067, z: 82.105675}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -219,6 +219,8 @@ MonoBehaviour:
   Camera2dLookAt: {fileID: 7697858892136434629}
   cameraRotationSpeed: 100
   cameraMaxRotationAngle: 25
+  cameraTotalRotation: 0
+  cameraRotationResetSpeed: 5
   Is2DPlayerActive: 0
   CanMove: 1
   maxSpeed2D: 15
@@ -1377,8 +1379,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   holdArea: {fileID: 8413178250063108687}
   HeldObject: {fileID: 0}
-  pickupForce: 10
-  pickupDrag: 20
+  pickupForce: 150
+  pickupDrag: 10
   objectsInInteractRange: []
   PickupBlockingLayers:
     serializedVersion: 2
@@ -2559,7 +2561,7 @@ Transform:
   m_GameObject: {fileID: 6774737294069508098}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: 29.137482, y: 3.7609339, z: -63.59999}
+  m_LocalPosition: {x: 71.84166, y: 4.7909327, z: -273.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

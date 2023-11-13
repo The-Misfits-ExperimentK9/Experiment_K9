@@ -213,7 +213,7 @@ public class MovementController_2D : MonoBehaviour {
         }
         else {
             //adjust the camera if the player is moving
-            Camera2dLookAt.transform.position = Vector3.Lerp(Camera2dLookAt.transform.position, transform.position, Time.deltaTime * cameraRotationResetSpeed);
+            Camera2dLookAt.transform.position = Vector3.Lerp(Camera2dLookAt.transform.position, transform.position, Time.fixedDeltaTime * cameraRotationResetSpeed);
             var vecToCameraLookat = Camera.main.transform.position - Camera2dLookAt.transform.position;
             var vecToPlayer = Camera.main.transform.position - transform.position;
 
