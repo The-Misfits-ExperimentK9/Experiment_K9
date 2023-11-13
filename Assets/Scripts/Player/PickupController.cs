@@ -22,7 +22,6 @@ public class PickupController : MonoBehaviour {
     [SerializeField] LayerMask PickupBlockingLayers;
     [SerializeField] LayerMask HoldBlockingLayers;
 
-    
 
     private void Awake() {
         interactKey = Keyboard.current.eKey;
@@ -36,6 +35,11 @@ public class PickupController : MonoBehaviour {
             HandleInteractionInput();
 
         
+    }
+    private void FixedUpdate() {
+        if (IsHoldingObject() && PlayerBehaviour.Instance.IsIn3D()) {
+            MoveObject();
+        }
     }
 
 
@@ -54,9 +58,7 @@ public class PickupController : MonoBehaviour {
             }
         }
         //only do this if its in 3d 2d won't work
-        if (IsHoldingObject() && PlayerBehaviour.Instance.IsIn3D()) {
-            MoveObject();
-        }
+        
     }
     public bool IsHoldingObject() {
         return HeldObject != null;
