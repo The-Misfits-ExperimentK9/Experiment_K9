@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 55013569138097356}
   - component: {fileID: 4849342270943865673}
   - component: {fileID: 2749844957838690942}
-  m_Layer: 8
+  m_Layer: 11
   m_Name: Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -100,6 +100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   glowPath: {fileID: 0}
+  audioSource: {fileID: 0}
   IsLocked: 0
   puzzlePieceToActivate: {fileID: 0}
   springForce: 1
@@ -174,7 +175,7 @@ GameObject:
   - component: {fileID: 762391962420381950}
   - component: {fileID: 6612980646606287759}
   - component: {fileID: 4990488232845893429}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: CollisionCube
   m_TagString: EventTrigger
   m_Icon: {fileID: 0}
@@ -306,7 +307,7 @@ GameObject:
   - component: {fileID: 4148991620455255085}
   - component: {fileID: 3254080458435089764}
   - component: {fileID: 4320007534286680833}
-  m_Layer: 8
+  m_Layer: 11
   m_Name: ButtonOutside
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -411,7 +412,7 @@ GameObject:
   - component: {fileID: 2562019774490426716}
   - component: {fileID: 2898055238065652682}
   - component: {fileID: 4610327570201250561}
-  m_Layer: 8
+  m_Layer: 11
   m_Name: Paw
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -493,7 +494,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1236909505349986478}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: big_button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
