@@ -7,6 +7,7 @@ public class BallReceiver_2D : ReceivableParent {
     [SerializeField] GameObject outsideOn;
     [SerializeField] ActivatablePuzzlePiece puzzlePieceToActivate;
     [SerializeField] bool Allow3DActivation = false;
+    private GrabbableObject objectThatActivatedReciever;
 
     public override void Activate() {
         base.Activate();
@@ -32,6 +33,7 @@ public class BallReceiver_2D : ReceivableParent {
                     Debug.Log("2d ball receive hit interactable object " + tObject.name);
                     //only activate if it is 3d and 3d activation is enabled or the object is 2d
                     if ((tObject.Is3D && Allow3DActivation) || !tObject.Is3D) {
+                        objectThatActivatedReciever = tObject;
                         Activate();
                     }
                 }
@@ -40,7 +42,20 @@ public class BallReceiver_2D : ReceivableParent {
 
         }
     }
-    
+    private void Update() {
+        if (objectThatActivatedReciever == null) {
+            Deactivate();
+            return;
+
+        }
+        else if (objectThatActivatedReciever.IsBeingHeld) {
+            Deactivate();
+            objectThatActivatedReciever = null;
+            return;
+
+        }
+    }
+
     private void OnTriggerExit(Collider other) {
         if (other.gameObject.layer == LayerInfo.INTERACTABLE_OBJECT) {
             Deactivate();
