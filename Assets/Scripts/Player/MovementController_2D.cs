@@ -29,7 +29,7 @@ public class MovementController_2D : MonoBehaviour {
     [SerializeField] private GameObject Camera2dLookAt;
     [SerializeField] private float cameraRotationSpeed = 100f;
     [SerializeField] private float cameraMaxRotationAngle = 25f;
-    private float cameraTotalRotation = 0f; // To keep track of the current rotation angle
+    [SerializeField] private float cameraTotalRotation = 0f; // To keep track of the current rotation angle
     [SerializeField] private float cameraRotationResetSpeed = 5f;
 
     [Space(10)]
@@ -214,6 +214,11 @@ public class MovementController_2D : MonoBehaviour {
         else {
             //adjust the camera if the player is moving
             Camera2dLookAt.transform.position = Vector3.Lerp(Camera2dLookAt.transform.position, transform.position, Time.deltaTime * cameraRotationResetSpeed);
+            var vecToCameraLookat = Camera.main.transform.position - Camera2dLookAt.transform.position;
+            var vecToPlayer = Camera.main.transform.position - transform.position;
+
+
+            cameraTotalRotation = Vector3.Angle(vecToCameraLookat, vecToPlayer);
             //dont allow camera rotation when moving
             AllowCameraRotation2D = false;
         }
