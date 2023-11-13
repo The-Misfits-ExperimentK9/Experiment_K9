@@ -18,6 +18,7 @@ Mike
 <li>Item spawner that can spawn 1 of any object type at time - activatable puzzle piece</li>
 <li>Pressable Button that can activate puzzle pieces</li>
 <li>Support for playing sound on puzzle piece activation</li>
+<li>Added the ability for the player to rotate the camera left or right while in 2D</li>
 </ul>
 
 <h3>Changes</h3>

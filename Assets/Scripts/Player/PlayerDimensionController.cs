@@ -265,7 +265,7 @@ public class PlayerDimensionController : MonoBehaviour {
 
         movementController_2D.GetComponent<Rigidbody>().isKinematic = false;
         movementController_2D.SetCurrentWall(currentProjectionSurface.GetComponent<WallBehaviour>());
-        
+        StartCoroutine(movementController_2D.EnableCameraRotationAfterSeconds(2f));
         SetWallProjectionToActive();
         player3D.SetActive(false);
 

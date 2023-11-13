@@ -18,31 +18,40 @@ public class MovementController_2D : MonoBehaviour {
     [Tooltip("The character uses its own gravity value. The engine default is -9.81f")]
     public float Gravity = -60.0f;
     public float Friction = 10f;
-
+    [Space(10)]
     [Header("Wall Collision")]
     [SerializeField] private float offSetAmount = 5.5f;
     [SerializeField] float wallCheckDistance = 0.8f;
     [SerializeField] private WallBehaviour currentWall;
+    [Space(10)]
+    [Header("2D Camera")]
+    [SerializeField] private bool AllowCameraRotation2D = false;
+    [SerializeField] private GameObject Camera2dLookAt;
+    [SerializeField] private float cameraRotationSpeed = 100f;
+    [SerializeField] private float cameraMaxRotationAngle = 25f;
+    private float cameraTotalRotation = 0f; // To keep track of the current rotation angle
+    [SerializeField] private float cameraRotationResetSpeed = 5f;
 
+    [Space(10)]
     [Header("Settings")]
     public bool Is2DPlayerActive = false;
     public bool CanMove = true;
     bool gravityEnabled = false;
     public float maxSpeed2D = 15.0f;
-    
     [SerializeField] private float movementForceMultiplier = 20f;
-    [Space(10)]
+
     [Tooltip("The height the player can jump")]
     public float JumpHeight = 10.25f;
-    [Space(10)]
+    
     [Tooltip("Time required to pass before being able to jump again. Set to 0f to instantly jump again")]
     public float JumpTimeout = 0.50f;
 
     [Tooltip("Time required to pass before entering the fall state. Useful for walking down stairs")]
     public float FallTimeout = 0.15f;
 
-    private KeyControl jumpKey1, jumpKey2;
+    private KeyControl jumpKey;
 
+    
 
 
     private Vector3 gizmoDrawLoc;
@@ -87,8 +96,7 @@ public class MovementController_2D : MonoBehaviour {
     void Awake() {
         // dog2DSprite = GetComponent<SpriteRenderer>();
         dogCollider2D = GetComponent<Collider>();
-        jumpKey1 = Keyboard.current.spaceKey;
-        jumpKey2 = Keyboard.current.wKey;
+        jumpKey = Keyboard.current.wKey;
     }
 
     // Update is called once per frame
@@ -113,6 +121,34 @@ public class MovementController_2D : MonoBehaviour {
             JumpAndGravity();
 
         }
+        if (AllowCameraRotation2D) {
+            RotateCamera2dLookAt();
+        }
+
+    }
+    private void RotateCamera2dLookAt() {
+        // Get mouse X movement
+        float mouseX = Input.GetAxis("Mouse X");
+
+        // Calculate the new rotation increment
+        float newYRotation = mouseX * (cameraRotationSpeed * Time.deltaTime);
+
+        // Calculate the potential new total rotation
+        float potentialTotalRotation = cameraTotalRotation + newYRotation;
+
+        // Clamp the potential total rotation within the maximum allowed angles
+        if (potentialTotalRotation > cameraMaxRotationAngle) {
+            newYRotation = cameraMaxRotationAngle - cameraTotalRotation; 
+        }
+        else if (potentialTotalRotation < -cameraMaxRotationAngle) {
+            newYRotation = -cameraMaxRotationAngle - cameraTotalRotation; 
+        }
+
+        // Apply the newYRotation using RotateAround
+        Camera2dLookAt.transform.RotateAround(Camera.main.transform.position, Vector3.up, newYRotation);
+
+        // Update the total rotation
+        cameraTotalRotation += newYRotation;
     }
     private void ApplyFriction() {
         Vector3 frictionDirection;
@@ -127,7 +163,7 @@ public class MovementController_2D : MonoBehaviour {
     }
     private void GroundedCheck() {
         // set sphere position, with offset
-        Vector3 spherePosition = new Vector3(transform.position.x, transform.position.y - GroundedOffset,
+        Vector3 spherePosition = new(transform.position.x, transform.position.y - GroundedOffset,
             transform.position.z);
         var hits = Physics.OverlapSphere(spherePosition, GroundedRadius, GroundLayers,
             QueryTriggerInteraction.Ignore);
@@ -170,7 +206,17 @@ public class MovementController_2D : MonoBehaviour {
         else if (input.x > 0) {
             spriteRenderer.flipX = false;
         }
-        if (input.x < .01f && input.x > -.01f) targetSpeed = 0.0f;
+        if (input.x < .01f && input.x > -.01f) {
+            //allow camera rotation when not moving 
+            AllowCameraRotation2D = true;
+            targetSpeed = 0.0f;
+        }
+        else {
+            //adjust the camera if the player is moving
+            Camera2dLookAt.transform.position = Vector3.Lerp(Camera2dLookAt.transform.position, transform.position, Time.deltaTime * cameraRotationResetSpeed);
+            //dont allow camera rotation when moving
+            AllowCameraRotation2D = false;
+        }
         // accelerate or decelerate to target speed
 
         _speedHorizontal = targetSpeed;
@@ -234,7 +280,7 @@ public class MovementController_2D : MonoBehaviour {
             }
 
             // Jump
-            if (jumpKey2.wasPressedThisFrame && _jumpTimeoutDelta <= 0.0f) {
+            if (jumpKey.wasPressedThisFrame && _jumpTimeoutDelta <= 0.0f) {
                 // the square root of H * -2 * G = how much velocity needed to reach desired height
                 _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
                 Debug.Log("jumping" + _verticalVelocity);
@@ -420,10 +466,16 @@ public class MovementController_2D : MonoBehaviour {
 
         return direction;
     }
+    public IEnumerator EnableCameraRotationAfterSeconds(float seconds) {
+        yield return new WaitForSeconds(seconds);
+        AllowCameraRotation2D = true;
+    }
 
     //handles transitioning to anew axis when encountering another wall at a 90 degree angle
     void TransitionToNewAxis(Vector3 closestPointOnBounds, WallBehaviour wall) {
-
+        AllowCameraRotation2D = false;
+        StartCoroutine(EnableCameraRotationAfterSeconds(2f));
+        cameraTotalRotation = 0f;
         bool flipOffset = transform.forward.x < 0 || transform.forward.z < 0;
         //rotate first to get correct transform.right
         transform.forward = GetOrthogonalVectorTo2DPlayer(wall.GetComponent<Collider>());

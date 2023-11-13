@@ -61,7 +61,7 @@ Transform:
   m_GameObject: {fileID: 74397854644777205}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: 33.619312, y: -10.329067, z: 82.105675}
+  m_LocalPosition: {x: 33.619312, y: -10.329067, z: 66.60769}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -86,7 +86,7 @@ MonoBehaviour:
   m_StreamingVersion: 20170927
   m_Priority: 10
   m_StandbyUpdate: 2
-  m_LookAt: {fileID: 7196005292634861346}
+  m_LookAt: {fileID: 5620757353717752846}
   m_Follow: {fileID: 7196005292634861346}
   m_Lens:
     FieldOfView: 60
@@ -141,6 +141,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7196005292634861346}
+  - {fileID: 5620757353717752846}
   m_Father: {fileID: 8962782108745754710}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &641710048873724522
@@ -214,6 +215,10 @@ MonoBehaviour:
   offSetAmount: 6
   wallCheckDistance: 0.8
   currentWall: {fileID: 0}
+  AllowCameraRotation2D: 0
+  Camera2dLookAt: {fileID: 7697858892136434629}
+  cameraRotationSpeed: 100
+  cameraMaxRotationAngle: 25
   Is2DPlayerActive: 0
   CanMove: 1
   maxSpeed2D: 15
@@ -221,6 +226,7 @@ MonoBehaviour:
   JumpHeight: 10.25
   JumpTimeout: 0.5
   FallTimeout: 0.15
+  projectionState: 0
   sprites:
   - {fileID: 21300000, guid: 2643cbf3a2614bf4fb863e26df2f1921, type: 3}
   - {fileID: 21300000, guid: a60c095fa53280448994615b855e8aa2, type: 3}
@@ -1247,7 +1253,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7196005292634861346}
   m_Layer: 10
-  m_Name: 2dCameraRoot
+  m_Name: 2dCameraFollow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1345,6 +1351,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player3D: {fileID: 5023980225577663842}
   directionVectorFromNearestWall: {x: 0, y: 0, z: 0}
+  currentProjectionSurface: {fileID: 0}
+  potentialProjectionSurfaces: []
   player2D: {fileID: 266677610665238099}
   movementController_2D: {fileID: 5895966758457165437}
   dog2DHitbox: {fileID: 7203371137855413276}
@@ -1478,7 +1486,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2601295727ca480449baeeac47e46d58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  potentialProjectionSurfaces: []
 --- !u!1 &4532644179058410253
 GameObject:
   m_ObjectHideFlags: 0
@@ -2552,7 +2559,7 @@ Transform:
   m_GameObject: {fileID: 6774737294069508098}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: 71.84166, y: 4.7909327, z: -273.6}
+  m_LocalPosition: {x: 29.137482, y: 3.7609339, z: -63.59999}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3156,6 +3163,37 @@ Transform:
   m_Children:
   - {fileID: 9075464239868151170}
   m_Father: {fileID: 6147317794146750502}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7697858892136434629
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5620757353717752846}
+  m_Layer: 10
+  m_Name: 2dCameraLookAt
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5620757353717752846
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7697858892136434629}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 557386753428854205}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7902264685300006612
 GameObject:
