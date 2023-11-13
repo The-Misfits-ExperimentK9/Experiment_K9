@@ -22,9 +22,7 @@ public class PickupController : MonoBehaviour {
     [SerializeField] LayerMask PickupBlockingLayers;
     [SerializeField] LayerMask HoldBlockingLayers;
 
-    [SerializeField] private float holdSpaceBlockedMoveOffset = 10f;
-    [SerializeField] private float holdAreaMoveSpeed = 10f;
-    private Vector3 holdAreaStartLocalPosition;
+    
 
     private void Awake() {
         interactKey = Keyboard.current.eKey;
