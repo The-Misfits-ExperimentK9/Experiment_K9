@@ -77,8 +77,6 @@ public class PickupController : MonoBehaviour {
 
             var moveDirection = holdArea.position - heldObjectRigidbody.transform.position;
             heldObjectRigidbody.AddForce(moveDirection * pickupForce);
-            //Debug.Log(transform.parent);
-            //transform.parent = holdArea;
         }
     }
 
@@ -180,91 +178,6 @@ public class PickupController : MonoBehaviour {
         }
 
     }
-    private bool IsHoldSpaceClear() {
-        return !Physics.OverlapSphere(holdArea.position, 0.5f, HoldBlockingLayers).Any();
-    }
-    private bool IsOriginalHoldSpaceClear() {
-        return !Physics.OverlapSphere(transform.position + holdAreaStartLocalPosition, 0.5f, HoldBlockingLayers).Any();
-    }
-    private void ResetHoldAreaPosition() {
-        holdArea.localPosition = holdAreaStartLocalPosition;
-    }
-
-    private void AdjustHoldAreaPosition() {
-        // Check if the hold area is clear
-        if (IsHoldSpaceClear()) {
-            // Slowly return to the start position
-            holdArea.localPosition = Vector3.MoveTowards(holdArea.localPosition, holdAreaStartLocalPosition, Time.deltaTime * holdAreaMoveSpeed * 2f);
-            return;
-        }
-
-        // Check space availability in both directions
-        float rightClearance = CheckClearance(transform.right);
-        float leftClearance = CheckClearance(-transform.right);
-
-        // Choose the direction with more space
-        Vector3 moveDirection = rightClearance > leftClearance ? transform.right : -transform.right;
-
-        // Move the hold area
-        Vector3 newPosition = holdArea.localPosition + moveDirection * (Time.deltaTime * holdAreaMoveSpeed);
-        //Debug.Log("moving hold area");
-
-        // Ensure the movement is within the allowed offset
-        if ((newPosition - holdAreaStartLocalPosition).magnitude <= holdSpaceBlockedMoveOffset) {
-            holdArea.localPosition = newPosition;
-        }
-    }
-
-    private float CheckClearance(Vector3 direction) {
-        if (Physics.Raycast(holdArea.position, direction, out RaycastHit hit)) {
-            return hit.distance;
-        }
-        else {
-            return Mathf.Infinity;
-        }
-    }
-    //returns the interactable object closest to where the player is looking at with the camera
-    //TODO not working 100% of the time sometimes choses object closeset to camera even if player isnt looking at it
-    //private GrabbableObject GetObjectClosestToCameraLookAt() {
-    //    if (!objectsInInteractRange.Any()) {
-    //        return null;
-    //    }
-    //    float closestToCameraLookDirection = float.MaxValue;
-    //    GrabbableObject gObject = null;
-    //    //iterate each object
-    //    foreach (var obj in objectsInInteractRange) {
-    //        //get the vector from the object to the main camera
-    //        var vecToObject = obj.transform.position - Camera.main.transform.position;
-    //        //use the dot product to project the vector onto the camera's right axis
-    //        var dist = Mathf.Abs(
-    //            Vector3.Dot(
-    //                vecToObject,
-    //                Camera.main.transform.right));
-    //        //compare the distance to camera and find the smallest one
-    //        if (dist < closestToCameraLookDirection) {
-    //            closestToCameraLookDirection = dist;
-    //            gObject = obj;
-    //        }
-    //    }
-    //    return gObject;
-    //}
-
-    //only allows one copy of each object
-    //public void AddObjectToInRangeList(GrabbableObject tObject) {
-
-
-    //    if (objectsInInteractRange.Contains(tObject)) return;
-
-    //    objectsInInteractRange.Add(tObject);
-
-    //}
-
-    //public void RemoveObjectFromRangeList(GrabbableObject tObject) {
-
-    //    objectsInInteractRange.Remove(tObject);
-    //}
-
-
     //returns the object to pick up that is closest to the player transform
     //this behaviour might want to be changed later
     private TransferableObject GetObjectClosestTo2DPlayer() {
