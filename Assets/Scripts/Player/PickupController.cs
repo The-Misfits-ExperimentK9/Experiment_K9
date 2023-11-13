@@ -27,7 +27,6 @@ public class PickupController : MonoBehaviour {
     private void Awake() {
         interactKey = Keyboard.current.eKey;
         objectsInInteractRange = new();
-        holdAreaStartLocalPosition = holdArea.localPosition;
     }
 
 
