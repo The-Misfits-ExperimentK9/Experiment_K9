@@ -5,9 +5,9 @@ using UnityEngine;
 public class ConveyerWall : WallBehaviour {
     protected Rigidbody playerRb;
     protected MovementController_2D player2D;
-    public float playerMoveForceAmount = 20f;
+    [SerializeField] public float playerMoveForceAmount;
 
-    private void Update() {
+    protected virtual void Update() {
         MovePlayer();
     }
     protected virtual void MovePlayer() {

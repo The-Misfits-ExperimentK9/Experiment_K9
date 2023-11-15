@@ -1,0 +1,41 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class ActivatorConveyerWall : ConveyerWall
+{
+    // The activators for this variety of conveyer wall.
+    [SerializeField] private List<GameObject> activator;
+    [SerializeField] List<bool> active;
+    int index = 0;
+    int activeCount = 0;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        // Initially, the conveyer wall doesn't move the player at all.
+        playerMoveForceAmount = 0.0f;
+    }
+
+    // Update is called once per frame
+    protected override void Update()
+    {
+        base.Update();
+    }
+
+    void checkActivators()
+    {
+        active[index] = true;
+        index++;
+
+        for (int i = 0; i < active.Count; i++)
+        {
+            if (active[i] == true)
+            {
+                activeCount++;
+            }
+        }
+
+        playerMoveForceAmount = 25.0f * activeCount;
+    }
+}
