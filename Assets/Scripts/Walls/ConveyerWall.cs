@@ -18,7 +18,7 @@ public class ConveyerWall : WallBehaviour {
             }
         }
     }
-    private void OnCollisionEnter(Collision collision) {
+    protected void OnCollisionEnter(Collision collision) {
 
         if (collision.gameObject.layer == LayerInfo.PLAYER) {
             if (collision.gameObject.TryGetComponent(out MovementController_2D player2D)) {
@@ -29,7 +29,7 @@ public class ConveyerWall : WallBehaviour {
 
         }
     }
-    private void OnCollisionExit(Collision collision) {
+    protected void OnCollisionExit(Collision collision) {
         if (collision.gameObject.layer == LayerInfo.PLAYER) {
             playerRb = null;
             player2D = null;
