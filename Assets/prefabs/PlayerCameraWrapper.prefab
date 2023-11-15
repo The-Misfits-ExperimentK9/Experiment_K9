@@ -687,7 +687,7 @@ MonoBehaviour:
   canResetLocation: 1
   is3D: 1
   spawnPoint: {fileID: 0}
-  interactDisplayRadius: 20
+  interactDisplayRadius: 10
   interactableLayerMask:
     serializedVersion: 2
     m_Bits: 65664
@@ -1251,8 +1251,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6774737294069508098}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: 71.84166, y: 4.7909327, z: -273.6}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -28.75, y: 3.375, z: -3.6000004}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1292,7 +1292,7 @@ Camera:
     height: 1
   near clip plane: 0.2
   far clip plane: 500
-  field of view: 60
+  field of view: 40
   orthographic: 0
   orthographic size: 10
   m_Depth: -1

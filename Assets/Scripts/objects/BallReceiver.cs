@@ -27,7 +27,9 @@ public class BallReceiver : ReceivableParent {
         if (isOn && currentHolo != null)
             Destroy(currentHolo);
 
-        if (objectThatActivatedReciever == null)
+        if (objectThatActivatedReciever == null && !isOn)
+            return;
+        else if (objectThatActivatedReciever == null && isOn)
             Deactivate();
         else if (objectThatActivatedReciever.IsBeingHeld)
             Deactivate();
@@ -44,7 +46,8 @@ public class BallReceiver : ReceivableParent {
         }
     }
     private void OnTriggerExit(Collider other) {
-        objectThatActivatedReciever = null;
+        if (other.transform.parent.TryGetComponent(out GrabbableObject g))
+            objectThatActivatedReciever = null;
         if (other.gameObject.layer == LayerInfo.INTERACTABLE_OBJECT) {
             if (isOn) {
                 Deactivate();

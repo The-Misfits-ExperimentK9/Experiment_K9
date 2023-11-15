@@ -143,7 +143,7 @@ public class PlayerBehaviour : MonoBehaviour {
 
     public GameObject GetClosestInteractable3D() {
         // Perform the overlap sphere and get the colliders within the specified radius.
-        Collider[] interactableColliders = Physics.OverlapSphere(player3D.transform.position, interactDisplayRadius, interactableLayerMask);
+        Collider[] interactableColliders = Physics.OverlapSphere(player3D.transform.position + player3D.transform.forward, interactDisplayRadius, interactableLayerMask);
 
         // Initialize variables to keep track of the closest object.
         GameObject closestObject = null;
