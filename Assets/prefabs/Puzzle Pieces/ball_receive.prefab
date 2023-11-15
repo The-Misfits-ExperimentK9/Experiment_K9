@@ -188,6 +188,7 @@ MonoBehaviour:
   audioSource: {fileID: 0}
   onLeds: {fileID: 7374632348811386951}
   offLeds: {fileID: 782531601339629997}
+  holo: {fileID: 702291051683937970, guid: ac4832becdce3814d831fff9582e2c1e, type: 3}
   puzzlePieceToActivate: {fileID: 0}
 --- !u!1 &2154524174305081871
 GameObject:

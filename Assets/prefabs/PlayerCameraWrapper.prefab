@@ -61,7 +61,7 @@ Transform:
   m_GameObject: {fileID: 74397854644777205}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: 33.619312, y: -10.329067, z: 66.60769}
+  m_LocalPosition: {x: 33.619312, y: -10.329067, z: 82.105675}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -710,8 +710,8 @@ MonoBehaviour:
   player2D: {fileID: 266677610665238099}
   movementController_2D: {fileID: 5895966758457165437}
   dog2DHitbox: {fileID: 7203371137855413276}
-  playerCamRoot: {fileID: 0}
-  VirtualCamera3D: {fileID: 0}
+  playerCamRoot: {fileID: 3784293241610158376}
+  VirtualCamera3D: {fileID: 9009892228891423777}
   Camera3D: {fileID: 2817393637023723959}
   Camera2D: {fileID: 74397854644777205}
   playerLeaveWallOffset: 6
@@ -1252,7 +1252,7 @@ Transform:
   m_GameObject: {fileID: 6774737294069508098}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: 36.23748, y: 3.7609339, z: -63.59999}
+  m_LocalPosition: {x: 71.84166, y: 4.7909327, z: -273.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

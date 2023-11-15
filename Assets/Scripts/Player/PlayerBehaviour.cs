@@ -167,5 +167,37 @@ public class PlayerBehaviour : MonoBehaviour {
         return closestObject;
     }
 
+    public GameObject GetClosestReciever()
+    {
+        // Perform the overlap sphere and get the colliders within the specified radius.
+        Collider[] eventTriggerColliders = Physics.OverlapSphere(player3D.transform.position + player3D.transform.forward, 10, LayerMask.GetMask("EventTrigger"));
+
+        // Initialize variables to keep track of the closest object.
+        GameObject closestObject = null;
+        float smallestOrthogonalDistance = float.MaxValue;
+        Ray cameraRay = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
+
+        foreach (var collider in eventTriggerColliders)
+        {
+            if (collider.TryGetComponent(out BallReceiver b))
+            {
+                // Get the closest point on the camera ray to the object's position.
+                Vector3 closestPointOnRay = cameraRay.GetPoint(Vector3.Dot(collider.transform.position - cameraRay.origin, cameraRay.direction));
+                // Calculate the orthogonal distance from the object to the ray.
+                float orthogonalDistance = Vector3.Distance(collider.transform.position, closestPointOnRay);
+
+                // Check if this collider is closer to the camera's forward direction than the previous ones.
+                if (orthogonalDistance < smallestOrthogonalDistance)
+                {
+                    smallestOrthogonalDistance = orthogonalDistance;
+                    closestObject = collider.gameObject;
+                }
+            }
+        }
+
+        // Return the closest interactable object or null if none was found.
+        return closestObject;
+    }
+
 }
 
