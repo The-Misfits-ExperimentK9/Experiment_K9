@@ -48,7 +48,7 @@ public class Platform : ActivatablePuzzlePiece {
         unlocked = true;
     }
 
-    public override void Deactivate() {
+    public override void Deactivate(GameObject caller) {
         unlocked = false;
     }
 

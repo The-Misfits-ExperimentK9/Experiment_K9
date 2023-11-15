@@ -75,7 +75,7 @@ public class PickupController : MonoBehaviour {
         if (transform.localPosition.magnitude > 0.2f) {
 
             var moveDirection = holdArea.position - heldObjectRigidbody.transform.position;
-            heldObjectRigidbody.AddForce(moveDirection * pickupForce);
+            heldObjectRigidbody.AddForce(moveDirection * pickupForce, ForceMode.Acceleration);
         }
     }
 

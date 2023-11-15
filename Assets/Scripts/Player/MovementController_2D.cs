@@ -103,7 +103,6 @@ public class MovementController_2D : MonoBehaviour {
 
     // Update is called once per frame
     void FixedUpdate() {
-        Debug.Log(transform.position);
         if (!PlayerBehaviour.Instance.IsIn3D()) {
             
             ApplyFriction();

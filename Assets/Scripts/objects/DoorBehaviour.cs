@@ -25,8 +25,8 @@ public class DoorBehaviour : ActivatablePuzzlePiece {
         Moving
     }
 
-    private DoorState currentState;
-    private DoorState goalState;
+    [SerializeField]  private DoorState currentState;
+    [SerializeField]  private DoorState goalState;
 
 
     Vector3 openLocalPosition, closedLocalPosition;
@@ -70,31 +70,34 @@ public class DoorBehaviour : ActivatablePuzzlePiece {
 
     private void OnTriggerEnter(Collider other) {
         if (IsAuto && other.CompareTag("InteractRadar")) {
-            goalState = DoorState.Open;
+            OpenDoor();
         }
     }
 
     private void OnTriggerExit(Collider other) {
         if (IsAuto && other.CompareTag("InteractRadar")) {
-            goalState = DoorState.Closed;
+            CloseDoor();
         }
     }
 
     protected void OpenDoor() {
+        Debug.Log("Opening door");
         goalState = DoorState.Open;
     }
     protected void CloseDoor() {
+        Debug.Log("Closing door");
         goalState = DoorState.Closed;
     }
     public bool IsOpen() {
-        return goalState == DoorState.Open;
+        return currentState == DoorState.Open;
     }
 
     public override void Activate() {
         OpenDoor();
     }
 
-    public override void Deactivate() {
+    public override void Deactivate(GameObject caller) {
+        Debug.Log(caller.name);
         CloseDoor();
     }
 }

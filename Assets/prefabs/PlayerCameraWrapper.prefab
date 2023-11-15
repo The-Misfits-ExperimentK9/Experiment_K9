@@ -731,8 +731,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   holdArea: {fileID: 8413178250063108687}
   HeldObject: {fileID: 0}
-  pickupForce: 10
-  pickupDrag: 20
+  pickupForce: 100
+  pickupDrag: 10
   objectsInInteractRange: []
   PickupBlockingLayers:
     serializedVersion: 2

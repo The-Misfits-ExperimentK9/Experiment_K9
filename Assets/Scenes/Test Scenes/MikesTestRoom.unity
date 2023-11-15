@@ -2028,7 +2028,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1236909505349986478, guid: 93719739f4fb3fd4cb4a98f97441f21d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.1600037
+      value: -2.98
       objectReference: {fileID: 0}
     - target: {fileID: 1236909505349986478, guid: 93719739f4fb3fd4cb4a98f97441f21d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2062,6 +2062,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2749844957838690942, guid: 93719739f4fb3fd4cb4a98f97441f21d, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 13400000, guid: 4435daff261a7ab458b4963e75878e54, type: 2}
     - target: {fileID: 7615615168833276125, guid: 93719739f4fb3fd4cb4a98f97441f21d, type: 3}
       propertyPath: m_Name
       value: big_button
@@ -2699,6 +2703,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 428203870717603982, guid: 17513ab5914eb2d4cb8bf0ccd9430ae8, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 1304167074492356921, guid: 17513ab5914eb2d4cb8bf0ccd9430ae8, type: 3}
       propertyPath: m_Name
       value: Cube

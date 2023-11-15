@@ -37,7 +37,7 @@ public class BallReceiver : ReceivableParent {
         base.Deactivate();
         onLeds.SetActive(false);
         offLeds.SetActive(true);
-        puzzlePieceToActivate.Deactivate();
+        puzzlePieceToActivate.Deactivate(gameObject);
         isOn = false;
     }
 }

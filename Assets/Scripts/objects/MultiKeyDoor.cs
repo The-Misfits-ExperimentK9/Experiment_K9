@@ -30,7 +30,7 @@ public class MultiKeyDoor : DoorBehaviour
         }
     }
 
-    public override void Deactivate()
+    public override void Deactivate(GameObject caller)
     {
         active[index] = false;
         index--;

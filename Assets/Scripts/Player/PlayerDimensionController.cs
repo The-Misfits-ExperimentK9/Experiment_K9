@@ -58,7 +58,6 @@ public class PlayerDimensionController : MonoBehaviour {
         HandleAutoModeInput();
         if (PlayerBehaviour.Instance.IsIn3D() && DOGEnabled)
             HandleSurfaceProjection();
-        Debug.Log(movementController_2D.transform.position);
     }
     private void HandlePauseInput() {
         if (pauseKey.wasPressedThisFrame) {
