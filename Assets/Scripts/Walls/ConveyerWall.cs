@@ -5,16 +5,27 @@ using UnityEngine;
 public class ConveyerWall : WallBehaviour {
     protected Rigidbody playerRb;
     protected MovementController_2D player2D;
-    [SerializeField] public float playerMoveForceAmount;
+    public float playerMoveForceAmount;
+    [SerializeField] protected Vector3 playerMoveDirection = Vector3.zero;
 
-    protected virtual void Update() {
+    protected virtual void Start() {
+        if (playerMoveDirection == Vector3.zero) {
+            playerMoveDirection = transform.forward;
+        }
+        else if (Mathf.Approximately(playerMoveDirection.magnitude, 1)) {
+            playerMoveDirection = playerMoveDirection.normalized;
+        }
+    }
+
+    protected virtual void FixedUpdate() {
         MovePlayer();
     }
+    
     protected virtual void MovePlayer() {
         if (playerRb != null) {
 
             if (player2D.Is2DPlayerActive) {
-                playerRb.AddForce(transform.forward * playerMoveForceAmount);
+                playerRb.AddForce(playerMoveDirection * playerMoveForceAmount);
             }
         }
     }

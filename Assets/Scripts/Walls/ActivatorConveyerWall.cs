@@ -11,19 +11,20 @@ public class ActivatorConveyerWall : ConveyerWall
     int activeCount = 0;
 
     // Start is called before the first frame update
-    void Start()
+    protected override void Start()
     {
         // Initially, the conveyer wall doesn't move the player at all.
         playerMoveForceAmount = 0.0f;
+        base.Start();
     }
 
-    // Update is called once per frame
-    protected override void Update()
-    {
-        base.Update();
+    protected override void FixedUpdate() {
+        base.FixedUpdate();
     }
 
-    void checkActivators()
+
+
+    void CheckActivators()
     {
         active[index] = true;
         index++;
