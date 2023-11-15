@@ -710,8 +710,8 @@ MonoBehaviour:
   player2D: {fileID: 266677610665238099}
   movementController_2D: {fileID: 5895966758457165437}
   dog2DHitbox: {fileID: 7203371137855413276}
-  playerCamRoot: {fileID: 0}
-  VirtualCamera3D: {fileID: 0}
+  playerCamRoot: {fileID: 3784293241610158376}
+  VirtualCamera3D: {fileID: 9009892228891423777}
   Camera3D: {fileID: 2817393637023723959}
   Camera2D: {fileID: 74397854644777205}
   playerLeaveWallOffset: 6

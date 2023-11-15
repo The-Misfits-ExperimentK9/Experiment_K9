@@ -7,12 +7,12 @@ using UnityEngine.UIElements;
 
 public class InteractRadarController : MonoBehaviour {
 
-    private void Update() {
-        if (!PlayerBehaviour.Instance.IsIn3D() || !PlayerBehaviour.Instance.playerDimensionController.DOGEnabled) {
-            PlayerBehaviour.Instance.playerDimensionController.DisableProjections();
-            return;
-        }
-    }
+    //private void Update() {
+    //    if (!PlayerBehaviour.Instance.IsIn3D() || !PlayerBehaviour.Instance.playerDimensionController.DOGEnabled) {
+    //        PlayerBehaviour.Instance.playerDimensionController.DisableProjections();
+    //        return;
+    //    }
+    //}
 
     private void OnTriggerEnter(Collider other) {
         //tell projection to enable

@@ -12,7 +12,7 @@ public class ConveyerWall : WallBehaviour {
         if (playerMoveDirection == Vector3.zero) {
             playerMoveDirection = transform.forward;
         }
-        else if (Mathf.Approximately(playerMoveDirection.magnitude, 1)) {
+        else if (Mathf.Approximately(Mathf.Abs(playerMoveDirection.magnitude), 1)) {
             playerMoveDirection = playerMoveDirection.normalized;
         }
     }

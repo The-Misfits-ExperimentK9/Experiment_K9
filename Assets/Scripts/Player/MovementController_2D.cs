@@ -103,11 +103,14 @@ public class MovementController_2D : MonoBehaviour {
 
     // Update is called once per frame
     void FixedUpdate() {
+        Debug.Log(transform.position);
         if (!PlayerBehaviour.Instance.IsIn3D()) {
-            ApplyFriction();
             
-            if (CanMove)
+            ApplyFriction();
+
+            if (CanMove) {
                 Move();
+            }
             //Move2D();
             if (currentWall.AllowsDimensionTransition && !PlayerBehaviour.Instance.playerDimensionController.DOGEnabled) {
                 PlayerBehaviour.Instance.playerDimensionController.TransitionTo3D();
@@ -126,8 +129,8 @@ public class MovementController_2D : MonoBehaviour {
         if (AllowCameraRotation2D) {
             RotateCamera2dLookAt();
         }
-        if (Is2DPlayerActive)
-            AABBCheckForWallLeaving();
+        //if (Is2DPlayerActive)
+        //    AABBCheckForWallLeaving();
 
     }
     #endregion
@@ -208,6 +211,7 @@ public class MovementController_2D : MonoBehaviour {
     
 
     private void Move() {
+
         float targetSpeed = maxSpeed2D;
 
         var input = GetInput();
@@ -300,7 +304,6 @@ public class MovementController_2D : MonoBehaviour {
             if (jumpKey.wasPressedThisFrame && _jumpTimeoutDelta <= 0.0f) {
                 // the square root of H * -2 * G = how much velocity needed to reach desired height
                 _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
-                Debug.Log("jumping" + _verticalVelocity);
                 // update animator if using character
 
             }
@@ -328,7 +331,7 @@ public class MovementController_2D : MonoBehaviour {
 
         // apply gravity over time if under terminal (multiply by delta time twice to linearly speed up over time)
         if (_verticalVelocity < _terminalVelocity) {
-            _verticalVelocity += Gravity * Time.deltaTime;//fixed delta time
+            _verticalVelocity += Gravity * Time.deltaTime;
         }
 
     }
@@ -336,6 +339,7 @@ public class MovementController_2D : MonoBehaviour {
     #endregion
     #region transition to a new axis
     void TransitionToNewAxis(Vector3 closestPointOnBounds, WallBehaviour wall) {
+        Debug.Log("TransitionToNewAxis");
         AllowCameraRotation2D = false;
         StartCoroutine(EnableCameraRotationAfterSeconds(2f));
         cameraTotalRotation = 0f;
@@ -353,7 +357,7 @@ public class MovementController_2D : MonoBehaviour {
         var offsetDirection = (transform.forward.x < 0 || transform.forward.z > 0) ? transform.right : -transform.right;
         offsetDirection = flipOffset ? -offsetDirection : offsetDirection;
         newSpritePos = closestPointOnBounds + offsetDirection * offSetAmount;
-        gizmoDrawLoc = newSpritePos;
+        
         newSpritePos += transform.forward * PlayerDimensionController.WALL_DRAW_OFFSET;
 
         //move to offset position
@@ -394,6 +398,7 @@ public class MovementController_2D : MonoBehaviour {
         }
     }
     private void OnCollisionEnter(Collision collision) {
+        if (PlayerBehaviour.Instance.IsIn3D()) return;
 
         if (collision.gameObject.TryGetComponent(out WallBehaviour wallB)) {
 
@@ -404,9 +409,11 @@ public class MovementController_2D : MonoBehaviour {
         }
     }
     private void OnCollisionExit(Collision collision) {
-        Debug.Log("On COllision Exit called");
+
+        if (PlayerBehaviour.Instance.IsIn3D()) return;
 
         if (collision.gameObject.TryGetComponent(out WallBehaviour wallB)) {
+           
 
             if (currentWall == wallB && !PlayerBehaviour.Instance.IsIn3D() || currentWall == null && !PlayerBehaviour.Instance.IsIn3D()) {
               
