@@ -25,12 +25,22 @@ public class ActivatorControlledConveyorWall : ActivatablePuzzlePiece
     {
         active[index] = true;
         index++;
+
+        if (index >= active.Count)
+        {
+            index = 0;
+        }
     }
 
     public override void Deactivate()
     {
         active[index] = false;
         index--;
+
+        if (index >= active.Count)
+        {
+            index = 0;
+        }
     }
 
     private int CheckActivators()
