@@ -5,7 +5,7 @@ using UnityEngine;
 public class ConveyerWall : WallBehaviour {
     protected Rigidbody playerRb;
     protected MovementController_2D player2D;
-    public float playerMoveForceAmount;
+    public float PlayerMoveForceAmount;
     [SerializeField] protected Vector3 playerMoveDirection = Vector3.zero;
 
     protected virtual void Start() {
@@ -25,7 +25,7 @@ public class ConveyerWall : WallBehaviour {
         if (playerRb != null) {
 
             if (player2D.Is2DPlayerActive) {
-                playerRb.AddForce(playerMoveDirection * playerMoveForceAmount);
+                playerRb.AddForce(playerMoveDirection * PlayerMoveForceAmount);
             }
         }
     }

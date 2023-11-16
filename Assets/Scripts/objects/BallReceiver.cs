@@ -7,35 +7,46 @@ public class BallReceiver : ReceivableParent {
     [SerializeField] GameObject onLeds;
     [SerializeField] GameObject offLeds;
     [SerializeField] GameObject holo;
+    public bool HoloIsOn = false;
 
     private GrabbableObject objectThatActivatedReciever;
-    GameObject currentHolo;
+   // GameObject currentHolo;
 
     bool isOn = false;
-    PlayerBehaviour player;
+   // PlayerBehaviour player;
 
     [SerializeField] ActivatablePuzzlePiece puzzlePieceToActivate;
 
-    void Update()
-    {
-        if (player == null)
-            player = PlayerBehaviour.Instance;
-        if (player.is3D && player.pickupController.IsHoldingObject())
-            if (player.GetClosestReciever() == gameObject && currentHolo == null)
-                currentHolo = Instantiate(holo, transform.position + transform.up, Quaternion.identity);
-            else if (player.GetClosestReciever() != gameObject && currentHolo != null)
-                Destroy(currentHolo);
-        if (isOn && currentHolo != null)
-            Destroy(currentHolo);
+    void Update() {
+        //if (PlayerBehaviour.Instance.is3D && PlayerBehaviour.Instance.pickupController.IsHoldingObject()) {
+        //    if (PlayerBehaviour.Instance.GetClosestReciever() == gameObject) {
+        //        ActivateHolo();
+        //    }
+        //    else if (PlayerBehaviour.Instance.GetClosestReciever() != gameObject) {
+        //        DeactivateHolo();
+        //    }
+        //}
+        //if (isOn && currentHolo != null)
+        //    Destroy(currentHolo);
 
-        if (objectThatActivatedReciever == null && !isOn)
-            return;
-        else if (objectThatActivatedReciever == null && isOn)
-            Deactivate();
-        else if (objectThatActivatedReciever.IsBeingHeld)
-            Deactivate();
-        else if (objectThatActivatedReciever != null && !objectThatActivatedReciever.IsBeingHeld)
-            Activate();
+        if (objectThatActivatedReciever != null) {
+            if (objectThatActivatedReciever == null && isOn)
+                Deactivate();
+            else if (objectThatActivatedReciever.IsBeingHeld)
+                Deactivate();
+            else if (objectThatActivatedReciever != null && !objectThatActivatedReciever.IsBeingHeld)
+                Activate();
+        }
+    }
+    public void ActivateHolo() {
+        HoloIsOn = true;
+        Debug.Log("activating holo");
+        holo.SetActive(true);
+    }
+    public void DeactivateHolo() {
+        Debug.Log("deactivating holo");
+        HoloIsOn = false;
+        holo.SetActive(false);
     }
 
     private void OnTriggerEnter(Collider other) {
@@ -47,19 +58,19 @@ public class BallReceiver : ReceivableParent {
         }
     }
     private void OnTriggerExit(Collider other) {
-        if (other.transform.parent.TryGetComponent(out GrabbableObject g))
-            objectThatActivatedReciever = null;
         if (other.gameObject.layer == LayerInfo.INTERACTABLE_OBJECT) {
             if (isOn) {
+                objectThatActivatedReciever = null;
                 Deactivate();
             }
         }
     }
     public override void Activate() {
         base.Activate();
+        holo.SetActive(false);
         onLeds.SetActive(true);
         offLeds.SetActive(false);
-        try { 
+        try {
             puzzlePieceToActivate.Activate();
         }
         catch {

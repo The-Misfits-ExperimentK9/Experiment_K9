@@ -61,7 +61,7 @@ Transform:
   m_GameObject: {fileID: 74397854644777205}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: 33.619312, y: -10.329067, z: 82.105675}
+  m_LocalPosition: {x: 40.71931, y: -10.329067, z: 66.60768}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -136,7 +136,7 @@ Transform:
   m_GameObject: {fileID: 266677610665238099}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 7.1, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -687,10 +687,11 @@ MonoBehaviour:
   canResetLocation: 1
   is3D: 1
   spawnPoint: {fileID: 0}
-  interactDisplayRadius: 10
-  interactableLayerMask:
+  interactDisplayRadius: 15
+  receiverLayers:
     serializedVersion: 2
-    m_Bits: 65664
+    m_Bits: 2048
+  receivables: []
 --- !u!114 &5647112630155608246
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -731,15 +732,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   holdArea: {fileID: 8413178250063108687}
   HeldObject: {fileID: 0}
-  pickupForce: 10
-  pickupDrag: 20
+  pickupForce: 150
+  pickupDrag: 10
   objectsInInteractRange: []
   PickupBlockingLayers:
     serializedVersion: 2
-    m_Bits: 0
-  HoldBlockingLayers:
+    m_Bits: 70081
+  interactableLayerMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 65664
 --- !u!1 &4384154448399022592
 GameObject:
   m_ObjectHideFlags: 0
@@ -767,8 +768,8 @@ Transform:
   m_GameObject: {fileID: 4384154448399022592}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
-  m_LocalScale: {x: 1.3333334, y: 1.1111112, z: 1.3333334}
+  m_LocalPosition: {x: 0, y: -2, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8520350602671941531}
@@ -792,7 +793,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 10
+  m_Radius: 15
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &632825037184773871
 MonoBehaviour:
@@ -1251,8 +1252,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6774737294069508098}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -28.75, y: 3.375, z: -3.6000004}
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
+  m_LocalPosition: {x: 36.23748, y: 3.7609339, z: -63.59999}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1292,7 +1293,7 @@ Camera:
     height: 1
   near clip plane: 0.2
   far clip plane: 500
-  field of view: 40
+  field of view: 60
   orthographic: 0
   orthographic size: 10
   m_Depth: -1
