@@ -5,8 +5,7 @@ using UnityEngine;
 public class ActivatorControlledConveyorWall : ActivatablePuzzlePiece
 {
     [SerializeField] ConveyerWall wallPart;
-    [SerializeField] private List<GameObject> activator;
-    [SerializeField] List<bool> active;
+    [SerializeField] private float playerMoveForcePerActivator = 25f;
     int index = 0;
 
     // Start is called before the first frame update
@@ -14,47 +13,15 @@ public class ActivatorControlledConveyorWall : ActivatablePuzzlePiece
     {
         wallPart.PlayerMoveForceAmount = 0.0f;
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        wallPart.PlayerMoveForceAmount = 25.0f * CheckActivators();
-    }
-
     public override void Activate()
     {
-        active[index] = true;
-        index++;
-
-        if (index >= active.Count)
-        {
-            index = 0;
-        }
+        //increment index then multiply by force per activator then set the wall's force to that value
+        wallPart.PlayerMoveForceAmount = playerMoveForcePerActivator * ++index;
     }
 
     public override void Deactivate()
     {
-        active[index] = false;
-        index--;
-
-        if (index >= active.Count)
-        {
-            index = 0;
-        }
+        wallPart.PlayerMoveForceAmount = playerMoveForcePerActivator * --index;
     }
 
-    private int CheckActivators()
-    {
-        int activatorsActive = 0;
-
-        for (int i = 0; i < active.Count; i++)
-        {
-            if (active[i] == true)
-            {
-                activatorsActive++;
-            }
-        }
-
-        return activatorsActive;
-    }
 }
