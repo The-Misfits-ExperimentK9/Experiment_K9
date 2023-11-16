@@ -63,11 +63,14 @@ public class GrabbableObject : MonoBehaviour {
         if (displayObject3D_Mesh.name != "actual_cube")
         {
             sphere.enabled = true;
-            sphere.excludeLayers = LayerMask.GetMask("Nothing");
-          //  displayObject3D_Mesh.transform.parent = transform;
+            if (PlayerBehaviour.Instance.GetClosestReceiver() != null)
+                transform.position = PlayerBehaviour.Instance.GetClosestReceiver().transform.position;
+            else
+                transform.position = displayObject3D_Mesh.transform.position;
+            //  sphere.excludeLayers = LayerMask.GetMask("Nothing");
+            //  displayObject3D_Mesh.transform.parent = transform;
         }
         
-        transform.position = displayObject3D_Mesh.transform.position;
         displayObject3D_Mesh.transform.localPosition = Vector3.zero;
         rb3D.useGravity = true;
         rb3D.drag = 1;

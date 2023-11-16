@@ -10,8 +10,8 @@ using UnityEngine.SceneManagement;
 
 public class PlayerBehaviour : MonoBehaviour {
 
-    
-                                                           //  private bool canMove = true;                            //disable or enable player movement
+
+    //  private bool canMove = true;                            //disable or enable player movement
 
     [Header("Player References")]
     public GameObject player2D;                             //holds the 2d depiction of the player
@@ -29,7 +29,7 @@ public class PlayerBehaviour : MonoBehaviour {
     public InterfaceBehaviour interfaceScript;
 
     [Header("Settings")]
-    
+
     [SerializeField] private bool canResetLocation = true;
     public bool is3D = true;                               //handles checking if the player is in 3d or 2d mode
 
@@ -43,9 +43,9 @@ public class PlayerBehaviour : MonoBehaviour {
 
     [Header("Interacting")]
     public float interactDisplayRadius = 20f; //radius of the collider to determine the range at which the player can interact
-    [SerializeField] private LayerMask interactableLayerMask; //layer mask for the interactable objects
-
-
+    [SerializeField] private LayerMask receiverLayers; //layer mask for the ball receivers
+    private List<Collider> receivables = new(); //list of potential ball receivers
+    private BallReceiver closestBallReceiver;
 
     private void Start() {
         //set singleton
@@ -68,23 +68,64 @@ public class PlayerBehaviour : MonoBehaviour {
             Debug.LogError("Missing player 3d when assigning controller scripts");
         }
     }
-    
+
     public void SetPaused(bool paused) {
         thirdPersonController.SetPaused(paused);
         this.paused = paused;
     }
 
     void Update() {
-        
+
         if (!paused) {
-            
             if (canResetLocation) {
                 HandleResetInput();
             }
+            //only check bal receivers while holding object and in 3d
+            if (pickupController.IsHoldingObject() && is3D) {
+                FindNearestReceiverAndActivateHologram();
+            }
         }
     }
-    
-   private void HandleResetInput() {
+    private void FindNearestReceiverAndActivateHologram() {
+
+
+        //enable the closest one
+        var closestReceiver = GetClosest3DObjectInColliderArray(receivables);
+
+        if (closestReceiver != null) {
+            var receiver = closestReceiver.GetComponent<BallReceiver>();
+            if (receiver.HoloIsOn)
+                return;
+            receiver.ActivateHolo();
+            closestBallReceiver = receiver;
+        }
+        if (receivables.Count > 1) {
+            receivables.ForEach(collider => {
+                if (collider.gameObject != closestReceiver) {
+                    var receiver = collider.GetComponent<BallReceiver>();
+                    receiver.DeactivateHolo();
+                }
+            });
+        }
+
+
+
+    }
+    public void AddReceivableToList(Collider receivable) {
+        if (receivables.Contains(receivable)) {
+            return;
+        }
+        receivables.Add(receivable);
+    }
+    public void RemoveReceivableFromList(Collider receivable) {
+        if (receivable.TryGetComponent(out BallReceiver component)) {
+
+            component.DeactivateHolo();
+        }
+        receivables.Remove(receivable);
+    }
+
+    private void HandleResetInput() {
         if (is3D) {
             if (resetKey.wasPressedThisFrame) {
                 ResetPlayerPosition();
@@ -141,16 +182,24 @@ public class PlayerBehaviour : MonoBehaviour {
     //returns true if the game is in 3d mode
     public bool IsIn3D() { return is3D; }
 
-    public GameObject GetClosestInteractable3D() {
+    public GameObject GetClosest3DObjectOnLayers(LayerMask layers) {
         // Perform the overlap sphere and get the colliders within the specified radius.
-        Collider[] interactableColliders = Physics.OverlapSphere(player3D.transform.position, interactDisplayRadius, interactableLayerMask);
+        Collider[] interactableColliders = Physics.OverlapSphere(player3D.transform.position, interactDisplayRadius, layers);
 
+        return GetClosest3DObjectInColliderArray(interactableColliders);
+
+
+    }
+    private GameObject GetClosest3DObjectInColliderArray(List<Collider> interactableColliders) {
+        return GetClosest3DObjectInColliderArray(interactableColliders.ToArray());
+    }
+    private GameObject GetClosest3DObjectInColliderArray(Collider[] colliders) {
         // Initialize variables to keep track of the closest object.
         GameObject closestObject = null;
         float smallestOrthogonalDistance = float.MaxValue;
         Ray cameraRay = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
 
-        foreach (var collider in interactableColliders) {
+        foreach (var collider in colliders) {
             // Get the closest point on the camera ray to the object's position.
             Vector3 closestPointOnRay = cameraRay.GetPoint(Vector3.Dot(collider.transform.position - cameraRay.origin, cameraRay.direction));
             // Calculate the orthogonal distance from the object to the ray.
@@ -158,14 +207,56 @@ public class PlayerBehaviour : MonoBehaviour {
 
             // Check if this collider is closer to the camera's forward direction than the previous ones.
             if (orthogonalDistance < smallestOrthogonalDistance) {
-                smallestOrthogonalDistance = orthogonalDistance;
-                closestObject = collider.gameObject;
+                // var vecFromCameraToObject = collider.transform.position- Camera.main.transform.position;
+                //   var cameraForward = Camera.main.transform.forward;
+                Vector3 viewportPos = Camera.main.WorldToViewportPoint(collider.transform.position);
+
+                // Check if the object is within the viewport bounds
+                bool isOnScreen = viewportPos.x >= 0 && viewportPos.x <= 1 && viewportPos.y >= 0 && viewportPos.y <= 1;
+
+                //allow picking up items in 90 degree cone in front of camera
+
+                if (isOnScreen) {
+                    smallestOrthogonalDistance = orthogonalDistance;
+                    closestObject = collider.gameObject;
+                }
             }
         }
 
         // Return the closest interactable object or null if none was found.
         return closestObject;
     }
+    public BallReceiver GetClosestReceiver() {
+        return closestBallReceiver;
+    }
+
+    //public GameObject GetClosestReciever() {
+    //    // Perform the overlap sphere and get the colliders within the specified radius.
+    //    Collider[] eventTriggerColliders = Physics.OverlapSphere(player3D.transform.position + player3D.transform.forward, 10, LayerMask.GetMask("EventTrigger"));
+
+    //    // Initialize variables to keep track of the closest object.
+    //    GameObject closestObject = null;
+    //    float smallestOrthogonalDistance = float.MaxValue;
+    //    Ray cameraRay = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
+
+    //    foreach (var collider in eventTriggerColliders) {
+    //        if (collider.TryGetComponent(out BallReceiver b)) {
+    //            // Get the closest point on the camera ray to the object's position.
+    //            Vector3 closestPointOnRay = cameraRay.GetPoint(Vector3.Dot(collider.transform.position - cameraRay.origin, cameraRay.direction));
+    //            // Calculate the orthogonal distance from the object to the ray.
+    //            float orthogonalDistance = Vector3.Distance(collider.transform.position, closestPointOnRay);
+
+    //            // Check if this collider is closer to the camera's forward direction than the previous ones.
+    //            if (orthogonalDistance < smallestOrthogonalDistance) {
+    //                smallestOrthogonalDistance = orthogonalDistance;
+    //                closestObject = collider.gameObject;
+    //            }
+    //        }
+    //    }
+
+    //    // Return the closest interactable object or null if none was found.
+    //    return closestObject;
+    //}
 
 }
 

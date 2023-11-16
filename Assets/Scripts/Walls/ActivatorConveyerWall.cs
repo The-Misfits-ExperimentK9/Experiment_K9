@@ -14,7 +14,7 @@ public class ActivatorConveyerWall : ConveyerWall
     protected override void Start()
     {
         // Initially, the conveyer wall doesn't move the player at all.
-        playerMoveForceAmount = 0.0f;
+        PlayerMoveForceAmount = 0.0f;
         base.Start();
     }
 
@@ -37,7 +37,7 @@ public class ActivatorConveyerWall : ConveyerWall
             }
         }
 
-        playerMoveForceAmount = 25.0f * activeCount;
+        PlayerMoveForceAmount = 25.0f * activeCount;
     }
 
 }
