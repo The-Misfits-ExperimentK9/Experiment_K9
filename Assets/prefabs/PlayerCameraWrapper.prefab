@@ -217,7 +217,7 @@ MonoBehaviour:
   currentWall: {fileID: 0}
   AllowCameraRotation2D: 0
   Camera2dLookAt: {fileID: 1535816345688438407}
-  cameraRotationSpeed: 100
+  cameraRotationSpeed: 200
   cameraMaxRotationAngle: 25
   cameraTotalRotation: 0
   cameraRotationResetSpeed: 5

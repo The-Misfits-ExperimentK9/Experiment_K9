@@ -389,12 +389,21 @@ public class MovementController_2D : MonoBehaviour {
         if (wallB.IsWalkThroughEnabled) {
             WallBehaviour pastwall = currentWall;
             SetCurrentWall(wallB);
-            if (pastwall == null || IsPerpendicular(wallB.transform, pastwall.transform)) {
+            //if (pastwall == null || IsPerpendicular(wallB.transform, pastwall.transform)) {
+            //    SetCurrentWall(wallB);
+            //    TransitionToNewAxis(closestPoint, wallB);
+
+            //}
+            if (pastwall == null || IsWallAtNewAngle(wallB.transform)) {
                 SetCurrentWall(wallB);
                 TransitionToNewAxis(closestPoint, wallB);
 
             }
         }
+    }
+
+    private bool IsWallAtNewAngle(Transform wall) {
+        return wall.up != transform.forward && -wall.up != transform.forward;
     }
     private void OnCollisionEnter(Collision collision) {
         if (PlayerBehaviour.Instance.IsIn3D()) return;

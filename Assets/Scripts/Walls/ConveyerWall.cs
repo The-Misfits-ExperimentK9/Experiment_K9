@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ConveyerWall : WallBehaviour {
-    protected Rigidbody playerRb;
-    protected MovementController_2D player2D;
+    [SerializeField] protected Rigidbody playerRb;
+    [SerializeField] protected MovementController_2D player2D;
     public float playerMoveForceAmount;
     [SerializeField] protected Vector3 playerMoveDirection = Vector3.zero;
 
@@ -20,19 +20,23 @@ public class ConveyerWall : WallBehaviour {
     protected virtual void FixedUpdate() {
         MovePlayer();
     }
-    
+
     protected virtual void MovePlayer() {
         if (playerRb != null) {
 
-            if (player2D.Is2DPlayerActive) {
-                playerRb.AddForce(playerMoveDirection * playerMoveForceAmount);
+
+            if (!player2D.isActiveAndEnabled) {
+                playerRb = null;
+                return;
             }
+            playerRb.AddForce(playerMoveDirection * playerMoveForceAmount);
         }
     }
     private void OnCollisionEnter(Collision collision) {
 
         if (collision.gameObject.layer == LayerInfo.PLAYER) {
             if (collision.gameObject.TryGetComponent(out MovementController_2D player2D)) {
+                
                 playerRb = collision.gameObject.GetComponent<Rigidbody>();
                 this.player2D = player2D;
 
@@ -41,7 +45,9 @@ public class ConveyerWall : WallBehaviour {
         }
     }
     private void OnCollisionExit(Collision collision) {
+        Debug.Log("on collision exit");
         if (collision.gameObject.layer == LayerInfo.PLAYER) {
+            Debug.Log("player exit");
             playerRb = null;
             player2D = null;
         }

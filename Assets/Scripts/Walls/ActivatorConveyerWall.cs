@@ -39,4 +39,5 @@ public class ActivatorConveyerWall : ConveyerWall
 
         playerMoveForceAmount = 25.0f * activeCount;
     }
+
 }
