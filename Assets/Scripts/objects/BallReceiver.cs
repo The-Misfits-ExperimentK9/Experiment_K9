@@ -84,7 +84,7 @@ public class BallReceiver : ReceivableParent {
         onLeds.SetActive(false);
         offLeds.SetActive(true);
         try {
-            puzzlePieceToActivate.Deactivate();
+            puzzlePieceToActivate.Deactivate(gameObject);
         }
         catch {
             Debug.LogError("No puzzle piece to activate");

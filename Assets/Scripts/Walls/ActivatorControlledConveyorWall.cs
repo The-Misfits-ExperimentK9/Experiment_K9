@@ -19,7 +19,7 @@ public class ActivatorControlledConveyorWall : ActivatablePuzzlePiece
         wallPart.PlayerMoveForceAmount = playerMoveForcePerActivator * ++index;
     }
 
-    public override void Deactivate()
+    public override void Deactivate(GameObject caller)
     {
         if (index == 0) return;
         wallPart.PlayerMoveForceAmount = playerMoveForcePerActivator * --index;

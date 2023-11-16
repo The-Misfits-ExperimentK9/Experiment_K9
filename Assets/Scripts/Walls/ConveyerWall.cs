@@ -5,7 +5,7 @@ using UnityEngine;
 public class ConveyerWall : WallBehaviour {
     [SerializeField] protected Rigidbody playerRb;
     [SerializeField] protected MovementController_2D player2D;
-    public float playerMoveForceAmount;
+    public float PlayerMoveForceAmount;
     [SerializeField] protected Vector3 playerMoveDirection = Vector3.zero;
 
     protected virtual void Start() {
@@ -29,7 +29,7 @@ public class ConveyerWall : WallBehaviour {
                 playerRb = null;
                 return;
             }
-            playerRb.AddForce(playerMoveDirection * playerMoveForceAmount);
+            playerRb.AddForce(playerMoveDirection * PlayerMoveForceAmount);
         }
     }
     private void OnCollisionEnter(Collision collision) {
