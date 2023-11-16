@@ -30,11 +30,14 @@ public class BallReceiver : ReceivableParent {
         //    Destroy(currentHolo);
 
         if (objectThatActivatedReciever != null) {
+            if (objectThatActivatedReciever.IsBeingHeld) {
+                objectThatActivatedReciever = null;
+                Deactivate();
+                return;
+            }
             if (objectThatActivatedReciever == null && isOn)
                 Deactivate();
-            else if (objectThatActivatedReciever.IsBeingHeld)
-                Deactivate();
-            else if (objectThatActivatedReciever != null && !objectThatActivatedReciever.IsBeingHeld)
+            else if (objectThatActivatedReciever != null && !objectThatActivatedReciever.IsBeingHeld)   
                 Activate();
         }
     }
