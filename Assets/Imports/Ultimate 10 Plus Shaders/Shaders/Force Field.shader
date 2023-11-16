@@ -41,10 +41,12 @@ Shader "Ultimate 10+ Shaders/Force Field"
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
-        [HDR] _Color ("Color", Color) = (1,1,1,1)
+        [HDR] _Color("Color", Color) = (1,1,1,1)
 
         _FresnelPower("Fresnel Power", Range(0, 10)) = 3
-        _ScrollDirection ("Scroll Direction", float) = (0, 0, 0, 0)
+        _ScrollDirection("Scroll Direction", float) = (0, 0, 0, 0)
+
+        _BorderThickness("Border Thickness", float) = 1
     }
     SubShader
     {
@@ -89,6 +91,7 @@ Shader "Ultimate 10+ Shaders/Force Field"
             fixed4 _Color;
             half _FresnelPower;
             half2 _ScrollDirection;
+            float _BorderThickness;
 
             
             // Add instancing support for this shader. You need to check 'Enable Instancing' on materials that use the shader.
@@ -107,7 +110,7 @@ Shader "Ultimate 10+ Shaders/Force Field"
                 output.uv = TRANSFORM_TEX(vert.uv, _MainTex);
 
                 viewDir = normalize(ObjSpaceViewDir(vert.vertex));
-                output.rim = 1.0 - (1.4)*saturate(dot(viewDir, vert.normal));
+                output.rim = 1.0 - (_BorderThickness)*saturate(dot(viewDir, vert.normal));
 
                 output.uv += _ScrollDirection * _Time.y;
 
