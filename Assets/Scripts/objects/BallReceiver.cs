@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -58,7 +59,12 @@ public class BallReceiver : ReceivableParent {
         base.Activate();
         onLeds.SetActive(true);
         offLeds.SetActive(false);
-        puzzlePieceToActivate.Activate();
+        try { 
+            puzzlePieceToActivate.Activate();
+        }
+        catch {
+            Debug.LogError("No puzzle piece to activate");
+        }
         isOn = true;
 
     }
@@ -66,7 +72,12 @@ public class BallReceiver : ReceivableParent {
         base.Deactivate();
         onLeds.SetActive(false);
         offLeds.SetActive(true);
-        puzzlePieceToActivate.Deactivate();
+        try {
+            puzzlePieceToActivate.Deactivate();
+        }
+        catch {
+            Debug.LogError("No puzzle piece to activate");
+        }
         isOn = false;
     }
 }
