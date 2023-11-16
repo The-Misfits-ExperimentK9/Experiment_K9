@@ -7,9 +7,22 @@ public class ConveyerWall : WallBehaviour {
     protected MovementController_2D player2D;
     [SerializeField] public float playerMoveForceAmount;
 
+    public float PlayerMoveForceAmount
+    {
+        get
+        {
+            return playerMoveForceAmount;
+        }
+        set
+        {
+            playerMoveForceAmount = value;
+        }
+    }
+
     protected virtual void Update() {
         MovePlayer();
     }
+
     protected virtual void MovePlayer() {
         if (playerRb != null) {
 
@@ -18,6 +31,7 @@ public class ConveyerWall : WallBehaviour {
             }
         }
     }
+
     protected void OnCollisionEnter(Collision collision) {
 
         if (collision.gameObject.layer == LayerInfo.PLAYER) {

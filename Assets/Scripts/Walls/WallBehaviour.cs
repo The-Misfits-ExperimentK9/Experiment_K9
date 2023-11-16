@@ -13,4 +13,15 @@ public class WallBehaviour : MonoBehaviour {
     //public float pushForce = 1f;
     public float LaunchForce = 10f;
 
+    public bool Active
+    {
+        get
+        {
+            return AllowsDimensionTransition;
+        }
+        set
+        {
+            AllowsDimensionTransition = value;
+        }
+    }
 }
