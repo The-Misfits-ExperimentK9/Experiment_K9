@@ -119,7 +119,8 @@ public class PlayerBehaviour : MonoBehaviour {
     }
     public void RemoveReceivableFromList(Collider receivable) {
         if (receivable.TryGetComponent(out BallReceiver component)) {
-
+            if (component == closestBallReceiver)
+                closestBallReceiver = null;
             component.DeactivateHolo();
         }
         receivables.Remove(receivable);
