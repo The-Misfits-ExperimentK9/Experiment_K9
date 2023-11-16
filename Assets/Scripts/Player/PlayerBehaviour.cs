@@ -195,6 +195,10 @@ public class PlayerBehaviour : MonoBehaviour {
         return GetClosest3DObjectInColliderArray(interactableColliders.ToArray());
     }
     private GameObject GetClosest3DObjectInColliderArray(Collider[] colliders) {
+        if (colliders.Length == 0)
+            return null;
+        if (colliders.Length == 1)
+            return colliders[0].gameObject;
         // Initialize variables to keep track of the closest object.
         GameObject closestObject = null;
         float smallestOrthogonalDistance = float.MaxValue;
