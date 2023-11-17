@@ -5034,7 +5034,7 @@ PrefabInstance:
     - target: {fileID: 5889834318972051371, guid: 817af57696690fc4cabfa3b043fd2227, type: 3}
       propertyPath: glowPath
       value: 
-      objectReference: {fileID: 1080292585}
+      objectReference: {fileID: 1080292587}
     - target: {fileID: 5889834318972051371, guid: 817af57696690fc4cabfa3b043fd2227, type: 3}
       propertyPath: puzzlePieceToActivate
       value: 
@@ -9695,7 +9695,7 @@ Transform:
   m_GameObject: {fileID: 1929003452}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 124, y: 47.64, z: -107.51}
+  m_LocalPosition: {x: 124, y: 47.64, z: -108.24}
   m_LocalScale: {x: 22.57527, y: 21.048, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
