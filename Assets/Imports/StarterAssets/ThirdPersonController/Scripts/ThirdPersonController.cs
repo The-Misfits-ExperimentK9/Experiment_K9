@@ -456,7 +456,8 @@ namespace StarterAssets
                 if (hit.gameObject.CompareTag("LevelGoal"))
                 {
                     var levelManager = GameObject.Find("LevelManager").GetComponent<LevelManager>();
-                    levelManager.IncrementLevel();
+                    if (levelManager != null)
+                        levelManager.IncrementLevel();
 
 
                 }
