@@ -112,7 +112,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 82f3b755628ea27418c4cd2e984a6758, type: 2}
   - {fileID: 2100000, guid: 82f3b755628ea27418c4cd2e984a6758, type: 2}
   minMassToPress: 5
-  IsPermanentlyPressedOnPress: 0
+  IsPermanentlyPressedOnPress: 1
   presser: {fileID: 0}
 --- !u!54 &4849342270943865673
 Rigidbody:
@@ -122,7 +122,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 977498680303453096}
   serializedVersion: 4
-  m_Mass: 4
+  m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -192,7 +192,7 @@ Transform:
   m_GameObject: {fileID: 3216956122741501285}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -4.4, z: 0}
+  m_LocalPosition: {x: 0, y: -4.44, z: 0}
   m_LocalScale: {x: 6, y: 5, z: 6}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -255,7 +255,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3216956122741501285}
-  m_Material: {fileID: 13400000, guid: e65958df5e4776f4d84e039124ed6de3, type: 2}
+  m_Material: {fileID: 13400000, guid: 4435daff261a7ab458b4963e75878e54, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -387,7 +387,7 @@ MeshCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3964964307166393470}
-  m_Material: {fileID: 13400000, guid: e65958df5e4776f4d84e039124ed6de3, type: 2}
+  m_Material: {fileID: 13400000, guid: 4435daff261a7ab458b4963e75878e54, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
