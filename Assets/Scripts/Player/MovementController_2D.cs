@@ -554,9 +554,9 @@ public class MovementController_2D : MonoBehaviour {
         direction.Normalize();
 
         // Ensure the vector points outwards from the collider
-        if (Vector3.Dot(direction, collider.transform.forward) > 0) {
-            direction = -direction;
-        }
+        //if (Vector3.Dot(direction, collider.transform.forward) > 0) {
+        //    direction = -direction;
+        //}
 
         return direction;
     }

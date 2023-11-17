@@ -20,7 +20,7 @@ public class Platform : ActivatablePuzzlePiece {
     private float distanceToCheck = .05f;
     [SerializeField] private bool unlocked = false;
 
-    [SerializeField] private bool unlockedByPlayerCollision = true;
+    [SerializeField] private bool unlockedByPlayerCollision = false;
  //   [SerializeField] private bool dontMoveWithoutPlayer = true;
 
     private Vector3 currentTravelTarget;
@@ -46,6 +46,7 @@ public class Platform : ActivatablePuzzlePiece {
     }
     public override void Activate() {
         unlocked = true;
+        StartMoving();
     }
 
     public override void Deactivate(GameObject caller) {
@@ -132,23 +133,26 @@ public class Platform : ActivatablePuzzlePiece {
         GetNextTargetLocation();
         yield return null;
     }
-
-    private void OnCollisionEnter(Collision collision) {
-        if (collision.gameObject.layer == LayerInfo.PLAYER) {
+    void OnControllerColliderHit(ControllerColliderHit hit) {
+        if (hit.gameObject.layer == LayerInfo.PLAYER) {
             if (!unlocked && unlockedByPlayerCollision) {
                 unlocked = true;
             }
-          //  playerOnPlatform = true;
-            player = collision.gameObject;
+            //  playerOnPlatform = true;
+            player = hit.gameObject;
             playerRb = player.GetComponent<Rigidbody>();
             StartMoving();
         }
     }
-    private void OnCollisionExit(Collision collision) {
-        if (collision.gameObject.layer == LayerInfo.PLAYER) {
-           // playerOnPlatform = false;
 
-        }
-    }
+    //private void OnCollisionEnter(Collision collision) {
+       
+    //}
+    //private void OnCollisionExit(Collision collision) {
+    //    if (collision.gameObject.layer == LayerInfo.PLAYER) {
+    //       // playerOnPlatform = false;
+
+    //    }
+    //}
 }
 

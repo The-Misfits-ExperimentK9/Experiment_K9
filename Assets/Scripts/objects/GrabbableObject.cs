@@ -73,7 +73,10 @@ public class GrabbableObject : MonoBehaviour {
             //  sphere.excludeLayers = LayerMask.GetMask("Nothing");
             //  displayObject3D_Mesh.transform.parent = transform;
         }
-        transform.localPosition = Vector3.zero;
+        else {
+            transform.localPosition = Vector3.zero;
+        }
+        
         transform.parent = null;
         displayObject3D_Mesh.transform.localPosition = Vector3.zero;
         
