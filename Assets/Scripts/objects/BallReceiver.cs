@@ -43,11 +43,9 @@ public class BallReceiver : ReceivableParent {
     }
     public void ActivateHolo() {
         HoloIsOn = true;
-        Debug.Log("activating holo");
         holo.SetActive(true);
     }
     public void DeactivateHolo() {
-        Debug.Log("deactivating holo");
         HoloIsOn = false;
         holo.SetActive(false);
     }
