@@ -59,7 +59,7 @@ public class ButtonBehaviour : ReceivableParent {
 
 
     private void OnCollisionEnter(Collision collision) {
-        Debug.Log("collision " + collision.gameObject.layer);
+       // Debug.Log("collision " + collision.gameObject.layer);
         if (collision.gameObject.layer == LayerInfo.INTERACTABLE_OBJECT) {
             presser = collision.gameObject;
         }

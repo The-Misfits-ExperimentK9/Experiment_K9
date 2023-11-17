@@ -74,7 +74,8 @@ namespace StarterAssets
 
             [Tooltip("For locking the camera position on all axis")]
             public bool LockCameraPosition = false;
-
+            [Tooltip("Basically sensitivity how fast you want your camera to turn")]
+            public float turnspeed = 1.0f;
             // cinemachine
             private float _cinemachineTargetYaw;
             private float _cinemachineTargetPitch;
@@ -223,7 +224,8 @@ namespace StarterAssets
                 if (_input.look.sqrMagnitude >= _threshold && !LockCameraPosition)
                 {
                     //Don't multiply mouse input by Time.deltaTime;
-                    float deltaTimeMultiplier = IsCurrentDeviceMouse ? 1.0f : Time.deltaTime;
+                    //turn sensitivity
+                    float deltaTimeMultiplier = IsCurrentDeviceMouse ? turnspeed : Time.deltaTime;
 
                     _cinemachineTargetYaw += _input.look.x * deltaTimeMultiplier;
                     _cinemachineTargetPitch += _input.look.y * deltaTimeMultiplier;
