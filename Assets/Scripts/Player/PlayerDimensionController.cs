@@ -40,6 +40,8 @@ public class PlayerDimensionController : MonoBehaviour {
     private KeyControl DOGLeaveKey;
     private KeyControl pauseKey;
 
+    private Vector3 gizmoDrawLocation = Vector3.zero;
+
 
     // public float DOGProjectionRange = 25f;
 
@@ -54,6 +56,7 @@ public class PlayerDimensionController : MonoBehaviour {
 
         HandlePauseInput();
         HandleAutoModeInput();
+        
         if (PlayerBehaviour.Instance.IsIn3D() && DOGEnabled)
             HandleSurfaceProjection();
     }
@@ -252,21 +255,30 @@ public class PlayerDimensionController : MonoBehaviour {
         }
     }
 
+
     public void TryTransitionTo2D() {
-        if (movementController_2D.IsProjectionSpaceClear(transform.position) && IsProjecting == true) {
+        if (movementController_2D.
+            IsProjectionSpaceClear(movementController_2D.transform.position) 
+            && IsProjecting == true) {
             TransitionTo2D();
         }
         else {
             Debug.Log("Transition area blocked or its not projecting");
         }
     }
+    private void OnDrawGizmos() {
+        Gizmos.color = Color.red;
+        Gizmos.DrawSphere(gizmoDrawLocation, .5f);
+    }
 
     private void TransitionTo2D() {
-
+        
         movementController_2D.GetComponent<Rigidbody>().isKinematic = false;
         movementController_2D.SetCurrentWall(currentProjectionSurface.GetComponent<WallBehaviour>());
         StartCoroutine(movementController_2D.EnableCameraRotationAfterSeconds(2f));
+        
         SetWallProjectionToActive();
+        
         player3D.SetActive(false);
 
         PlayerBehaviour.Instance.ChangeDimension();
@@ -279,10 +291,12 @@ public class PlayerDimensionController : MonoBehaviour {
             sAssetsInput.ClearInput();
         }
         Physics.IgnoreLayerCollision(LayerInfo.PLAYER, LayerInfo.INTERACTABLE_OBJECT);
+        
+        //player is in the correct position at the end of this function
 
     }
     public void TransitionTo3D() {
-        VirtualCamera3D.LookAt = player2D.transform;
+        VirtualCamera3D.LookAt = player2D.transform;    
         VirtualCamera3D.Follow = Camera2D.transform;
         //adjust the player 3d model to be in front of the wall offset by a small amount
         MovePlayerOutOfWall(player2D.transform.position + player2D.transform.forward * playerLeaveWallOffset);
@@ -306,6 +320,7 @@ public class PlayerDimensionController : MonoBehaviour {
         }
     }
     public void TransitionTo3DLaunch() {
+        
         Vector3 launchDirection = player2D.transform.forward;
 
         //adjust the player 3d model to be in front of the wall offset by a small amount

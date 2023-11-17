@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class MovingWall : WallBehaviour
 {
-    public bool isMoving = false;
+    public bool isMoving = true;
     //waiting for a bit before moving
     private bool wait = false;
     [SerializeField] private float waitTime = 10f;

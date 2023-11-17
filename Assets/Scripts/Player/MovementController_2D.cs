@@ -104,10 +104,12 @@ public class MovementController_2D : MonoBehaviour {
     // Update is called once per frame
     void FixedUpdate() {
         if (!PlayerBehaviour.Instance.IsIn3D()) {
-            ApplyFriction();
             
-            if (CanMove)
+            ApplyFriction();
+
+            if (CanMove) {
                 Move();
+            }
             //Move2D();
             if (currentWall.AllowsDimensionTransition && !PlayerBehaviour.Instance.playerDimensionController.DOGEnabled) {
                 PlayerBehaviour.Instance.playerDimensionController.TransitionTo3D();
@@ -126,8 +128,8 @@ public class MovementController_2D : MonoBehaviour {
         if (AllowCameraRotation2D) {
             RotateCamera2dLookAt();
         }
-        if (Is2DPlayerActive)
-            AABBCheckForWallLeaving();
+        //if (Is2DPlayerActive)
+        //    AABBCheckForWallLeaving();
 
     }
     #endregion
@@ -208,6 +210,7 @@ public class MovementController_2D : MonoBehaviour {
     
 
     private void Move() {
+
         float targetSpeed = maxSpeed2D;
 
         var input = GetInput();
@@ -300,7 +303,6 @@ public class MovementController_2D : MonoBehaviour {
             if (jumpKey.wasPressedThisFrame && _jumpTimeoutDelta <= 0.0f) {
                 // the square root of H * -2 * G = how much velocity needed to reach desired height
                 _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
-                Debug.Log("jumping" + _verticalVelocity);
                 // update animator if using character
 
             }
@@ -328,7 +330,7 @@ public class MovementController_2D : MonoBehaviour {
 
         // apply gravity over time if under terminal (multiply by delta time twice to linearly speed up over time)
         if (_verticalVelocity < _terminalVelocity) {
-            _verticalVelocity += Gravity * Time.deltaTime;//fixed delta time
+            _verticalVelocity += Gravity * Time.deltaTime;
         }
 
     }
@@ -336,24 +338,27 @@ public class MovementController_2D : MonoBehaviour {
     #endregion
     #region transition to a new axis
     void TransitionToNewAxis(Vector3 closestPointOnBounds, WallBehaviour wall) {
+        Debug.Log("TransitionToNewAxis");
         AllowCameraRotation2D = false;
         StartCoroutine(EnableCameraRotationAfterSeconds(2f));
         cameraTotalRotation = 0f;
-        bool flipOffset = transform.forward.x < 0 || transform.forward.z < 0;
+        bool flipOffset = transform.forward.x < -.001 || transform.forward.z < -.001;
         //rotate first to get correct transform.right
+          
         transform.forward = GetOrthogonalVectorTo2DPlayer(wall.GetComponent<Collider>());
 
         // Debug.Log($"Transitioning to {wall.name} and setting forward to {transform.forward}");
 
         LockPlayerMovementInForwardDirection();
         SetCurrentWall(wall);
-
+        
 
         //only supports changing x/z plane not y (ceiling/floor)
-        var offsetDirection = (transform.forward.x < 0 || transform.forward.z > 0) ? transform.right : -transform.right;
+        var offsetDirection = (transform.forward.x < -.001 || transform.forward.z > .001) ? transform.right : -transform.right;
+
         offsetDirection = flipOffset ? -offsetDirection : offsetDirection;
         newSpritePos = closestPointOnBounds + offsetDirection * offSetAmount;
-        gizmoDrawLoc = newSpritePos;
+        
         newSpritePos += transform.forward * PlayerDimensionController.WALL_DRAW_OFFSET;
 
         //move to offset position
@@ -386,14 +391,24 @@ public class MovementController_2D : MonoBehaviour {
         if (wallB.IsWalkThroughEnabled) {
             WallBehaviour pastwall = currentWall;
             SetCurrentWall(wallB);
-            if (pastwall == null || IsPerpendicular(wallB.transform, pastwall.transform)) {
+            //if (pastwall == null || IsPerpendicular(wallB.transform, pastwall.transform)) {
+            //    SetCurrentWall(wallB);
+            //    TransitionToNewAxis(closestPoint, wallB);
+
+            //}
+            if (pastwall == null || IsWallAtNewAngle(wallB.transform)) {
                 SetCurrentWall(wallB);
                 TransitionToNewAxis(closestPoint, wallB);
 
             }
         }
     }
+
+    private bool IsWallAtNewAngle(Transform wall) {
+        return wall.up != transform.forward && -wall.up != transform.forward;
+    }
     private void OnCollisionEnter(Collision collision) {
+        if (PlayerBehaviour.Instance.IsIn3D()) return;
 
         if (collision.gameObject.TryGetComponent(out WallBehaviour wallB)) {
 
@@ -404,9 +419,11 @@ public class MovementController_2D : MonoBehaviour {
         }
     }
     private void OnCollisionExit(Collision collision) {
-        Debug.Log("On COllision Exit called");
+
+        if (PlayerBehaviour.Instance.IsIn3D()) return;
 
         if (collision.gameObject.TryGetComponent(out WallBehaviour wallB)) {
+           
 
             if (currentWall == wallB && !PlayerBehaviour.Instance.IsIn3D() || currentWall == null && !PlayerBehaviour.Instance.IsIn3D()) {
               
@@ -539,9 +556,9 @@ public class MovementController_2D : MonoBehaviour {
         direction.Normalize();
 
         // Ensure the vector points outwards from the collider
-        if (Vector3.Dot(direction, collider.transform.forward) > 0) {
-            direction = -direction;
-        }
+        //if (Vector3.Dot(direction, collider.transform.forward) > 0) {
+        //    direction = -direction;
+        //}
 
         return direction;
     }

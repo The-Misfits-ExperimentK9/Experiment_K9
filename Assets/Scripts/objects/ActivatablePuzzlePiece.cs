@@ -6,5 +6,5 @@ public abstract class ActivatablePuzzlePiece : MonoBehaviour
 {
 
     public abstract void Activate();
-    public abstract void Deactivate();
+    public abstract void Deactivate(GameObject caller);
 }

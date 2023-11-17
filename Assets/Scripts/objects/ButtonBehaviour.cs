@@ -7,6 +7,7 @@ public class ButtonBehaviour : ReceivableParent {
     [SerializeField] private ActivatablePuzzlePiece puzzlePieceToActivate;
 
 
+
     [SerializeField] private float springForce = 1f;
     private Rigidbody rb;
     [SerializeField] private MeshRenderer pawMeshRenderer;
@@ -16,11 +17,11 @@ public class ButtonBehaviour : ReceivableParent {
     //the minimum mass the button needs to be in contact with to activate
     [SerializeField] private float minMassToPress = 5f;
     //control to make the button not unpress itself if it was successfully pressed
-    [SerializeField] private bool IsPermanentlyPressedOnPress = false;
+    [SerializeField] private bool IsPermanentlyPressedOnPress = true;
 
     private bool unpressed;
     //keeps track of who or what pressed the button to check its mass against minimum required
-    private GameObject presser;
+    [SerializeField] private GameObject presser;
 
     // Start is called before the first frame update
     void Awake() {
@@ -41,35 +42,36 @@ public class ButtonBehaviour : ReceivableParent {
 
     //move the button up if it is not at its starting position
     void UnPress() {
-        if (transform.localPosition.y < -0.01f) {
-            unpressed = false;
-            rb.AddForce(Vector3.up * springForce);
-        }
-        //clear and reset everything to 0
-        else if (!unpressed) {
-            unpressed = true;
-            var tempVec = transform.localPosition;
-            tempVec.y = 0;
-            transform.localPosition = tempVec;
-            rb.velocity = Vector3.zero;
-        }
+            if (transform.localPosition.y < -0.01f) {
+                unpressed = false;
+                rb.AddForce(springForce * Time.deltaTime * Vector3.up, ForceMode.Acceleration);
+            }
+            //clear and reset everything to 0
+            else if (!unpressed) {
+                unpressed = true;
+                var tempVec = transform.localPosition;
+                tempVec.y = 0;
+                transform.localPosition = tempVec;
+                rb.velocity = Vector3.zero;
+            }
+        
     }
 
 
     private void OnCollisionEnter(Collision collision) {
+       // Debug.Log("collision " + collision.gameObject.layer);
+        if (collision.gameObject.layer == LayerInfo.INTERACTABLE_OBJECT) {
+            presser = collision.gameObject;
+        }
         //button hit the trigger cube
         //check if the button can be pressed and open door and swap material if so
-        if (collision.collider.CompareTag("EventTrigger")) {
-            presser = collision.gameObject;
+        else if(collision.collider.CompareTag("EventTrigger")) {
             if (CanPressButton()) {
-                
                 Activate();
             }
         }
         //otherwise the collision was with something trying to press it so store it as the presser
-        else {
-            presser = collision.gameObject;
-        }
+       
 
     }
     //set materials to pressed and activate the puzzle piece
@@ -81,19 +83,16 @@ public class ButtonBehaviour : ReceivableParent {
     //set materials back to unpressed and deactivate the puzzle piece
     public override void Deactivate() {
         pawMeshRenderer.SetMaterials(unPressedMaterials);
-        puzzlePieceToActivate.Deactivate();
+        puzzlePieceToActivate.Deactivate(gameObject);
 
         base.Deactivate();
     }
 
     private void OnCollisionExit(Collision collision) {
+        //if (collision.gameObject == presser)
+        //    presser = null;
         if (collision.collider.CompareTag("EventTrigger")) {
             Deactivate();
-        }
-        else {
-            //null the presser if they leave the collision with the button
-            if (collision.gameObject == presser)
-                presser = null;
         }
 
     }
@@ -101,12 +100,12 @@ public class ButtonBehaviour : ReceivableParent {
     //then checks for mass on the attached rigid body
     //if no rigid body is found also return false
     private bool CanPressButton() {
-        if (presser == null) return false;
-        if (presser.layer == LayerInfo.PLAYER) return true;
-        if (presser.layer == 13) return true;
-        if (presser.TryGetComponent(out Rigidbody rb)) {
-            return rb.mass > minMassToPress;
-        }
-        return false;
+        return true;
+        //if (presser == null) return false;
+        //if (presser.layer == LayerInfo.PLAYER) return true;
+        //if (presser.TryGetComponent(out Rigidbody rb)) {
+        //    return rb.mass > minMassToPress;
+        //}
+        //return false;
     }
 }

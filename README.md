@@ -19,6 +19,7 @@ Mike
 <li>Pressable Button that can activate puzzle pieces</li>
 <li>Support for playing sound on puzzle piece activation</li>
 <li>Added the ability for the player to rotate the camera left or right while in 2D</li>
+<li>Brand new level</li>
 </ul>
 
 <h3>Changes</h3>
@@ -44,7 +45,7 @@ Mike
 <li>Conveyer Wall is now functional</li>
 <li>Fixed player picking up items through walls</li>
 <li>Fixed player jumping to incorrect wall when in contact with the ground in some scenarios</li>
- 
+<li>Attempted fixes for camera clipping outside the playable area</li> 
 </ul>
 
 

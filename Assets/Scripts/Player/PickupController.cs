@@ -20,8 +20,8 @@ public class PickupController : MonoBehaviour {
 
     [SerializeField] private List<GrabbableObject> objectsInInteractRange;    //a list of all the objects that are in interactable range
     [SerializeField] LayerMask PickupBlockingLayers;
-    [SerializeField] LayerMask HoldBlockingLayers;
-
+    
+    [SerializeField] private LayerMask interactableLayerMask; //layer mask for the interactable objects
 
     private void Awake() {
         interactKey = Keyboard.current.eKey;
@@ -75,7 +75,7 @@ public class PickupController : MonoBehaviour {
         if (transform.localPosition.magnitude > 0.2f) {
 
             var moveDirection = holdArea.position - heldObjectRigidbody.transform.position;
-            heldObjectRigidbody.AddForce(moveDirection * pickupForce);
+            heldObjectRigidbody.AddForce(moveDirection * pickupForce, ForceMode.Acceleration);
         }
     }
 
@@ -133,7 +133,7 @@ public class PickupController : MonoBehaviour {
     }
     //handle picking up 3d objects while in 3d 
     private void Handle3DInteractions() {
-        var closestGOToCamera = PlayerBehaviour.Instance.GetClosestInteractable3D();
+        var closestGOToCamera = PlayerBehaviour.Instance.GetClosest3DObjectOnLayers(interactableLayerMask);
 
         //handle picking up objects
         if (closestGOToCamera != null) {
@@ -148,7 +148,6 @@ public class PickupController : MonoBehaviour {
             //if the raycast hits something that wasnt the object then return
             if (Physics.Raycast(ray, out var hit,
                 100f, PickupBlockingLayers) && hit.collider.gameObject != closestGOToCamera) {
-                
                 return;
             }
 
@@ -181,7 +180,7 @@ public class PickupController : MonoBehaviour {
     //this behaviour might want to be changed later
     private TransferableObject GetObjectClosestTo2DPlayer() {
 
-        var objectsInRange = Physics.OverlapSphere(PlayerBehaviour.Instance.player2D.transform.position, PlayerBehaviour.Instance.interactDisplayRadius, LayerMask.GetMask("Interactable Objects"));
+        var objectsInRange = Physics.OverlapSphere(PlayerBehaviour.Instance.player2D.transform.position, PlayerBehaviour.Instance.interactDisplayRadius, interactableLayerMask);
 
 
         if (!objectsInRange.Any()) return null;

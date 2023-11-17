@@ -17,7 +17,7 @@ public class BallReceiver_2D : ReceivableParent {
     }
     public override void Deactivate() {
         base.Deactivate();
-        puzzlePieceToActivate.Deactivate();
+        puzzlePieceToActivate.Deactivate(gameObject);
         outsideOff.SetActive(true);
         outsideOn.SetActive(false);
     }
@@ -43,12 +43,7 @@ public class BallReceiver_2D : ReceivableParent {
         }
     }
     private void Update() {
-        if (objectThatActivatedReciever == null) {
-            Deactivate();
-            return;
-
-        }
-        else if (objectThatActivatedReciever.IsBeingHeld) {
+        if (objectThatActivatedReciever != null && objectThatActivatedReciever.IsBeingHeld) {
             Deactivate();
             objectThatActivatedReciever = null;
             return;

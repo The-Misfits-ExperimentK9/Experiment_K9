@@ -11,7 +11,7 @@ public class ItemSpawner : ActivatablePuzzlePiece
         SpawnItem();
     }
 
-    public override void Deactivate() {
+    public override void Deactivate(GameObject caller) {
         //do nothing
     }
 
