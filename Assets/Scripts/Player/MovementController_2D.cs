@@ -356,7 +356,7 @@ public class MovementController_2D : MonoBehaviour {
         
 
         //only supports changing x/z plane not y (ceiling/floor)
-        var offsetDirection = (transform.forward.x < 0 || transform.forward.z > 0) ? transform.right : -transform.right;
+        var offsetDirection = (transform.forward.x < -.001 || transform.forward.z > .001) ? transform.right : -transform.right;
 
         offsetDirection = flipOffset ? -offsetDirection : offsetDirection;
         newSpritePos = closestPointOnBounds + offsetDirection * offSetAmount;
