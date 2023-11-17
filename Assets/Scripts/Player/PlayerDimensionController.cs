@@ -56,6 +56,7 @@ public class PlayerDimensionController : MonoBehaviour {
 
         HandlePauseInput();
         HandleAutoModeInput();
+        
         if (PlayerBehaviour.Instance.IsIn3D() && DOGEnabled)
             HandleSurfaceProjection();
     }
@@ -295,6 +296,7 @@ public class PlayerDimensionController : MonoBehaviour {
 
     }
     public void TransitionTo3D() {
+        StartCoroutine(PlayerBehaviour.Instance.thirdPersonController.EnableCameraRotationAfterSeconds(2f));
         VirtualCamera3D.LookAt = player2D.transform;    
         VirtualCamera3D.Follow = Camera2D.transform;
         //adjust the player 3d model to be in front of the wall offset by a small amount
@@ -319,6 +321,7 @@ public class PlayerDimensionController : MonoBehaviour {
         }
     }
     public void TransitionTo3DLaunch() {
+        
         Vector3 launchDirection = player2D.transform.forward;
 
         //adjust the player 3d model to be in front of the wall offset by a small amount
