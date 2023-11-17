@@ -41,6 +41,7 @@ public class LevelManager : MonoBehaviour {
     }
     void Update() {
         //LevelNull is just an empty level with the Level Manager and the PlayerWrapper in it.
+        TestChange();
         if (SceneManager.GetActiveScene().name == "LevelNull")
             IncrementLevel();
     }
@@ -80,7 +81,7 @@ public class LevelManager : MonoBehaviour {
             SceneManager.LoadScene(Previous());
     }
     private void TestChange() {
-        if (Keyboard.current.pageUpKey.wasPressedThisFrame)
+        if (Keyboard.current.enterKey.wasPressedThisFrame)
             IncrementLevel();
         if (Keyboard.current.pageDownKey.wasPressedThisFrame)
             DecrementLevel();
