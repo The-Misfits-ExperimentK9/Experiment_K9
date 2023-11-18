@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 #if ENABLE_INPUT_SYSTEM 
 using UnityEngine.InputSystem;
 #endif
@@ -199,6 +200,10 @@ namespace StarterAssets {
                 //_animator.SetBool(_animIDGrounded, Grounded);
                 _animator.SetBool(_animIDJump, !Grounded);
             }
+        }
+        public IEnumerator EnableCameraRotationAfterSeconds(float seconds) {
+            yield return new WaitForSeconds(seconds);
+            LockCameraPosition = false;
         }
 
         private void CameraRotation() {
