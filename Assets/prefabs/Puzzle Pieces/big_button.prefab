@@ -112,7 +112,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 82f3b755628ea27418c4cd2e984a6758, type: 2}
   - {fileID: 2100000, guid: 82f3b755628ea27418c4cd2e984a6758, type: 2}
   minMassToPress: 5
-  IsPermanentlyPressedOnPress: 1
+  IsPermanentlyPressedOnPress: 0
   presser: {fileID: 0}
 --- !u!54 &4849342270943865673
 Rigidbody:
