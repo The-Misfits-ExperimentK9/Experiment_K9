@@ -46,6 +46,7 @@ public class PlayerDimensionController : MonoBehaviour {
 
     // public float DOGProjectionRange = 25f;
 
+    public Collider CurrentProjectionSurface { get => currentProjectionSurface; set => currentProjectionSurface = value; }
 
     private void Awake() {
         DOGToggleKey = Keyboard.current.fKey;

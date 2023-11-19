@@ -1,3 +1,4 @@
+using Cinemachine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -29,13 +30,14 @@ public class MovementController_2D : MonoBehaviour {
     [SerializeField] private bool AllowCameraRotation2D = false;
     [SerializeField] private GameObject Camera2dLookAt;
     [SerializeField] private GameObject CinemachineFollowTarget;
-    [SerializeField] private float cameraRotationSpeed = 100f;
-    [SerializeField] private float cameraMaxRotationAngle = 25f;
-    [SerializeField] private float cameraTotalRotation = 0f; // To keep track of the current rotation angle
-    [SerializeField] private float cameraRotationResetSpeed = 5f;
-    private float _cinemachineTargetYaw, _cinemachineTargetPitch;
-    public float BottomClamp = -10f;
-    public float TopClamp = 10f;
+    [SerializeField] private CinemachineVirtualCamera virtualCamera2D;
+    //[SerializeField] private float cameraRotationSpeed = 100f;
+    //[SerializeField] private float cameraMaxRotationAngle = 25f;
+    //[SerializeField] private float cameraTotalRotation = 0f; // To keep track of the current rotation angle
+    //[SerializeField] private float cameraRotationResetSpeed = 5f;
+    //private float _cinemachineTargetYaw, _cinemachineTargetPitch;
+    //public float BottomClamp = -10f;
+    //public float TopClamp = 10f;
 
     [Space(10)]
     [Header("Settings")]
@@ -47,7 +49,7 @@ public class MovementController_2D : MonoBehaviour {
 
     [Tooltip("The height the player can jump")]
     public float JumpHeight = 10.25f;
-    
+
     [Tooltip("Time required to pass before being able to jump again. Set to 0f to instantly jump again")]
     public float JumpTimeout = 0.50f;
 
@@ -56,7 +58,7 @@ public class MovementController_2D : MonoBehaviour {
 
     private KeyControl jumpKey;
 
-    
+
 
 
     private Vector3 gizmoDrawLoc;
@@ -108,7 +110,7 @@ public class MovementController_2D : MonoBehaviour {
     // Update is called once per frame
     void FixedUpdate() {
         if (!PlayerBehaviour.Instance.IsIn3D()) {
-            
+
             ApplyFriction();
 
             if (CanMove) {
@@ -130,7 +132,7 @@ public class MovementController_2D : MonoBehaviour {
 
         }
         if (AllowCameraRotation2D) {
-           // RotateCamera2dLookAt();
+            // RotateCamera2dLookAt();
         }
 
         //if (Is2DPlayerActive)
@@ -138,55 +140,55 @@ public class MovementController_2D : MonoBehaviour {
 
     }
     private void LateUpdate() {
-        CameraRotation();
+     //   CameraRotation();
     }
     #endregion
     #region camera rotation 2d
-    private void CameraRotation() {
+    //private void CameraRotation() {
 
-        var mouseInput  = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
-        // if there is an input and camera position is not fixed
-        if (mouseInput.sqrMagnitude >= .01 && AllowCameraRotation2D) {
-            //Don't multiply mouse input by Time.deltaTime;
-            //turn sensitivity
-            float deltaTimeMultiplier = cameraRotationSpeed;
+    //    var mouseInput = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
+    //    // if there is an input and camera position is not fixed
+    //    if (mouseInput.sqrMagnitude >= .01 && AllowCameraRotation2D) {
+    //        //Don't multiply mouse input by Time.deltaTime;
+    //        //turn sensitivity
+    //        float deltaTimeMultiplier = cameraRotationSpeed;
 
-            _cinemachineTargetYaw += mouseInput.x * deltaTimeMultiplier;
-            _cinemachineTargetPitch += mouseInput.y * deltaTimeMultiplier;
-        }
+    //        _cinemachineTargetYaw += mouseInput.x * deltaTimeMultiplier;
+    //        _cinemachineTargetPitch += mouseInput.y * deltaTimeMultiplier;
+    //    }
 
-        // clamp our rotations so our values are limited 360 degrees
-        _cinemachineTargetYaw = ClampAngle(_cinemachineTargetYaw, float.MinValue, float.MaxValue);
-        _cinemachineTargetPitch = ClampAngle(_cinemachineTargetPitch, BottomClamp, TopClamp);
+    //    // clamp our rotations so our values are limited 360 degrees
+    //    _cinemachineTargetYaw = ClampAngle(_cinemachineTargetYaw, float.MinValue, float.MaxValue);
+    //    _cinemachineTargetPitch = ClampAngle(_cinemachineTargetPitch, BottomClamp, TopClamp);
 
-        // Cinemachine will follow this target
-        CinemachineFollowTarget.transform.rotation = Quaternion.Euler(_cinemachineTargetPitch,
-            _cinemachineTargetYaw, 0.0f);
-    }
-    private void RotateCamera2dLookAt() {
-        // Get mouse X movement
-        float mouseX = Input.GetAxis("Mouse X");
+    //    // Cinemachine will follow this target
+    //    CinemachineFollowTarget.transform.rotation = Quaternion.Euler(_cinemachineTargetPitch,
+    //        _cinemachineTargetYaw, 0.0f);
+    //}
+    //private void RotateCamera2dLookAt() {
+    //    // Get mouse X movement
+    //    float mouseX = Input.GetAxis("Mouse X");
 
-        // Calculate the new rotation increment
-        float newYRotation = mouseX * (cameraRotationSpeed * Time.deltaTime);
+    //    // Calculate the new rotation increment
+    //    float newYRotation = mouseX * (cameraRotationSpeed * Time.deltaTime);
 
-        // Calculate the potential new total rotation
-        float potentialTotalRotation = cameraTotalRotation + newYRotation;
+    //    // Calculate the potential new total rotation
+    //    float potentialTotalRotation = cameraTotalRotation + newYRotation;
 
-        // Clamp the potential total rotation within the maximum allowed angles
-        if (potentialTotalRotation > cameraMaxRotationAngle) {
-            newYRotation = cameraMaxRotationAngle - cameraTotalRotation; 
-        }
-        else if (potentialTotalRotation < -cameraMaxRotationAngle) {
-            newYRotation = -cameraMaxRotationAngle - cameraTotalRotation; 
-        }
+    //    // Clamp the potential total rotation within the maximum allowed angles
+    //    if (potentialTotalRotation > cameraMaxRotationAngle) {
+    //        newYRotation = cameraMaxRotationAngle - cameraTotalRotation;
+    //    }
+    //    else if (potentialTotalRotation < -cameraMaxRotationAngle) {
+    //        newYRotation = -cameraMaxRotationAngle - cameraTotalRotation;
+    //    }
 
-        // Apply the newYRotation using RotateAround
-        Camera2dLookAt.transform.RotateAround(Camera.main.transform.position, Vector3.up, newYRotation);
+    //    // Apply the newYRotation using RotateAround
+    //    Camera2dLookAt.transform.RotateAround(Camera.main.transform.position, Vector3.up, newYRotation);
 
-        // Update the total rotation
-        cameraTotalRotation += newYRotation;
-    }
+    //    // Update the total rotation
+    //    cameraTotalRotation += newYRotation;
+    //}
     #endregion
     #region gizmos
     private void OnDrawGizmosSelected() {
@@ -236,7 +238,7 @@ public class MovementController_2D : MonoBehaviour {
         }
 
     }
-    
+
 
     private void Move() {
 
@@ -257,12 +259,12 @@ public class MovementController_2D : MonoBehaviour {
         }
         else {
             //adjust the camera if the player is moving
-            Camera2dLookAt.transform.position = Vector3.Lerp(Camera2dLookAt.transform.position, transform.position, Time.fixedDeltaTime * cameraRotationResetSpeed);
-            var vecToCameraLookat = Camera.main.transform.position - Camera2dLookAt.transform.position;
-            var vecToPlayer = Camera.main.transform.position - transform.position;
+            //Camera2dLookAt.transform.position = Vector3.Lerp(Camera2dLookAt.transform.position, transform.position, Time.fixedDeltaTime * cameraRotationResetSpeed);
+            //var vecToCameraLookat = Camera.main.transform.position - Camera2dLookAt.transform.position;
+            //var vecToPlayer = Camera.main.transform.position - transform.position;
 
 
-            cameraTotalRotation = Vector3.Angle(vecToCameraLookat, vecToPlayer);
+            //cameraTotalRotation = Vector3.Angle(vecToCameraLookat, vecToPlayer);
             //dont allow camera rotation when moving
             AllowCameraRotation2D = false;
         }
@@ -315,7 +317,7 @@ public class MovementController_2D : MonoBehaviour {
     }
 
     private void JumpAndGravity() {
-        
+
         if (Grounded) {
             // reset the fall timeout timer
             _fallTimeoutDelta = FallTimeout;
@@ -371,24 +373,24 @@ public class MovementController_2D : MonoBehaviour {
         AllowCameraRotation2D = false;
         StartCoroutine(EnableCameraRotationAfterSeconds(2f));
         CinemachineFollowTarget.transform.localRotation = Quaternion.identity;
-        cameraTotalRotation = 0f;
+        //cameraTotalRotation = 0f;
         bool flipOffset = transform.forward.x < -.001 || transform.forward.z < -.001;
         //rotate first to get correct transform.right
-          
+
         transform.forward = GetOrthogonalVectorTo2DPlayer(wall.GetComponent<Collider>());
 
         // Debug.Log($"Transitioning to {wall.name} and setting forward to {transform.forward}");
 
         LockPlayerMovementInForwardDirection();
         SetCurrentWall(wall);
-        
+
 
         //only supports changing x/z plane not y (ceiling/floor)
         var offsetDirection = (transform.forward.x < -.001 || transform.forward.z > .001) ? transform.right : -transform.right;
 
         offsetDirection = flipOffset ? -offsetDirection : offsetDirection;
         newSpritePos = closestPointOnBounds + offsetDirection * offSetAmount;
-        
+
         newSpritePos += transform.forward * PlayerDimensionController.WALL_DRAW_OFFSET;
 
         //move to offset position
@@ -397,8 +399,36 @@ public class MovementController_2D : MonoBehaviour {
     //locks the axes to the up/down/left/right on the wall
     //prevents the dog from slipping into the or out of the wall
     public void LockPlayerMovementInForwardDirection() {
-        
+
         var right = transform.right;
+        var fwd = transform.forward;
+        //Debug.Log(fwd);
+        var cameraPOV = virtualCamera2D.GetCinemachineComponent<CinemachinePOV>();
+        
+        if (fwd.x > 0.1) {
+            cameraPOV.m_HorizontalAxis.Value = -90f;
+            cameraPOV.m_HorizontalAxis.m_MinValue = -115f;
+            cameraPOV.m_HorizontalAxis.m_MaxValue = -65f;
+
+        }
+        else if (fwd.x < -0.1) {
+            cameraPOV.m_HorizontalAxis.Value = 90f;
+            cameraPOV.m_HorizontalAxis.m_MinValue = 65f;
+            cameraPOV.m_HorizontalAxis.m_MaxValue = 115f;
+        }
+        else if (fwd.y > 0.1 || fwd.y < -0.0001) {
+            Debug.LogError("Unsupported behaviour - doggo on floor");
+        }
+        else if (fwd.z > 0.1) {
+            cameraPOV.m_HorizontalAxis.Value = 180f;
+            cameraPOV.m_HorizontalAxis.m_MinValue = 155f;
+            cameraPOV.m_HorizontalAxis.m_MaxValue = 205f;
+        }
+        else if (fwd.z < -0.1) {
+            cameraPOV.m_HorizontalAxis.Value = 0f;
+            cameraPOV.m_HorizontalAxis.m_MinValue = -25f;
+            cameraPOV.m_HorizontalAxis.m_MaxValue = 25f;
+        }
 
         //crazy floating point errors
         if (right.x > 0.0001 || right.x < -0.0001) {
@@ -454,10 +484,10 @@ public class MovementController_2D : MonoBehaviour {
         if (PlayerBehaviour.Instance.IsIn3D()) return;
 
         if (collision.gameObject.TryGetComponent(out WallBehaviour wallB)) {
-           
+
 
             if (currentWall == wallB && !PlayerBehaviour.Instance.IsIn3D() || currentWall == null && !PlayerBehaviour.Instance.IsIn3D()) {
-              
+
                 UpdateWallStatus();
 
             }
@@ -521,8 +551,7 @@ public class MovementController_2D : MonoBehaviour {
         var ray = new Ray(transform.position, -transform.forward);
         var hits = Physics.RaycastAll(ray, 10f, LayerMask.GetMask("Walls"));
 
-        foreach (var item in hits)
-        {
+        foreach (var item in hits) {
             Debug.Log("wall hit " + item.rigidbody.gameObject.name);
         }
 
@@ -578,7 +607,7 @@ public class MovementController_2D : MonoBehaviour {
         return true;
     }
     private Vector3 GetOrthogonalVectorTo2DPlayer(Collider collider) {
-        
+
 
         Vector3 closestPoint = collider.ClosestPointOnBounds(transform.position);
 
@@ -603,7 +632,7 @@ public class MovementController_2D : MonoBehaviour {
         AllowCameraRotation2D = true;
     }
     public void SetCurrentWall(WallBehaviour wall) {
-        currentWallCollider = wall.GetComponent<Collider>();  
+        currentWallCollider = wall.GetComponent<Collider>();
         currentWall = wall;
         if (currentWall is GravityWall) {
             EnableGravity();
