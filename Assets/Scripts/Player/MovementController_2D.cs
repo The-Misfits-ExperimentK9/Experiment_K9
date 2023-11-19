@@ -28,10 +28,14 @@ public class MovementController_2D : MonoBehaviour {
     [Header("2D Camera")]
     [SerializeField] private bool AllowCameraRotation2D = false;
     [SerializeField] private GameObject Camera2dLookAt;
+    [SerializeField] private GameObject CinemachineFollowTarget;
     [SerializeField] private float cameraRotationSpeed = 100f;
     [SerializeField] private float cameraMaxRotationAngle = 25f;
     [SerializeField] private float cameraTotalRotation = 0f; // To keep track of the current rotation angle
     [SerializeField] private float cameraRotationResetSpeed = 5f;
+    private float _cinemachineTargetYaw, _cinemachineTargetPitch;
+    public float BottomClamp = -10f;
+    public float TopClamp = 10f;
 
     [Space(10)]
     [Header("Settings")]
@@ -126,14 +130,39 @@ public class MovementController_2D : MonoBehaviour {
 
         }
         if (AllowCameraRotation2D) {
-            RotateCamera2dLookAt();
+           // RotateCamera2dLookAt();
         }
+
         //if (Is2DPlayerActive)
         //    AABBCheckForWallLeaving();
 
     }
+    private void LateUpdate() {
+        CameraRotation();
+    }
     #endregion
     #region camera rotation 2d
+    private void CameraRotation() {
+
+        var mouseInput  = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
+        // if there is an input and camera position is not fixed
+        if (mouseInput.sqrMagnitude >= .01 && AllowCameraRotation2D) {
+            //Don't multiply mouse input by Time.deltaTime;
+            //turn sensitivity
+            float deltaTimeMultiplier = cameraRotationSpeed;
+
+            _cinemachineTargetYaw += mouseInput.x * deltaTimeMultiplier;
+            _cinemachineTargetPitch += mouseInput.y * deltaTimeMultiplier;
+        }
+
+        // clamp our rotations so our values are limited 360 degrees
+        _cinemachineTargetYaw = ClampAngle(_cinemachineTargetYaw, float.MinValue, float.MaxValue);
+        _cinemachineTargetPitch = ClampAngle(_cinemachineTargetPitch, BottomClamp, TopClamp);
+
+        // Cinemachine will follow this target
+        CinemachineFollowTarget.transform.rotation = Quaternion.Euler(_cinemachineTargetPitch,
+            _cinemachineTargetYaw, 0.0f);
+    }
     private void RotateCamera2dLookAt() {
         // Get mouse X movement
         float mouseX = Input.GetAxis("Mouse X");
@@ -341,6 +370,7 @@ public class MovementController_2D : MonoBehaviour {
         Debug.Log("TransitionToNewAxis");
         AllowCameraRotation2D = false;
         StartCoroutine(EnableCameraRotationAfterSeconds(2f));
+        CinemachineFollowTarget.transform.localRotation = Quaternion.identity;
         cameraTotalRotation = 0f;
         bool flipOffset = transform.forward.x < -.001 || transform.forward.z < -.001;
         //rotate first to get correct transform.right
@@ -367,6 +397,7 @@ public class MovementController_2D : MonoBehaviour {
     //locks the axes to the up/down/left/right on the wall
     //prevents the dog from slipping into the or out of the wall
     public void LockPlayerMovementInForwardDirection() {
+        
         var right = transform.right;
 
         //crazy floating point errors
@@ -509,6 +540,11 @@ public class MovementController_2D : MonoBehaviour {
     }
     #endregion
     #region helper methods
+    private static float ClampAngle(float lfAngle, float lfMin, float lfMax) {
+        if (lfAngle < -360f) lfAngle += 360f;
+        if (lfAngle > 360f) lfAngle -= 360f;
+        return Mathf.Clamp(lfAngle, lfMin, lfMax);
+    }
     public Vector2 GetInput() {
         var keyboard = Keyboard.current;
         return new Vector2(keyboard.dKey.isPressed ? 1 : keyboard.aKey.isPressed ? -1 : 0,
@@ -591,6 +627,7 @@ public class MovementController_2D : MonoBehaviour {
                 Is2DPlayerActive = false;
                 break;
             case ProjectionState.In2D:
+
                 spriteRenderer.sprite = sprites[3];
                 Is2DPlayerActive = true;
                 break;
