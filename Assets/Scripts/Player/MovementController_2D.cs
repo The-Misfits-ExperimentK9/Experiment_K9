@@ -31,6 +31,9 @@ public class MovementController_2D : MonoBehaviour {
     [SerializeField] private GameObject Camera2dLookAt;
     [SerializeField] private GameObject CinemachineFollowTarget;
     [SerializeField] private CinemachineVirtualCamera virtualCamera2D;
+    [SerializeField] private CameraWallConfiner cameraWallConfiner;
+    [SerializeField] private float transitionDuration = 0.5f;
+
     //[SerializeField] private float cameraRotationSpeed = 100f;
     //[SerializeField] private float cameraMaxRotationAngle = 25f;
     //[SerializeField] private float cameraTotalRotation = 0f; // To keep track of the current rotation angle
@@ -140,7 +143,7 @@ public class MovementController_2D : MonoBehaviour {
 
     }
     private void LateUpdate() {
-     //   CameraRotation();
+        //   CameraRotation();
     }
     #endregion
     #region camera rotation 2d
@@ -404,30 +407,42 @@ public class MovementController_2D : MonoBehaviour {
         var fwd = transform.forward;
         //Debug.Log(fwd);
         var cameraPOV = virtualCamera2D.GetCinemachineComponent<CinemachinePOV>();
-        
+
         if (fwd.x > 0.1) {
-            cameraPOV.m_HorizontalAxis.Value = -90f;
-            cameraPOV.m_HorizontalAxis.m_MinValue = -115f;
-            cameraPOV.m_HorizontalAxis.m_MaxValue = -65f;
+            //cameraPOV.m_HorizontalAxis.Value = -90f;
+            //cameraPOV.m_HorizontalAxis.m_MinValue = -115f;
+            //cameraPOV.m_HorizontalAxis.m_MaxValue = -65f;
+            cameraWallConfiner.SetZeroRotaion(-90f);
+            //cameraWallConfiner.YRotation = -90f;
+         //   StartCoroutine(AxisTransitionCoroutine(-115f, -65f, -90f));
 
         }
         else if (fwd.x < -0.1) {
-            cameraPOV.m_HorizontalAxis.Value = 90f;
-            cameraPOV.m_HorizontalAxis.m_MinValue = 65f;
-            cameraPOV.m_HorizontalAxis.m_MaxValue = 115f;
+            //cameraPOV.m_HorizontalAxis.Value = 90f;
+            //cameraPOV.m_HorizontalAxis.m_MinValue = 65f;
+            //cameraPOV.m_HorizontalAxis.m_MaxValue = 115f;
+            cameraWallConfiner.SetZeroRotaion(90f);
+            // cameraWallConfiner.YRotation = 90f;
+            //    StartCoroutine(AxisTransitionCoroutine(65f, 115f, 90f));
         }
         else if (fwd.y > 0.1 || fwd.y < -0.0001) {
             Debug.LogError("Unsupported behaviour - doggo on floor");
         }
         else if (fwd.z > 0.1) {
-            cameraPOV.m_HorizontalAxis.Value = 180f;
-            cameraPOV.m_HorizontalAxis.m_MinValue = 155f;
-            cameraPOV.m_HorizontalAxis.m_MaxValue = 205f;
+            //cameraPOV.m_HorizontalAxis.Value = 180f;
+            //cameraPOV.m_HorizontalAxis.m_MinValue = 155f;
+            //cameraPOV.m_HorizontalAxis.m_MaxValue = 205f;
+            cameraWallConfiner.SetZeroRotaion(180f);
+           // cameraWallConfiner.YRotation = 180f;
+          //  StartCoroutine(AxisTransitionCoroutine(155f, 205f, 180f));
         }
         else if (fwd.z < -0.1) {
-            cameraPOV.m_HorizontalAxis.Value = 0f;
-            cameraPOV.m_HorizontalAxis.m_MinValue = -25f;
-            cameraPOV.m_HorizontalAxis.m_MaxValue = 25f;
+            //cameraPOV.m_HorizontalAxis.Value = 0f;
+            //cameraPOV.m_HorizontalAxis.m_MinValue = -25f;
+            //cameraPOV.m_HorizontalAxis.m_MaxValue = 25f;
+            cameraWallConfiner.SetZeroRotaion(0f);
+            //cameraWallConfiner.YRotation = 0f;
+       //     StartCoroutine(AxisTransitionCoroutine(-25f, 25f, 0f));
         }
 
         //crazy floating point errors
@@ -440,6 +455,35 @@ public class MovementController_2D : MonoBehaviour {
         else if (right.z > 0.0001 || right.z < -0.0001) {
             rb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezeRotation;
         }
+    }
+    private IEnumerator AxisTransitionCoroutine(float newMinValue, float newMaxValue, float newValue) {
+        CinemachinePOV cameraPOV = virtualCamera2D.GetCinemachineComponent<CinemachinePOV>();
+        float originalMinValue = cameraPOV.m_HorizontalAxis.m_MinValue;
+        float originalMaxValue = cameraPOV.m_HorizontalAxis.m_MaxValue;
+        float originalValue = cameraPOV.m_HorizontalAxis.Value;
+
+        float elapsedTime = 0f;
+
+        while (elapsedTime < transitionDuration) {
+            // Calculate the progress ratio
+            float ratio = elapsedTime / transitionDuration;
+
+            // Smoothly interpolate the axis values
+            cameraPOV.m_HorizontalAxis.m_MinValue = Mathf.Lerp(originalMinValue, newMinValue, ratio);
+            cameraPOV.m_HorizontalAxis.m_MaxValue = Mathf.Lerp(originalMaxValue, newMaxValue, ratio);
+            cameraPOV.m_HorizontalAxis.Value = Mathf.Lerp(originalValue, newValue, ratio);
+
+            // Increment the elapsed time
+            elapsedTime += Time.deltaTime;
+
+            // Wait for the next frame
+            yield return null;
+        }
+
+        // Ensure final values are set
+        cameraPOV.m_HorizontalAxis.m_MinValue = newMinValue;
+        cameraPOV.m_HorizontalAxis.m_MaxValue = newMaxValue;
+        cameraPOV.m_HorizontalAxis.Value = newValue;
     }
     #endregion
     #region Unity Collision Methods
