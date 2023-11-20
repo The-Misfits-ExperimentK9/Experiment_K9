@@ -25,6 +25,7 @@ public class PlayerDimensionController : MonoBehaviour {
     [SerializeField] private CinemachineVirtualCamera VirtualCamera3D;
     [SerializeField] private GameObject Camera3D;
     [SerializeField] private GameObject Camera2D;
+    [SerializeField] private float LockCameraOn3DTranstionTime = 1f;
 
     [Header("Launch")]
     [SerializeField] private float playerLeaveWallOffset = 6f;
@@ -275,7 +276,7 @@ public class PlayerDimensionController : MonoBehaviour {
         
         movementController_2D.GetComponent<Rigidbody>().isKinematic = false;
         movementController_2D.SetCurrentWall(currentProjectionSurface.GetComponent<WallBehaviour>());
-        StartCoroutine(movementController_2D.EnableCameraRotationAfterSeconds(2f));
+        StartCoroutine(movementController_2D.EnableCameraRotationAfterSeconds(LockCameraOn3DTranstionTime));
         
         SetWallProjectionToActive();
         
@@ -298,6 +299,8 @@ public class PlayerDimensionController : MonoBehaviour {
     public void TransitionTo3D() {
         VirtualCamera3D.LookAt = player2D.transform;    
         VirtualCamera3D.Follow = Camera2D.transform;
+        PlayerBehaviour.Instance.thirdPersonController.LockCameraPosition = true;
+        StartCoroutine(PlayerBehaviour.Instance.thirdPersonController.EnableCameraRotationAfterSeconds(LockCameraOn3DTranstionTime));
         //adjust the player 3d model to be in front of the wall offset by a small amount
         MovePlayerOutOfWall(player2D.transform.position + player2D.transform.forward * playerLeaveWallOffset);
         Physics.IgnoreLayerCollision(LayerInfo.PLAYER, LayerInfo.INTERACTABLE_OBJECT, false);
@@ -325,6 +328,8 @@ public class PlayerDimensionController : MonoBehaviour {
 
         //adjust the player 3d model to be in front of the wall offset by a small amount
         Vector3 launchPosition = player2D.transform.position + launchDirection * playerLeaveWallOffset;
+        PlayerBehaviour.Instance.thirdPersonController.LockCameraPosition = true;
+        StartCoroutine(PlayerBehaviour.Instance.thirdPersonController.EnableCameraRotationAfterSeconds(LockCameraOn3DTranstionTime));
 
         //  print(player3D.transform.position);
         MovePlayerOutOfWall(launchPosition);
