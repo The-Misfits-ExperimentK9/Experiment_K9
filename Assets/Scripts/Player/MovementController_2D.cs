@@ -28,22 +28,11 @@ public class MovementController_2D : MonoBehaviour {
     private Collider currentWallCollider;
     [Space(10)]
     [Header("2D Camera")]
-    [SerializeField] private bool AllowCameraRotation2D = false;
     [SerializeField] private GameObject Camera2dLookAt;
     [SerializeField] private GameObject CinemachineFollowTarget;
     [SerializeField] private CinemachineVirtualCamera virtualCamera2D;
     [SerializeField] private CameraWallConfiner cameraWallConfiner;
-    [SerializeField] private float transitionDuration = 0.5f;
 
-    private float cinemachineCameraDistance;
-
-    //[SerializeField] private float cameraRotationSpeed = 100f;
-    //[SerializeField] private float cameraMaxRotationAngle = 25f;
-    //[SerializeField] private float cameraTotalRotation = 0f; // To keep track of the current rotation angle
-    //[SerializeField] private float cameraRotationResetSpeed = 5f;
-    //private float _cinemachineTargetYaw, _cinemachineTargetPitch;
-    //public float BottomClamp = -10f;
-    //public float TopClamp = 10f;
 
     [Space(10)]
     [Header("Settings")]
@@ -64,11 +53,7 @@ public class MovementController_2D : MonoBehaviour {
 
     private KeyControl jumpKey;
 
-
-
-
     private Vector3 gizmoDrawLoc, gizmoDrawLoc2;
-    Vector3 forward;                                    //used to check which wall object is in the foreground to use that as the movement override
 
     public enum ProjectionState {
         OutOfRange,
@@ -108,18 +93,11 @@ public class MovementController_2D : MonoBehaviour {
     #region Start and Update
     // Start is called before the first frame update
     void Awake() {
-        // dog2DSprite = GetComponent<SpriteRenderer>();
         dogCollider2D = GetComponent<Collider>();
         jumpKey = Keyboard.current.wKey;
     }
     private void Start() {
-        if (virtualCamera2D) {
-            //cinemachineCameraDistance = virtualCamera2D.GetCinemachineComponent<Cinemachine3rdPersonFollow>().CameraDistance;
 
-        }
-        else {
-            cinemachineCameraDistance = -40;
-        }
     }
 
     // Update is called once per frame
@@ -146,65 +124,9 @@ public class MovementController_2D : MonoBehaviour {
             JumpAndGravity();
 
         }
-        if (AllowCameraRotation2D) {
-            // RotateCamera2dLookAt();
-        }
-
-        //if (Is2DPlayerActive)
-        //    AABBCheckForWallLeaving();
-
-    }
-    private void LateUpdate() {
-        //   CameraRotation();
     }
     #endregion
-    #region camera rotation 2d
-    //private void CameraRotation() {
-
-    //    var mouseInput = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
-    //    // if there is an input and camera position is not fixed
-    //    if (mouseInput.sqrMagnitude >= .01 && AllowCameraRotation2D) {
-    //        //Don't multiply mouse input by Time.deltaTime;
-    //        //turn sensitivity
-    //        float deltaTimeMultiplier = cameraRotationSpeed;
-
-    //        _cinemachineTargetYaw += mouseInput.x * deltaTimeMultiplier;
-    //        _cinemachineTargetPitch += mouseInput.y * deltaTimeMultiplier;
-    //    }
-
-    //    // clamp our rotations so our values are limited 360 degrees
-    //    _cinemachineTargetYaw = ClampAngle(_cinemachineTargetYaw, float.MinValue, float.MaxValue);
-    //    _cinemachineTargetPitch = ClampAngle(_cinemachineTargetPitch, BottomClamp, TopClamp);
-
-    //    // Cinemachine will follow this target
-    //    CinemachineFollowTarget.transform.rotation = Quaternion.Euler(_cinemachineTargetPitch,
-    //        _cinemachineTargetYaw, 0.0f);
-    //}
-    //private void RotateCamera2dLookAt() {
-    //    // Get mouse X movement
-    //    float mouseX = Input.GetAxis("Mouse X");
-
-    //    // Calculate the new rotation increment
-    //    float newYRotation = mouseX * (cameraRotationSpeed * Time.deltaTime);
-
-    //    // Calculate the potential new total rotation
-    //    float potentialTotalRotation = cameraTotalRotation + newYRotation;
-
-    //    // Clamp the potential total rotation within the maximum allowed angles
-    //    if (potentialTotalRotation > cameraMaxRotationAngle) {
-    //        newYRotation = cameraMaxRotationAngle - cameraTotalRotation;
-    //    }
-    //    else if (potentialTotalRotation < -cameraMaxRotationAngle) {
-    //        newYRotation = -cameraMaxRotationAngle - cameraTotalRotation;
-    //    }
-
-    //    // Apply the newYRotation using RotateAround
-    //    Camera2dLookAt.transform.RotateAround(Camera.main.transform.position, Vector3.up, newYRotation);
-
-    //    // Update the total rotation
-    //    cameraTotalRotation += newYRotation;
-    //}
-    #endregion
+    
     #region gizmos
     private void OnDrawGizmosSelected() {
         Color transparentGreen = new Color(0.0f, 1.0f, 0.0f, 0.35f);
@@ -274,20 +196,9 @@ public class MovementController_2D : MonoBehaviour {
             spriteRenderer.flipX = false;
         }
         if (input.x < .01f && input.x > -.01f) {
-            //allow camera rotation when not moving 
-            AllowCameraRotation2D = true;
             targetSpeed = 0.0f;
         }
         else {
-            //adjust the camera if the player is moving
-            //Camera2dLookAt.transform.position = Vector3.Lerp(Camera2dLookAt.transform.position, transform.position, Time.fixedDeltaTime * cameraRotationResetSpeed);
-            //var vecToCameraLookat = Camera.main.transform.position - Camera2dLookAt.transform.position;
-            //var vecToPlayer = Camera.main.transform.position - transform.position;
-
-
-            //cameraTotalRotation = Vector3.Angle(vecToCameraLookat, vecToPlayer);
-            //dont allow camera rotation when moving
-            AllowCameraRotation2D = false;
         }
         // accelerate or decelerate to target speed
 
@@ -391,9 +302,9 @@ public class MovementController_2D : MonoBehaviour {
     #region transition to a new axis
     void TransitionToNewAxis(Vector3 closestPointOnBounds, WallBehaviour wall) {
         Debug.Log("TransitionToNewAxis");
+        // Store the current world position of the CinemachineFollowTarget
         Vector3 originalFollowTargetPosition = Camera.main.transform.position;
-        AllowCameraRotation2D = false;
-        StartCoroutine(EnableCameraRotationAfterSeconds(2f));
+        
         CinemachineFollowTarget.transform.localRotation = Quaternion.identity;
         //cameraTotalRotation = 0f;
         bool flipOffset = transform.forward.x < -.001 || transform.forward.z < -.001;
@@ -401,7 +312,6 @@ public class MovementController_2D : MonoBehaviour {
 
         transform.forward = GetOrthogonalVectorTo2DPlayer(wall.GetComponent<Collider>());
 
-        // Debug.Log($"Transitioning to {wall.name} and setting forward to {transform.forward}");
 
         LockPlayerMovementInForwardDirection();
         SetCurrentWall(wall);
@@ -419,14 +329,11 @@ public class MovementController_2D : MonoBehaviour {
         //add the offset to the new position
         newSpritePos += transform.forward * PlayerDimensionController.WALL_DRAW_OFFSET;
 
-        
 
         var newCameraDesiredPosition = (closestPointOnBounds + offsetDirection * cameraWallConfiner.MinAllowedDistanceToWall);
 
         gizmoDrawLoc = newCameraDesiredPosition;
-       
-        // Store the current world position of the CinemachineFollowTarget
-        
+
 
         // Move the parent object
         transform.position = newSpritePos;
@@ -684,10 +591,6 @@ public class MovementController_2D : MonoBehaviour {
         //}
 
         return direction;
-    }
-    public IEnumerator EnableCameraRotationAfterSeconds(float seconds) {
-        yield return new WaitForSeconds(seconds);
-        AllowCameraRotation2D = true;
     }
     public void SetCurrentWall(WallBehaviour wall) {
         currentWallCollider = wall.GetComponent<Collider>();

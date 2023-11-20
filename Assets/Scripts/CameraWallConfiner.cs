@@ -15,7 +15,6 @@ public class CameraWallConfiner : MonoBehaviour {
     private CinemachineTransposer cameraTransposer;
     private Vector3 originalCameraOffset;
     private float yZeroRotationAngle;
-    public bool IsTranstitingCorner { get; set; } = false;
     public float cornerTransitDuration = 0.5f; // Duration of the transition
 
     [SerializeField] private float HorizontalCameraClamp = 25f;
@@ -25,9 +24,6 @@ public class CameraWallConfiner : MonoBehaviour {
     private float resetTransitionSpeed; // Speed of transition to new angle
     private bool cameraNeedsToBeReset = false;
 
-
-    private Vector3 desiredLocation;
-    private float yMin, yMax;
     private float yZeroMin, yZeroMax;
 
     public Vector3 OffsetFromPlayer; // Initial offset from the player
@@ -50,12 +46,9 @@ public class CameraWallConfiner : MonoBehaviour {
     }
     void FindAndSetDesiredPosition() {
 
-        Debug.DrawRay(playerTransform.position, -playerTransform.right * MinAllowedDistanceToWall, Color.yellow);
-        Debug.DrawRay(playerTransform.position, playerTransform.right * MinAllowedDistanceToWall, Color.yellow);
+       // Debug.DrawRay(playerTransform.position, -playerTransform.right * MinAllowedDistanceToWall, Color.yellow);
+      //  Debug.DrawRay(playerTransform.position, playerTransform.right * MinAllowedDistanceToWall, Color.yellow);
 
-        if (IsTranstitingCorner) {
-            return;
-        }
 
         var rightColliders = Physics.RaycastAll(playerTransform.position, -playerTransform.right, MinAllowedDistanceToWall, wallLayer);
         var leftColliders = Physics.RaycastAll(playerTransform.position, playerTransform.right, MinAllowedDistanceToWall, wallLayer);
@@ -109,25 +102,23 @@ public class CameraWallConfiner : MonoBehaviour {
         float elapsedTime = 0;
 
         Vector3 startPosition = transform.position;
-      //  IsTranstitingCorner = true;
         while (elapsedTime < cornerTransitDuration) {
             transform.position = Vector3.Lerp(startPosition, targetPosition, elapsedTime / cornerTransitDuration);
-           cameraTransposer.m_FollowOffset = Vector3.Lerp(Vector3.zero, originalCameraOffset, elapsedTime / cornerTransitDuration);
+            cameraTransposer.m_FollowOffset = Vector3.Lerp(Vector3.zero, originalCameraOffset, elapsedTime / cornerTransitDuration);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
-     //   IsTranstitingCorner = false;
         transform.position = targetPosition; // Ensure the position is set to the target at the end
         cameraTransposer.m_FollowOffset = originalCameraOffset;
     }
-    
+
     private void LateUpdate() {
 
         //dont adjust the camera while the player is moving the mouse
         if (cameraPOV.m_HorizontalAxis.m_InputAxisValue > .01f) {
             transitionSpeed = 0f;
         }
-        else if (!isResetting && cameraNeedsToBeReset){
+        else if (!isResetting && cameraNeedsToBeReset) {
             StartCoroutine(ResetCameraAfter(resetWaitTime));
         }
 
@@ -142,8 +133,6 @@ public class CameraWallConfiner : MonoBehaviour {
         cameraPOV.m_HorizontalAxis.m_MaxValue = yZeroMax + targetAngle;
 
 
-        // Adjust camera rotation to track the player
-        //   AdjustCameraRotation();
     }
     IEnumerator ResetCameraAfter(float time) {
         isResetting = true;
@@ -153,29 +142,5 @@ public class CameraWallConfiner : MonoBehaviour {
         cameraNeedsToBeReset = false;
         Debug.Log("reset camera rotation");
     }
-    private void AdjustCameraRotation() {
-        // CinemachinePOV cameraPOV = virtualCamera2D.GetCinemachineComponent<CinemachinePOV>();
 
-        // Calculate the direction from the camera to the player
-        Vector3 cameraForwardHorizontal = virtualCamera2D.transform.forward;
-        cameraForwardHorizontal.y = 0;
-
-        Vector3 directionToPlayerHorizontal = playerTransform.position - virtualCamera2D.transform.position;
-        directionToPlayerHorizontal.y = 0;
-
-        // Calculate the signed angle on the horizontal plane
-        float angleToPlayer = Vector3.SignedAngle(cameraForwardHorizontal, directionToPlayerHorizontal, Vector3.up);
-
-        // Set the horizontal axis value to angle to player
-        //cameraPOV.m_HorizontalAxis.Value = angleToPlayer;
-
-        // Debug.Log(angleToPlayer);
-
-        // Set the horizontal axis value to angle to player
-        //    cameraPOV.m_HorizontalAxis.Value = angleToPlayer;
-
-        // Adjust min and max values to allow a range of +/- 25 degrees from the current angle
-        //  cameraPOV.m_HorizontalAxis.m_MinValue = angleToPlayer - 25f;
-        //   cameraPOV.m_HorizontalAxis.m_MaxValue = angleToPlayer + 25f;
-    }
 }
