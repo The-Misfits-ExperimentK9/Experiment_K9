@@ -29,7 +29,7 @@ public class ActivatableWall : ActivatablePuzzlePiece
         wallPart.Active = true;
     }
 
-    public override void Deactivate()
+    public override void Deactivate(GameObject caller)
     {
         active[index] = false;
         index--;

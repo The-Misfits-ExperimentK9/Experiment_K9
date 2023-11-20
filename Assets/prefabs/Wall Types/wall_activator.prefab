@@ -52,25 +52,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: wall_activator
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 288963238029891637, guid: b2705ed3faf55cf4395196d84eb8accc, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 8310837404339325246, guid: b2705ed3faf55cf4395196d84eb8accc, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8070281222873470711}
+    - targetCorrespondingSourceObject: {fileID: 8310837404339325246, guid: b2705ed3faf55cf4395196d84eb8accc, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2185918540723586344}
   m_SourcePrefab: {fileID: 100100000, guid: b2705ed3faf55cf4395196d84eb8accc, type: 3}
---- !u!114 &3446460665332710113 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 288963238029891637, guid: b2705ed3faf55cf4395196d84eb8accc, type: 3}
-  m_PrefabInstance: {fileID: 3158944459310768852}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6377331996829740010}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81324052c1cb77e44bdc37d6a3b30895, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &6377331996829740010 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8310837404339325246, guid: b2705ed3faf55cf4395196d84eb8accc, type: 3}
@@ -88,6 +81,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af6cdae18dc119a4d9e5560ddfa32d51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wallPart: {fileID: 3446460665332710113}
+  wallPart: {fileID: 2185918540723586344}
   activator: []
   active: 
+--- !u!114 &2185918540723586344
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6377331996829740010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1863eac71e987dc469416279fad703ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AllowsDimensionTransition: 0
+  IsWalkThroughEnabled: 1
+  IsPassthrough: 0
+  LaunchForce: 10

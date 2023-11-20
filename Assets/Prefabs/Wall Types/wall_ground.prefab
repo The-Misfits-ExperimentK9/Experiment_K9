@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 7033518516474956368}
   - component: {fileID: 1494795418122996243}
   - component: {fileID: 6096125570938688737}
-  - component: {fileID: 288963238029891637}
   - component: {fileID: 3460354804257265962}
   - component: {fileID: 5211824112134360549}
+  - component: {fileID: 5469329025590421382}
   m_Layer: 8
   m_Name: wall_ground
   m_TagString: Untagged
@@ -86,22 +86,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &288963238029891637
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8310837404339325246}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81324052c1cb77e44bdc37d6a3b30895, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AllowsDimensionTransition: 0
-  IsWalkThroughEnabled: 0
-  IsPassthrough: 0
-  pushForce: 15
 --- !u!54 &3460354804257265962
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -150,3 +134,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5469329025590421382
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8310837404339325246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1863eac71e987dc469416279fad703ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AllowsDimensionTransition: 1
+  IsWalkThroughEnabled: 1
+  IsPassthrough: 0
+  LaunchForce: 10
