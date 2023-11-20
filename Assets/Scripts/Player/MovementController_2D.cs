@@ -1,4 +1,5 @@
 using Cinemachine;
+using StarterAssets;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -34,6 +35,8 @@ public class MovementController_2D : MonoBehaviour {
     [SerializeField] private CameraWallConfiner cameraWallConfiner;
     [SerializeField] private float transitionDuration = 0.5f;
 
+    private float cinemachineCameraDistance;
+
     //[SerializeField] private float cameraRotationSpeed = 100f;
     //[SerializeField] private float cameraMaxRotationAngle = 25f;
     //[SerializeField] private float cameraTotalRotation = 0f; // To keep track of the current rotation angle
@@ -64,7 +67,7 @@ public class MovementController_2D : MonoBehaviour {
 
 
 
-    private Vector3 gizmoDrawLoc;
+    private Vector3 gizmoDrawLoc, gizmoDrawLoc2;
     Vector3 forward;                                    //used to check which wall object is in the foreground to use that as the movement override
 
     public enum ProjectionState {
@@ -108,6 +111,15 @@ public class MovementController_2D : MonoBehaviour {
         // dog2DSprite = GetComponent<SpriteRenderer>();
         dogCollider2D = GetComponent<Collider>();
         jumpKey = Keyboard.current.wKey;
+    }
+    private void Start() {
+        if (virtualCamera2D) {
+            //cinemachineCameraDistance = virtualCamera2D.GetCinemachineComponent<Cinemachine3rdPersonFollow>().CameraDistance;
+
+        }
+        else {
+            cinemachineCameraDistance = -40;
+        }
     }
 
     // Update is called once per frame
@@ -205,6 +217,12 @@ public class MovementController_2D : MonoBehaviour {
         Gizmos.DrawSphere(
             new Vector3(transform.position.x, transform.position.y - GroundedOffset, transform.position.z),
             GroundedRadius);
+    }
+    private void OnDrawGizmos() {
+        Gizmos.color = Color.white;
+        Gizmos.DrawSphere(gizmoDrawLoc, 1f);
+        Gizmos.color = Color.magenta;
+        Gizmos.DrawSphere(gizmoDrawLoc2, 1f);
     }
     #endregion
     #region GroundedCheck, Friction, Move, Jump, Gravity
@@ -373,6 +391,7 @@ public class MovementController_2D : MonoBehaviour {
     #region transition to a new axis
     void TransitionToNewAxis(Vector3 closestPointOnBounds, WallBehaviour wall) {
         Debug.Log("TransitionToNewAxis");
+        Vector3 originalFollowTargetPosition = Camera.main.transform.position;
         AllowCameraRotation2D = false;
         StartCoroutine(EnableCameraRotationAfterSeconds(2f));
         CinemachineFollowTarget.transform.localRotation = Quaternion.identity;
@@ -391,13 +410,36 @@ public class MovementController_2D : MonoBehaviour {
         //only supports changing x/z plane not y (ceiling/floor)
         var offsetDirection = (transform.forward.x < -.001 || transform.forward.z > .001) ? transform.right : -transform.right;
 
+        //flip the offset direction if the player is flipped
         offsetDirection = flipOffset ? -offsetDirection : offsetDirection;
+
+        //get the new position
         newSpritePos = closestPointOnBounds + offsetDirection * offSetAmount;
 
+        //add the offset to the new position
         newSpritePos += transform.forward * PlayerDimensionController.WALL_DRAW_OFFSET;
 
-        //move to offset position
+        
+
+        var newCameraDesiredPosition = (closestPointOnBounds + offsetDirection * cameraWallConfiner.MinAllowedDistanceToWall);
+
+        gizmoDrawLoc = newCameraDesiredPosition;
+       
+        // Store the current world position of the CinemachineFollowTarget
+        
+
+        // Move the parent object
         transform.position = newSpritePos;
+
+        // After moving the parent, reset the CinemachineFollowTarget's world position
+        CinemachineFollowTarget.transform.position = originalFollowTargetPosition;
+        gizmoDrawLoc2 = CinemachineFollowTarget.transform.position;
+
+        //start the coroutine to new position
+
+        cameraWallConfiner.MoveToCorner(newCameraDesiredPosition);
+       
+
     }
     //locks the axes to the up/down/left/right on the wall
     //prevents the dog from slipping into the or out of the wall
@@ -414,7 +456,7 @@ public class MovementController_2D : MonoBehaviour {
             //cameraPOV.m_HorizontalAxis.m_MaxValue = -65f;
             cameraWallConfiner.SetZeroRotaion(-90f);
             //cameraWallConfiner.YRotation = -90f;
-         //   StartCoroutine(AxisTransitionCoroutine(-115f, -65f, -90f));
+            //   StartCoroutine(AxisTransitionCoroutine(-115f, -65f, -90f));
 
         }
         else if (fwd.x < -0.1) {
@@ -433,8 +475,8 @@ public class MovementController_2D : MonoBehaviour {
             //cameraPOV.m_HorizontalAxis.m_MinValue = 155f;
             //cameraPOV.m_HorizontalAxis.m_MaxValue = 205f;
             cameraWallConfiner.SetZeroRotaion(180f);
-           // cameraWallConfiner.YRotation = 180f;
-          //  StartCoroutine(AxisTransitionCoroutine(155f, 205f, 180f));
+            // cameraWallConfiner.YRotation = 180f;
+            //  StartCoroutine(AxisTransitionCoroutine(155f, 205f, 180f));
         }
         else if (fwd.z < -0.1) {
             //cameraPOV.m_HorizontalAxis.Value = 0f;
@@ -442,7 +484,7 @@ public class MovementController_2D : MonoBehaviour {
             //cameraPOV.m_HorizontalAxis.m_MaxValue = 25f;
             cameraWallConfiner.SetZeroRotaion(0f);
             //cameraWallConfiner.YRotation = 0f;
-       //     StartCoroutine(AxisTransitionCoroutine(-25f, 25f, 0f));
+            //     StartCoroutine(AxisTransitionCoroutine(-25f, 25f, 0f));
         }
 
         //crazy floating point errors
@@ -456,35 +498,7 @@ public class MovementController_2D : MonoBehaviour {
             rb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezeRotation;
         }
     }
-    private IEnumerator AxisTransitionCoroutine(float newMinValue, float newMaxValue, float newValue) {
-        CinemachinePOV cameraPOV = virtualCamera2D.GetCinemachineComponent<CinemachinePOV>();
-        float originalMinValue = cameraPOV.m_HorizontalAxis.m_MinValue;
-        float originalMaxValue = cameraPOV.m_HorizontalAxis.m_MaxValue;
-        float originalValue = cameraPOV.m_HorizontalAxis.Value;
 
-        float elapsedTime = 0f;
-
-        while (elapsedTime < transitionDuration) {
-            // Calculate the progress ratio
-            float ratio = elapsedTime / transitionDuration;
-
-            // Smoothly interpolate the axis values
-            cameraPOV.m_HorizontalAxis.m_MinValue = Mathf.Lerp(originalMinValue, newMinValue, ratio);
-            cameraPOV.m_HorizontalAxis.m_MaxValue = Mathf.Lerp(originalMaxValue, newMaxValue, ratio);
-            cameraPOV.m_HorizontalAxis.Value = Mathf.Lerp(originalValue, newValue, ratio);
-
-            // Increment the elapsed time
-            elapsedTime += Time.deltaTime;
-
-            // Wait for the next frame
-            yield return null;
-        }
-
-        // Ensure final values are set
-        cameraPOV.m_HorizontalAxis.m_MinValue = newMinValue;
-        cameraPOV.m_HorizontalAxis.m_MaxValue = newMaxValue;
-        cameraPOV.m_HorizontalAxis.Value = newValue;
-    }
     #endregion
     #region Unity Collision Methods
     private void HandleWallCollision(Collider collider, WallBehaviour wallB) {
