@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 112000000, guid: 1bbcebfaaa6e1a54090a87931d3a5a5b, type: 2}
+  m_LightingDataAsset: {fileID: 112000000, guid: 09f295aec9d837b4994fa01834648c2b, type: 2}
   m_LightingSettings: {fileID: 4890085278179872738, guid: 79ab8d2de6ac5a544a43453136084499, type: 2}
 --- !u!196 &4
 NavMeshSettings:
@@ -2793,6 +2793,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8482270819604309625, guid: 661267eb891b5904580f830d0297da52, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -4317,9 +4321,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 428203870717603982, guid: 17513ab5914eb2d4cb8bf0ccd9430ae8, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 13400000, guid: 2bf0adc56069ca243a02880c6dd48cc6, type: 2}
     - target: {fileID: 1304167074492356921, guid: 17513ab5914eb2d4cb8bf0ccd9430ae8, type: 3}
       propertyPath: m_Name
       value: Cube
+      objectReference: {fileID: 0}
+    - target: {fileID: 2425542187679739804, guid: 17513ab5914eb2d4cb8bf0ccd9430ae8, type: 3}
+      propertyPath: shrinkScale
+      value: 250
       objectReference: {fileID: 0}
     - target: {fileID: 3951483994476646461, guid: 17513ab5914eb2d4cb8bf0ccd9430ae8, type: 3}
       propertyPath: m_LocalPosition.x
