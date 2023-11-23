@@ -2845,7 +2845,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5777044561863398770, guid: fb8c3e8ae224536429ccdea06bdbd743, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -24.249332
+      value: -24.36
       objectReference: {fileID: 0}
     - target: {fileID: 5777044561863398770, guid: fb8c3e8ae224536429ccdea06bdbd743, type: 3}
       propertyPath: m_LocalPosition.y
@@ -4010,23 +4010,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4976584202734474264, guid: 10b144c380968504d935c9e3949f6f80, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 159.2843
+      value: 4.990822
       objectReference: {fileID: 0}
     - target: {fileID: 4976584202734474264, guid: 10b144c380968504d935c9e3949f6f80, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -26.825003
+      value: 0.34578514
       objectReference: {fileID: 0}
     - target: {fileID: 4976584202734474264, guid: 10b144c380968504d935c9e3949f6f80, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -171.21986
+      value: 80.63581
       objectReference: {fileID: 0}
     - target: {fileID: 4976584202734474264, guid: 10b144c380968504d935c9e3949f6f80, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.9989771
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4976584202734474264, guid: 10b144c380968504d935c9e3949f6f80, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.045218114
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5516494056249470713, guid: 10b144c380968504d935c9e3949f6f80, type: 3}
       propertyPath: m_IsActive
@@ -4102,7 +4102,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7290586444352009121, guid: 10b144c380968504d935c9e3949f6f80, type: 3}
       propertyPath: field of view
-      value: 40
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 8262082385531830984, guid: 10b144c380968504d935c9e3949f6f80, type: 3}
       propertyPath: m_ProbeAnchor
