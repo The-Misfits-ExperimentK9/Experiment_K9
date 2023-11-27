@@ -382,7 +382,7 @@ public class MovementController_2D : MonoBehaviour {
     }
     #endregion
     #region Unity Collision Methods
-    private void HandleWallCollision(Collider collider, WallBehaviour wallB) {
+    public void HandleWallCollision(Collider collider, WallBehaviour wallB, bool convex) {
 
         if (PlayerBehaviour.Instance.IsIn3D()) return;
 
@@ -396,10 +396,15 @@ public class MovementController_2D : MonoBehaviour {
             //    TransitionToNewAxis(closestPoint, wallB);
 
             //}
-            if (pastwall == null || IsWallAtNewAngle(wallB.transform)) {
+            if (pastwall == null || (IsWallAtNewAngle(wallB.transform) && !IsPerpendicular(wallB.transform, pastwall.transform))) {
+                Debug.Log("1");
                 SetCurrentWall(wallB);
                 TransitionToNewAxis(closestPoint, wallB);
-
+            }
+            else if (convex) {
+                Debug.Log("2");
+                SetCurrentWall(wallB);
+                TransitionToNewAxis(closestPoint, wallB);
             }
         }
     }
@@ -414,7 +419,7 @@ public class MovementController_2D : MonoBehaviour {
 
             //if (wallB.IsWalkThroughEnabled) {
 
-            HandleWallCollision(collision.collider, wallB);
+            HandleWallCollision(collision.collider, wallB, false);
             //}
         }
     }
