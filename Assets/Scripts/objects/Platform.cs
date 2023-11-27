@@ -134,17 +134,17 @@ public class Platform : ActivatablePuzzlePiece {
         GetNextTargetLocation();
         yield return null;
     }
-    void OnControllerColliderHit(ControllerColliderHit hit) {
-        if (hit.gameObject.layer == LayerInfo.PLAYER) {
-            if (!unlocked && unlockedByPlayerCollision) {
-                unlocked = true;
-            }
-            //  playerOnPlatform = true;
-            player = hit.gameObject;
-            playerRb = player.GetComponent<Rigidbody>();
-            StartMoving();
-        }
-    }
+    //void OnControllerColliderHit(ControllerColliderHit hit) {
+    //    if (hit.gameObject.layer == LayerInfo.PLAYER) {
+    //        if (!unlocked && unlockedByPlayerCollision) {
+    //            unlocked = true;
+    //        }
+    //        //  playerOnPlatform = true;
+    //        player = hit.gameObject;
+    //        playerRb = player.GetComponent<Rigidbody>();
+    //        StartMoving();
+    //    }
+    //}
 
     //private void OnCollisionEnter(Collision collision) {
        

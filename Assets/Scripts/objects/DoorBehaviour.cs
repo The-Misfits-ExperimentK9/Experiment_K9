@@ -81,11 +81,11 @@ public class DoorBehaviour : ActivatablePuzzlePiece {
     }
 
     protected void OpenDoor() {
-        Debug.Log("Opening door");
+       // Debug.Log("Opening door");
         goalState = DoorState.Open;
     }
     protected void CloseDoor() {
-        Debug.Log("Closing door");
+        //Debug.Log("Closing door");
         goalState = DoorState.Closed;
     }
     public bool IsOpen() {
@@ -97,7 +97,7 @@ public class DoorBehaviour : ActivatablePuzzlePiece {
     }
 
     public override void Deactivate(GameObject caller) {
-        Debug.Log(caller.name);
+        //Debug.Log(caller.name);
         CloseDoor();
     }
 }

@@ -52,8 +52,8 @@ MonoBehaviour:
   Is3D: 1
   isColliding: 0
   unShrunkScale: 500
-  shrinkScale: 100
-  shrinkTime: 0.5
+  shrinkScale: 250
+  shrinkTime: 0.25
 --- !u!1 &1986648808456706806
 GameObject:
   m_ObjectHideFlags: 0
@@ -236,7 +236,7 @@ GameObject:
   - component: {fileID: 797450111443044504}
   m_Layer: 7
   m_Name: actual_cube
-  m_TagString: EventTrigger
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -317,7 +317,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8951393118057610491}
   serializedVersion: 4
-  m_Mass: 6
+  m_Mass: 60
   m_Drag: 1
   m_AngularDrag: 5
   m_CenterOfMass: {x: 0, y: 0, z: 0}

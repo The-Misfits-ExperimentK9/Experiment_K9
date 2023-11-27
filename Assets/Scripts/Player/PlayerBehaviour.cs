@@ -2,6 +2,7 @@ using StarterAssets;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -47,6 +48,11 @@ public class PlayerBehaviour : MonoBehaviour {
     private List<Collider> receivables = new(); //list of potential ball receivers
     private BallReceiver closestBallReceiver;
 
+
+    [Header("Development")]
+    public bool EnableItemSpawning = true;
+    public List<GameObject> items = new();
+    private KeyControl spawnKey1, spawnKey2;
     private void Start() {
         //set singleton
         if (Instance == null) {
@@ -57,6 +63,8 @@ public class PlayerBehaviour : MonoBehaviour {
         }
         //set reset key to R key and set the radius of the interact radar
         resetKey = Keyboard.current.rKey;
+        spawnKey1 = Keyboard.current.digit1Key;
+        spawnKey2 = Keyboard.current.digit2Key;
         interactRadarGameObject.GetComponent<SphereCollider>().radius = interactDisplayRadius;
 
         //grab the controller scripts from the 3d player object
@@ -84,8 +92,27 @@ public class PlayerBehaviour : MonoBehaviour {
             if (pickupController.IsHoldingObject() && is3D) {
                 FindNearestReceiverAndActivateHologram();
             }
+            if (EnableItemSpawning) {
+                HandleItemSpawning();
+            }
         }
     }
+    void HandleItemSpawning() {
+        if (spawnKey1.wasPressedThisFrame) {
+            Debug.Log("one key pressed");
+            var item = items[0];
+            if (item != null) {
+                Instantiate(item, player3D.transform.position + player3D.transform.forward * 5, Quaternion.identity);
+            }
+        }
+        if (spawnKey2.wasPressedThisFrame) {
+            var item = items[1];
+            if (item != null) {
+                Instantiate(item, player3D.transform.position + player3D.transform.forward * 10, Quaternion.identity);
+            }
+        }
+    }
+
     private void FindNearestReceiverAndActivateHologram() {
 
 

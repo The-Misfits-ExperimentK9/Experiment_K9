@@ -120,8 +120,6 @@ public class MovementController_2D : MonoBehaviour {
         }
     }
     private void Update() {
-        Debug.Log("transform.forward: " + transform.forward);
-        Debug.Log("transform.right: " + transform.right);
         if (gravityEnabled) {
             GroundedCheck();
             JumpAndGravity();

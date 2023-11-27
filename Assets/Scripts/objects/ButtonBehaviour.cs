@@ -17,7 +17,7 @@ public class ButtonBehaviour : ReceivableParent {
     //the minimum mass the button needs to be in contact with to activate
     [SerializeField] private float minMassToPress = 5f;
     //control to make the button not unpress itself if it was successfully pressed
-    [SerializeField] private bool IsPermanentlyPressedOnPress = false;
+    [SerializeField] private bool IsPermanentlyPressedOnPress = true;
 
     private bool unpressed;
     //keeps track of who or what pressed the button to check its mass against minimum required
@@ -59,7 +59,7 @@ public class ButtonBehaviour : ReceivableParent {
 
 
     private void OnCollisionEnter(Collision collision) {
-        Debug.Log("collision " + collision.gameObject.layer);
+       // Debug.Log("collision " + collision.gameObject.layer);
         if (collision.gameObject.layer == LayerInfo.INTERACTABLE_OBJECT) {
             presser = collision.gameObject;
         }
@@ -100,11 +100,12 @@ public class ButtonBehaviour : ReceivableParent {
     //then checks for mass on the attached rigid body
     //if no rigid body is found also return false
     private bool CanPressButton() {
-        if (presser == null) return false;
-        if (presser.layer == LayerInfo.PLAYER) return true;
-        if (presser.TryGetComponent(out Rigidbody rb)) {
-            return rb.mass > minMassToPress;
-        }
-        return false;
+        return true;
+        //if (presser == null) return false;
+        //if (presser.layer == LayerInfo.PLAYER) return true;
+        //if (presser.TryGetComponent(out Rigidbody rb)) {
+        //    return rb.mass > minMassToPress;
+        //}
+        //return false;
     }
 }

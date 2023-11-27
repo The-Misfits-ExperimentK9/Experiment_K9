@@ -9,12 +9,14 @@ using UnityEngine.InputSystem.Controls;
 public class PickupController : MonoBehaviour {
     [Header("Pickup Settings")]
     [SerializeField] Transform holdArea;
+    [SerializeField] Vector3 sphereHoldAreaLocalPosition;
+    [SerializeField] Vector3 cubeHoldAreaLocalPosition;
     public GrabbableObject HeldObject;
     private Rigidbody heldObjectRigidbody;
     
     [Header("Physics Params")]
-    [SerializeField] float pickupForce = 100f;
-    [SerializeField] float pickupDrag = 20f;
+    [SerializeField] float pickupForce = 150f;
+    [SerializeField] float pickupDrag = 10f;
     private bool canInteract = true;                        //disable or enable player interactions
     KeyControl interactKey;
 
@@ -166,6 +168,12 @@ public class PickupController : MonoBehaviour {
                     heldObjectRigidbody.AddForce(moveDirection * pickupForce);
                     //pick up the object that was found to be the closest
                     HeldObject.Pickup3D(gameObject, holdArea, pickupDrag);
+                    if (HeldObject is TransferableObject) {
+                        holdArea.localPosition = sphereHoldAreaLocalPosition;
+                    }
+                    else {
+                        holdArea.localPosition = cubeHoldAreaLocalPosition;
+                    }
                 }
             }
             //closest object to camera is a Interactable object no pickup (button)
