@@ -13,6 +13,7 @@ Mike
 <ul>
 <li>Added blue shaders to transferable walls to make them more obvious</li>
 <li>Added indoor lighting to tutorial and john level</li>
+<li>Replaced bars with glass walls so they dont mess with the camera</li>
 </ul>
 <h3>Changes</h3>
 <ul>
