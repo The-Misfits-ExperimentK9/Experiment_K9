@@ -52,7 +52,7 @@ MonoBehaviour:
   Is3D: 1
   isColliding: 0
   unShrunkScale: 500
-  shrinkScale: 250
+  shrinkScale: 500
   shrinkTime: 0.25
 --- !u!1 &1986648808456706806
 GameObject:
