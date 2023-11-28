@@ -242,7 +242,7 @@ public class MovementController_2D : MonoBehaviour {
 
 
             rb.velocity = new Vector3(rb.velocity.x, _verticalVelocity, rb.velocity.x); //apply gravity
-            Debug.Log(rb.velocity);
+            //Debug.Log(rb.velocity);
 
         }
 
