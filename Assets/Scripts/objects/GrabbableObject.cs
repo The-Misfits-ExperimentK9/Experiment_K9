@@ -64,7 +64,7 @@ public class GrabbableObject : MonoBehaviour {
         //prevent errors with sphere
         if (displayObject3D_Mesh.name != "actual_cube")
         {
-            Debug.Log("dropping sphere");
+            //Debug.Log("dropping sphere");
             sphereCollider.enabled = true;
             if (PlayerBehaviour.Instance.GetClosestReceiver() != null)
                 transform.position = PlayerBehaviour.Instance.GetClosestReceiver().transform.position;

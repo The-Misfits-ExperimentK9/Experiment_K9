@@ -12,6 +12,7 @@ public class InterfaceBehaviour : MonoBehaviour {
     private string dogEnabledPrefix = "D.O.G. Transfer: ";
     [SerializeField] private GameObject pauseMenu;
     [SerializeField] private List<GameObject> tutorialMessages;
+    
     //[SerializeField] private GameObject player3D;
     //[SerializeField] private GameObject player2D;
     //[SerializeField] private GameObject playerBehavior;

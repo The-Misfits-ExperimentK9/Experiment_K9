@@ -22,6 +22,12 @@ public class ItemSpawner : ActivatablePuzzlePiece
         }
         spawnedObject = Instantiate(itemToSpawn, transform.position, Quaternion.identity);
     }
-
+    private void OnTriggerExit(Collider other) {
+        if (other.gameObject.layer == LayerInfo.INTERACTABLE_OBJECT) {
+            if (Vector3.Distance(other.transform.position, transform.position) > 10f) {
+                SpawnItem();
+            }
+        }
+    }
 
 }

@@ -265,7 +265,7 @@ public class PlayerDimensionController : MonoBehaviour {
             TransitionTo2D();
         }
         else {
-            Debug.Log("Transition area blocked or its not projecting");
+           // Debug.Log("Transition area blocked or its not projecting");
         }
     }
     private void OnDrawGizmos() {
@@ -374,6 +374,7 @@ public class PlayerDimensionController : MonoBehaviour {
     //disable all projections
     public void DisableProjections() {
         if (IsProjecting) {
+          
             player2D.SetActive(false);
             IsProjecting = false;
 

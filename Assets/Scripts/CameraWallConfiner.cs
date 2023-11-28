@@ -53,6 +53,8 @@ public class CameraWallConfiner : MonoBehaviour {
         var rightColliders = Physics.RaycastAll(playerTransform.position, -playerTransform.right, MinAllowedDistanceToWall, wallLayer);
         var leftColliders = Physics.RaycastAll(playerTransform.position, playerTransform.right, MinAllowedDistanceToWall, wallLayer);
 
+        if (rightColliders.Length > 0 & leftColliders.Length > 0) return;
+
         var currentWall = playerMovementController.GetCurrentWall();
         GameObject currentWallGameobject;
         if (currentWall) {

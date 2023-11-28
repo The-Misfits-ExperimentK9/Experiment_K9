@@ -9,7 +9,7 @@ public class PressButtonBehaviour : ReceivableParent {
     private readonly float pressTimer = .1f;
     private readonly float pressDelay = .5f;
     private bool isPressed = false;
-    
+    public bool IsPressed { get => isPressed; }
 
     //set materials to pressed and activate the puzzle piece
     public override void Activate() {
