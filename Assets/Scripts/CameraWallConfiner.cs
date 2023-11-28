@@ -87,7 +87,7 @@ public class CameraWallConfiner : MonoBehaviour {
     }
 
     void Update() {
-        cameraNeedsToBeReset = cameraNeedsToBeReset || cameraPOV.m_HorizontalAxis.m_InputAxisValue > .01f;
+        cameraNeedsToBeReset = cameraNeedsToBeReset || cameraPOV.m_HorizontalAxis.m_InputAxisValue > .1f;
         FindAndSetDesiredPosition();
 
     }

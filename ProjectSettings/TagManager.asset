@@ -13,6 +13,7 @@ TagManager:
   - PlayerSpawnPoint
   - LevelGoal
   - BallReceiver
+  - LevelManager
   layers:
   - Default
   - TransparentFX

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class InterfaceBehaviour : MonoBehaviour {
     //  [SerializeField] private TextMeshProUGUI dogModeText;
@@ -11,6 +12,9 @@ public class InterfaceBehaviour : MonoBehaviour {
     private string dogEnabledPrefix = "D.O.G. Transfer: ";
     [SerializeField] private GameObject pauseMenu;
     [SerializeField] private List<GameObject> tutorialMessages;
+    //[SerializeField] private GameObject player3D;
+    //[SerializeField] private GameObject player2D;
+    //[SerializeField] private GameObject playerBehavior;
     
 
     public void SetDogToggleText(bool dogIsRangedMode) {
@@ -47,4 +51,19 @@ public class InterfaceBehaviour : MonoBehaviour {
 
         }
     }
+    
+    public void QuitGame() {
+        Application.Quit();
+    }
+    public void LoadMainMenu() {
+        Debug.Log("Loading main menu");
+        SceneManager.LoadScene(0);
+    }
+    public void LoadNextLevel() {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
+    public void ResetLevel() {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
 }

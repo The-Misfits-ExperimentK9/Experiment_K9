@@ -530,7 +530,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2817393637023723959}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0.777363, z: -0, w: 0.62905234}
+  m_LocalRotation: {x: -0, y: 0.045218114, z: -0, w: 0.9989771}
   m_LocalPosition: {x: 185.1084, y: -26.825003, z: -154.88974}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -807,7 +807,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   holdArea: {fileID: 8413178250063108687}
   sphereHoldAreaLocalPosition: {x: 0, y: -1.36, z: 3.25}
-  cubeHoldAreaLocalPosition: {x: 0, y: -1.36, z: 5.88}
+  cubeHoldAreaLocalPosition: {x: 0, y: -1.36, z: 10}
   HeldObject: {fileID: 0}
   pickupForce: 150
   pickupDrag: 10
@@ -1331,7 +1331,7 @@ Transform:
   m_GameObject: {fileID: 6774737294069508098}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.777363, z: -0, w: 0.62905234}
-  m_LocalPosition: {x: -31.8715, y: 12.5906515, z: -48.173298}
+  m_LocalPosition: {x: 185.1084, y: -26.825003, z: -154.88974}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1514,12 +1514,40 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4976584202734474264}
     m_Modifications:
+    - target: {fileID: 1133704007185780458, guid: e70ebb95f1603a347ade9fb1bb0c3501, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 800
+      objectReference: {fileID: 0}
+    - target: {fileID: 1133704007185780458, guid: e70ebb95f1603a347ade9fb1bb0c3501, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 449.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1133704007185780458, guid: e70ebb95f1603a347ade9fb1bb0c3501, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.00000026543
+      objectReference: {fileID: 0}
+    - target: {fileID: 1133704007185780458, guid: e70ebb95f1603a347ade9fb1bb0c3501, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0.00098419
+      objectReference: {fileID: 0}
+    - target: {fileID: 1133704007185780458, guid: e70ebb95f1603a347ade9fb1bb0c3501, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.048964
+      objectReference: {fileID: 0}
     - target: {fileID: 2606557874445328026, guid: e70ebb95f1603a347ade9fb1bb0c3501, type: 3}
       propertyPath: m_Name
       value: TutorialCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 2606557874445328026, guid: e70ebb95f1603a347ade9fb1bb0c3501, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6768711235060410883, guid: e70ebb95f1603a347ade9fb1bb0c3501, type: 3}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7039001175674802304, guid: e70ebb95f1603a347ade9fb1bb0c3501, type: 3}
+      propertyPath: m_IgnoreReversedGraphics
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8400497174328679795, guid: e70ebb95f1603a347ade9fb1bb0c3501, type: 3}
@@ -1602,6 +1630,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8591256392416504604, guid: e70ebb95f1603a347ade9fb1bb0c3501, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8735395586250520716, guid: e70ebb95f1603a347ade9fb1bb0c3501, type: 3}
+      propertyPath: player2D
+      value: 
+      objectReference: {fileID: 5711888553331146587}
+    - target: {fileID: 8735395586250520716, guid: e70ebb95f1603a347ade9fb1bb0c3501, type: 3}
+      propertyPath: player3D
+      value: 
+      objectReference: {fileID: 5023980225577663842}
+    - target: {fileID: 8735395586250520716, guid: e70ebb95f1603a347ade9fb1bb0c3501, type: 3}
+      propertyPath: playerBehavior
+      value: 
+      objectReference: {fileID: 3973961944444345345}
     - target: {fileID: 8735395586250520716, guid: e70ebb95f1603a347ade9fb1bb0c3501, type: 3}
       propertyPath: tutorialMessages.Array.data[1]
       value: 

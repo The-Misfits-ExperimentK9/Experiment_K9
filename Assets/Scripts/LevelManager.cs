@@ -6,13 +6,9 @@ using System.Collections.Generic;
 using static Cinemachine.DocumentationSortingAttribute;
 
 public class LevelManager : MonoBehaviour {
-//    private int lvlNum = 1;
- //   [SerializeField] private GameObject player3D;
- //   [SerializeField]
- ////   PlayerBehaviour player;
- //   string[] sceneArray;
-    [SerializeField]
-    List<string> levelNames = new();
+
+    public List<string> levelNames = new();
+    private LevelManager Instance;
 
     int index = 0;
 
@@ -35,20 +31,32 @@ public class LevelManager : MonoBehaviour {
     }
 
     private void Awake() {
-        DontDestroyOnLoad(gameObject);
+        if (Instance == null) {
+            Instance = this;
+        }
+        else {
+            Destroy(this);
+        }
+        var levelManagers = GameObject.FindGameObjectsWithTag("LevelManager");
+        if (levelManagers.Length > 1) {
+            Destroy(gameObject);
+        }
+        else {
+            DontDestroyOnLoad(gameObject);
+        }
         //InitializeCatelog();
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
-    void Update() {
-        //LevelNull is just an empty level with the Level Manager and the PlayerWrapper in it.
-        if (SceneManager.GetActiveScene().name == "LevelNull")
-            IncrementLevel();
-    }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode load) {
-         if (SceneManager.GetActiveScene().name != "LevelNull")
+        if (SceneManager.GetActiveScene().name != "MainMenu") {
+            Cursor.lockState = CursorLockMode.Locked;
+            Time.timeScale = 1;
             SpawnPlayer();
-
+            
+        }
+        
+        
     }
     private void SpawnPlayer() {
         var playerWrap = GameObject.FindWithTag("PlayerWrapper");
@@ -73,11 +81,17 @@ public class LevelManager : MonoBehaviour {
     //or if the level should be set to int level.
     //Default is a modifier of 1 (AKA Next level)
     public void IncrementLevel() {
-            SceneManager.LoadScene(Next());
-        
+        SceneManager.LoadScene(Next());
+
     }
     public void DecrementLevel() {
-            SceneManager.LoadScene(Previous());
+        SceneManager.LoadScene(Previous());
+    }
+    public void LoadLevelByIndex(int sceneNumber) {
+        if (sceneNumber < 0 || sceneNumber >= levelNames.Count) {
+            throw new System.Exception("Scene number out of range");
+        }
+        SceneManager.LoadScene(levelNames[sceneNumber]);
     }
     private void TestChange() {
         if (Keyboard.current.pageUpKey.wasPressedThisFrame)

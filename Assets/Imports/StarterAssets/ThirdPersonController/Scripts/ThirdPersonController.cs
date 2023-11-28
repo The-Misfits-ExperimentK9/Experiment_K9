@@ -170,6 +170,7 @@ namespace StarterAssets {
                 }
 
             }
+            else { Cursor.lockState = CursorLockMode.None; }
         }
 
         private void LateUpdate() {
