@@ -6,7 +6,29 @@ Jordan
 John
 Billy
 Mike
- 
+
+
+<h2>Sprint 6 Changelog</h2>
+<h3>New</h3>
+<ul>
+<li>Added blue shaders to transferable walls to make them more obvious</li>
+<li>Added indoor lighting to tutorial and john level</li>
+<li>Replaced bars with glass walls so they dont mess with the camera</li>
+<li>Main Menu</li>
+<li>Level Selection system</li>
+<li>Level Reset, quit, main menu while in game</li>
+<li>Additional tutorial messages</li>
+</ul>
+<h3>Changes</h3>
+<ul>
+<li>Changed 2d camera movement from only horizontal to also vertical</li>
+</ul>
+<h3>Bugfixes</h3> 
+<ul>
+<li>Fixed 2d ball disappearing at some angles</li>
+<li>Fixed 2d ball receiver disappearing due to the new shaders</li>
+<li>2d camera changes on wall transfer a less jarring</li>
+</ul>
 
 
 <h2>Sprint 5 Changelog</h2>
@@ -18,6 +40,8 @@ Mike
 <li>Item spawner that can spawn 1 of any object type at time - activatable puzzle piece</li>
 <li>Pressable Button that can activate puzzle pieces</li>
 <li>Support for playing sound on puzzle piece activation</li>
+<li>Added the ability for the player to rotate the camera left or right while in 2D</li>
+<li>Brand new level</li>
 </ul>
 
 <h3>Changes</h3>
@@ -25,6 +49,7 @@ Mike
 <li>Convert PlayerBehaviour to singleton removing a massive amount of script links</li>
 <li>Changed the way picking up objects works to use forces which looks a lot prettier</li>
 <li>2d camera FOV increase + change to camera transition</li>
+<li>Changed the way the forward transform of the 2d player is set to allow for projection/2d traversal of the backside of walls (should make level creation a bit less tedious)</li>
 </ul>
 
 <h3>Bugfixes</h3>
@@ -40,8 +65,11 @@ Mike
 <li>Picking up items should more reliably pickup the item you are looking at</li>
 <li>Gravity Wall is now functional</li>
 <li>Conveyer Wall is now functional</li>
- 
+<li>Fixed player picking up items through walls</li>
+<li>Fixed player jumping to incorrect wall when in contact with the ground in some scenarios</li>
+<li>Attempted fixes for camera clipping outside the playable area</li> 
 </ul>
+
 
 
 
