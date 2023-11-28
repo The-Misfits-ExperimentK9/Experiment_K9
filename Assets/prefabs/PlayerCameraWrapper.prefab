@@ -61,7 +61,7 @@ Transform:
   m_GameObject: {fileID: 74397854644777205}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 40.719315, y: -10.329067, z: 82.105675}
+  m_LocalPosition: {x: 40.71931, y: -10.329067, z: 82.105675}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -215,12 +215,10 @@ MonoBehaviour:
   offSetAmount: 6
   wallCheckDistance: 0.8
   currentWall: {fileID: 0}
-  AllowCameraRotation2D: 0
   Camera2dLookAt: {fileID: 1535816345688438407}
   CinemachineFollowTarget: {fileID: 1749976163743187951}
   virtualCamera2D: {fileID: 3488118317138536256}
   cameraWallConfiner: {fileID: 7760674472729566309}
-  transitionDuration: 0.5
   Is2DPlayerActive: 0
   CanMove: 1
   maxSpeed2D: 15
@@ -445,8 +443,8 @@ MonoBehaviour:
     m_InputAxisName: Mouse Y
     m_InputAxisValue: 0
     m_InvertInput: 1
-    m_MinValue: -70
-    m_MaxValue: 70
+    m_MinValue: -10
+    m_MaxValue: 10
     m_Wrap: 0
     m_Recentering:
       m_enabled: 0
@@ -532,7 +530,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2817393637023723959}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: -0, y: -0.777363, z: -0, w: 0.62905234}
   m_LocalPosition: {x: 185.1084, y: -26.825003, z: -154.88974}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1333,7 +1331,7 @@ Transform:
   m_GameObject: {fileID: 6774737294069508098}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.777363, z: -0, w: 0.62905234}
-  m_LocalPosition: {x: 185.1084, y: -26.825003, z: -154.88974}
+  m_LocalPosition: {x: -31.8715, y: 12.5906515, z: -48.173298}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
