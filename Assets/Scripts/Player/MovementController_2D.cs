@@ -1,3 +1,5 @@
+using Cinemachine;
+using StarterAssets;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -26,12 +28,11 @@ public class MovementController_2D : MonoBehaviour {
     private Collider currentWallCollider;
     [Space(10)]
     [Header("2D Camera")]
-    [SerializeField] private bool AllowCameraRotation2D = false;
     [SerializeField] private GameObject Camera2dLookAt;
-    [SerializeField] private float cameraRotationSpeed = 100f;
-    [SerializeField] private float cameraMaxRotationAngle = 25f;
-    [SerializeField] private float cameraTotalRotation = 0f; // To keep track of the current rotation angle
-    [SerializeField] private float cameraRotationResetSpeed = 5f;
+    [SerializeField] private GameObject CinemachineFollowTarget;
+    [SerializeField] private CinemachineVirtualCamera virtualCamera2D;
+    [SerializeField] private CameraWallConfiner cameraWallConfiner;
+
 
     [Space(10)]
     [Header("Settings")]
@@ -43,7 +44,7 @@ public class MovementController_2D : MonoBehaviour {
 
     [Tooltip("The height the player can jump")]
     public float JumpHeight = 10.25f;
-    
+
     [Tooltip("Time required to pass before being able to jump again. Set to 0f to instantly jump again")]
     public float JumpTimeout = 0.50f;
 
@@ -52,11 +53,7 @@ public class MovementController_2D : MonoBehaviour {
 
     private KeyControl jumpKey;
 
-    
-
-
-    private Vector3 gizmoDrawLoc;
-    Vector3 forward;                                    //used to check which wall object is in the foreground to use that as the movement override
+    private Vector3 gizmoDrawLoc, gizmoDrawLoc2;
 
     public enum ProjectionState {
         OutOfRange,
@@ -96,15 +93,17 @@ public class MovementController_2D : MonoBehaviour {
     #region Start and Update
     // Start is called before the first frame update
     void Awake() {
-        // dog2DSprite = GetComponent<SpriteRenderer>();
         dogCollider2D = GetComponent<Collider>();
         jumpKey = Keyboard.current.wKey;
+    }
+    private void Start() {
+
     }
 
     // Update is called once per frame
     void FixedUpdate() {
         if (!PlayerBehaviour.Instance.IsIn3D()) {
-            
+
             ApplyFriction();
 
             if (CanMove) {
@@ -125,40 +124,9 @@ public class MovementController_2D : MonoBehaviour {
             JumpAndGravity();
 
         }
-        if (AllowCameraRotation2D) {
-            RotateCamera2dLookAt();
-        }
-        //if (Is2DPlayerActive)
-        //    AABBCheckForWallLeaving();
-
     }
     #endregion
-    #region camera rotation 2d
-    private void RotateCamera2dLookAt() {
-        // Get mouse X movement
-        float mouseX = Input.GetAxis("Mouse X");
-
-        // Calculate the new rotation increment
-        float newYRotation = mouseX * (cameraRotationSpeed * Time.deltaTime);
-
-        // Calculate the potential new total rotation
-        float potentialTotalRotation = cameraTotalRotation + newYRotation;
-
-        // Clamp the potential total rotation within the maximum allowed angles
-        if (potentialTotalRotation > cameraMaxRotationAngle) {
-            newYRotation = cameraMaxRotationAngle - cameraTotalRotation; 
-        }
-        else if (potentialTotalRotation < -cameraMaxRotationAngle) {
-            newYRotation = -cameraMaxRotationAngle - cameraTotalRotation; 
-        }
-
-        // Apply the newYRotation using RotateAround
-        Camera2dLookAt.transform.RotateAround(Camera.main.transform.position, Vector3.up, newYRotation);
-
-        // Update the total rotation
-        cameraTotalRotation += newYRotation;
-    }
-    #endregion
+    
     #region gizmos
     private void OnDrawGizmosSelected() {
         Color transparentGreen = new Color(0.0f, 1.0f, 0.0f, 0.35f);
@@ -171,6 +139,12 @@ public class MovementController_2D : MonoBehaviour {
         Gizmos.DrawSphere(
             new Vector3(transform.position.x, transform.position.y - GroundedOffset, transform.position.z),
             GroundedRadius);
+    }
+    private void OnDrawGizmos() {
+        Gizmos.color = Color.white;
+        Gizmos.DrawSphere(gizmoDrawLoc, 1f);
+        Gizmos.color = Color.magenta;
+        Gizmos.DrawSphere(gizmoDrawLoc2, 1f);
     }
     #endregion
     #region GroundedCheck, Friction, Move, Jump, Gravity
@@ -207,7 +181,7 @@ public class MovementController_2D : MonoBehaviour {
         }
 
     }
-    
+
 
     private void Move() {
 
@@ -222,20 +196,9 @@ public class MovementController_2D : MonoBehaviour {
             spriteRenderer.flipX = false;
         }
         if (input.x < .01f && input.x > -.01f) {
-            //allow camera rotation when not moving 
-            AllowCameraRotation2D = true;
             targetSpeed = 0.0f;
         }
         else {
-            //adjust the camera if the player is moving
-            Camera2dLookAt.transform.position = Vector3.Lerp(Camera2dLookAt.transform.position, transform.position, Time.fixedDeltaTime * cameraRotationResetSpeed);
-            var vecToCameraLookat = Camera.main.transform.position - Camera2dLookAt.transform.position;
-            var vecToPlayer = Camera.main.transform.position - transform.position;
-
-
-            cameraTotalRotation = Vector3.Angle(vecToCameraLookat, vecToPlayer);
-            //dont allow camera rotation when moving
-            AllowCameraRotation2D = false;
         }
         // accelerate or decelerate to target speed
 
@@ -279,14 +242,14 @@ public class MovementController_2D : MonoBehaviour {
 
 
             rb.velocity = new Vector3(rb.velocity.x, _verticalVelocity, rb.velocity.x); //apply gravity
-            Debug.Log(rb.velocity);
+            //Debug.Log(rb.velocity);
 
         }
 
     }
 
     private void JumpAndGravity() {
-        
+
         if (Grounded) {
             // reset the fall timeout timer
             _fallTimeoutDelta = FallTimeout;
@@ -339,35 +302,75 @@ public class MovementController_2D : MonoBehaviour {
     #region transition to a new axis
     void TransitionToNewAxis(Vector3 closestPointOnBounds, WallBehaviour wall) {
         Debug.Log("TransitionToNewAxis");
-        AllowCameraRotation2D = false;
-        StartCoroutine(EnableCameraRotationAfterSeconds(2f));
-        cameraTotalRotation = 0f;
+        // Store the current world position of the CinemachineFollowTarget
+        Vector3 originalFollowTargetPosition = Camera.main.transform.position;
+        
+        CinemachineFollowTarget.transform.localRotation = Quaternion.identity;
+        //cameraTotalRotation = 0f;
         bool flipOffset = transform.forward.x < -.001 || transform.forward.z < -.001;
         //rotate first to get correct transform.right
-          
+
         transform.forward = GetOrthogonalVectorTo2DPlayer(wall.GetComponent<Collider>());
 
-        // Debug.Log($"Transitioning to {wall.name} and setting forward to {transform.forward}");
 
         LockPlayerMovementInForwardDirection();
         SetCurrentWall(wall);
-        
+
 
         //only supports changing x/z plane not y (ceiling/floor)
         var offsetDirection = (transform.forward.x < -.001 || transform.forward.z > .001) ? transform.right : -transform.right;
 
+        //flip the offset direction if the player is flipped
         offsetDirection = flipOffset ? -offsetDirection : offsetDirection;
+
+        //get the new position
         newSpritePos = closestPointOnBounds + offsetDirection * offSetAmount;
-        
+
+        //add the offset to the new position
         newSpritePos += transform.forward * PlayerDimensionController.WALL_DRAW_OFFSET;
 
-        //move to offset position
+
+        var newCameraDesiredPosition = (closestPointOnBounds + offsetDirection * cameraWallConfiner.MinAllowedDistanceToWall);
+
+        gizmoDrawLoc = newCameraDesiredPosition;
+
+
+        // Move the parent object
         transform.position = newSpritePos;
+
+        // After moving the parent, reset the CinemachineFollowTarget's world position
+        CinemachineFollowTarget.transform.position = originalFollowTargetPosition;
+        gizmoDrawLoc2 = CinemachineFollowTarget.transform.position;
+
+        //start the coroutine to new position
+
+        cameraWallConfiner.MoveToCorner(newCameraDesiredPosition);
+       
+
     }
     //locks the axes to the up/down/left/right on the wall
     //prevents the dog from slipping into the or out of the wall
     public void LockPlayerMovementInForwardDirection() {
+
         var right = transform.right;
+        var fwd = transform.forward;
+
+        if (fwd.x > 0.1) {
+            cameraWallConfiner.SetZeroRotaion(-90f);
+
+        }
+        else if (fwd.x < -0.1) {
+            cameraWallConfiner.SetZeroRotaion(90f);
+        }
+        else if (fwd.y > 0.1 || fwd.y < -0.0001) {
+            Debug.LogError("Unsupported behaviour - doggo on floor");
+        }
+        else if (fwd.z > 0.1) {
+            cameraWallConfiner.SetZeroRotaion(180f);
+        }
+        else if (fwd.z < -0.1) {
+            cameraWallConfiner.SetZeroRotaion(0f);
+        }
 
         //crazy floating point errors
         if (right.x > 0.0001 || right.x < -0.0001) {
@@ -380,9 +383,10 @@ public class MovementController_2D : MonoBehaviour {
             rb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezeRotation;
         }
     }
+
     #endregion
     #region Unity Collision Methods
-    private void HandleWallCollision(Collider collider, WallBehaviour wallB) {
+    public void HandleWallCollision(Collider collider, WallBehaviour wallB, bool convex) {
 
         if (PlayerBehaviour.Instance.IsIn3D()) return;
 
@@ -396,10 +400,15 @@ public class MovementController_2D : MonoBehaviour {
             //    TransitionToNewAxis(closestPoint, wallB);
 
             //}
-            if (pastwall == null || IsWallAtNewAngle(wallB.transform)) {
+            if (pastwall == null || (IsWallAtNewAngle(wallB.transform) && !IsPerpendicular(wallB.transform, pastwall.transform))) {
+                Debug.Log("1");
                 SetCurrentWall(wallB);
                 TransitionToNewAxis(closestPoint, wallB);
-
+            }
+            else if (convex) {
+                Debug.Log("2");
+                SetCurrentWall(wallB);
+                TransitionToNewAxis(closestPoint, wallB);
             }
         }
     }
@@ -414,7 +423,7 @@ public class MovementController_2D : MonoBehaviour {
 
             //if (wallB.IsWalkThroughEnabled) {
 
-            HandleWallCollision(collision.collider, wallB);
+            HandleWallCollision(collision.collider, wallB, false);
             //}
         }
     }
@@ -423,10 +432,10 @@ public class MovementController_2D : MonoBehaviour {
         if (PlayerBehaviour.Instance.IsIn3D()) return;
 
         if (collision.gameObject.TryGetComponent(out WallBehaviour wallB)) {
-           
+
 
             if (currentWall == wallB && !PlayerBehaviour.Instance.IsIn3D() || currentWall == null && !PlayerBehaviour.Instance.IsIn3D()) {
-              
+
                 UpdateWallStatus();
 
             }
@@ -490,8 +499,7 @@ public class MovementController_2D : MonoBehaviour {
         var ray = new Ray(transform.position, -transform.forward);
         var hits = Physics.RaycastAll(ray, 10f, LayerMask.GetMask("Walls"));
 
-        foreach (var item in hits)
-        {
+        foreach (var item in hits) {
             Debug.Log("wall hit " + item.rigidbody.gameObject.name);
         }
 
@@ -509,6 +517,11 @@ public class MovementController_2D : MonoBehaviour {
     }
     #endregion
     #region helper methods
+    private static float ClampAngle(float lfAngle, float lfMin, float lfMax) {
+        if (lfAngle < -360f) lfAngle += 360f;
+        if (lfAngle > 360f) lfAngle -= 360f;
+        return Mathf.Clamp(lfAngle, lfMin, lfMax);
+    }
     public Vector2 GetInput() {
         var keyboard = Keyboard.current;
         return new Vector2(keyboard.dKey.isPressed ? 1 : keyboard.aKey.isPressed ? -1 : 0,
@@ -542,7 +555,7 @@ public class MovementController_2D : MonoBehaviour {
         return true;
     }
     private Vector3 GetOrthogonalVectorTo2DPlayer(Collider collider) {
-        
+
 
         Vector3 closestPoint = collider.ClosestPointOnBounds(transform.position);
 
@@ -562,12 +575,8 @@ public class MovementController_2D : MonoBehaviour {
 
         return direction;
     }
-    public IEnumerator EnableCameraRotationAfterSeconds(float seconds) {
-        yield return new WaitForSeconds(seconds);
-        AllowCameraRotation2D = true;
-    }
     public void SetCurrentWall(WallBehaviour wall) {
-        currentWallCollider = wall.GetComponent<Collider>();  
+        currentWallCollider = wall.GetComponent<Collider>();
         currentWall = wall;
         if (currentWall is GravityWall) {
             EnableGravity();
@@ -591,6 +600,7 @@ public class MovementController_2D : MonoBehaviour {
                 Is2DPlayerActive = false;
                 break;
             case ProjectionState.In2D:
+
                 spriteRenderer.sprite = sprites[3];
                 Is2DPlayerActive = true;
                 break;

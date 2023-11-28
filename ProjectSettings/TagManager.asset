@@ -13,6 +13,7 @@ TagManager:
   - PlayerSpawnPoint
   - LevelGoal
   - BallReceiver
+  - LevelManager
   layers:
   - Default
   - TransparentFX
@@ -32,7 +33,7 @@ TagManager:
   - Triggers
   - InteractableObjectNoPickup
   - IgnorePlayerCollision
-  - 
+  - Ignore2DPlayerAndCamera
   - 
   - 
   - 

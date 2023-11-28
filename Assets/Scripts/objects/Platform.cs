@@ -11,28 +11,29 @@ public class Platform : ActivatablePuzzlePiece {
     public float firstLastWaitTime = 2.0f;
 
     [SerializeField] GameObject player;
-    Rigidbody playerRb;
-    private Rigidbody rb;
+    protected Rigidbody playerRb;
+    protected Rigidbody rb;
 
-    private int currentTargetIndex = 0;
-    private bool isMovingForward = true;
-  //  [SerializeField] private bool playerOnPlatform = false;
-    private float distanceToCheck = .05f;
+    protected int currentTargetIndex = 1;
+    protected bool isMovingForward = true;
+    //  [SerializeField] private bool playerOnPlatform = false;
+    protected float distanceToCheck = .1f;
     [SerializeField] private bool unlocked = false;
+    protected bool movementStarted = false;
 
-    [SerializeField] private bool unlockedByPlayerCollision = false;
- //   [SerializeField] private bool dontMoveWithoutPlayer = true;
+    [SerializeField] private bool unlockedByPlayerCollision = true;
+    //   [SerializeField] private bool dontMoveWithoutPlayer = true;
 
-    private Vector3 currentTravelTarget;
+    protected Vector3 currentTravelTarget;
 
-    private Vector3 lastPos, firstPos;
+    protected Vector3 lastPos, firstPos;
     public enum PlatformState {
         Waiting,
         Moving,
     }
-    [SerializeField] private PlatformState state;
+    [SerializeField] protected PlatformState state;
 
-    private void Start() {
+    protected void Start() {
         if (travelLocations == null || travelLocations.Count < 2) {
             Debug.LogWarning("Insufficient travel locations provided.");
             return;
@@ -47,14 +48,15 @@ public class Platform : ActivatablePuzzlePiece {
     public override void Activate() {
         unlocked = true;
         //StartMoving();
-        StartCoroutine(WaitThenMove());
+        if (!unlockedByPlayerCollision)
+            StartCoroutine(WaitThenMove());
     }
 
     public override void Deactivate(GameObject caller) {
         unlocked = false;
     }
 
-    private void Update() {
+    protected void FixedUpdate() {
         if (travelLocations == null || travelLocations.Count < 2) {
             Debug.LogWarning("Insufficient travel locations provided.");
             return;
@@ -72,23 +74,22 @@ public class Platform : ActivatablePuzzlePiece {
 
     }
 
-    private void MovePlatform() {
+    protected void MovePlatform() {
 
         //if the platform is moving
         if (state == PlatformState.Moving) {
-           // var targetPosition = travelLocations[currentTargetIndex];
+            // var targetPosition = travelLocations[currentTargetIndex];
             //check how close it is to the target
-            var distSquaredToTarget = (currentTravelTarget - transform.position).sqrMagnitude;
             //reached a destination
-            if (distSquaredToTarget <= distanceToCheck) {
+            if (GotToDestination()) {
                 //end pos
-                if (Vector3.Distance(currentTravelTarget, lastPos) < .01f) {
+                if (Vector3.Distance(currentTravelTarget, lastPos) < .1f) {
                     StartCoroutine(WaitThenMove());
                     isMovingForward = false;
                     currentTargetIndex--;
                 }
                 //start pos
-                else if (Vector3.Distance(currentTravelTarget, firstPos) < .01f) {
+                else if (Vector3.Distance(currentTravelTarget, firstPos) < .1f) {
                     StartCoroutine(WaitThenMove());
                     isMovingForward = true;
                     currentTargetIndex++;
@@ -104,56 +105,60 @@ public class Platform : ActivatablePuzzlePiece {
             }
             //move the platform if not at a destination
             else {
-                
-                //if (playerOnPlatform) {
-                //    playerRb.velocity = rb.velocity;
-                //}
-                //transform.position = Vector3.MoveTowards(transform.position, targetPosition, platformMovementSpeed * Time.deltaTime);
-                //var velocity = (targetPosition - transform.position) * (platformMovementSpeed * Time.deltaTime);
+
 
 
             }
         }
     }
+    protected virtual bool GotToDestination() {
+        return (currentTravelTarget - transform.position).sqrMagnitude <= distanceToCheck;
+    }
 
-    private void GetNextTargetLocation() {
+    protected virtual void GetNextTargetLocation() {
         currentTravelTarget = travelLocations[currentTargetIndex];
-
         var moveDirection = (currentTravelTarget - transform.position).normalized;
         var velocity = platformMovementSpeed * moveDirection;
         rb.velocity = velocity; // set the Rigidbody's velocity to move the platform
+        if (playerRb) {
+            playerRb.velocity += velocity;
+        }
         state = PlatformState.Moving;
     }
 
-    private IEnumerator WaitThenMove() {
+    protected IEnumerator WaitThenMove() {
+        movementStarted = true;
+        Debug.Log("WaitThenMove");
         state = PlatformState.Waiting;
         rb.velocity = Vector3.zero;
-        for (int x = 0; x < 2; x++) {
-            yield return new WaitForSeconds(firstLastWaitTime / 2f);
-        }
+        yield return new WaitForSeconds(firstLastWaitTime);
+        
         GetNextTargetLocation();
         yield return null;
     }
-    //void OnControllerColliderHit(ControllerColliderHit hit) {
-    //    if (hit.gameObject.layer == LayerInfo.PLAYER) {
-    //        if (!unlocked && unlockedByPlayerCollision) {
-    //            unlocked = true;
-    //        }
-    //        //  playerOnPlatform = true;
-    //        player = hit.gameObject;
-    //        playerRb = player.GetComponent<Rigidbody>();
-    //        StartMoving();
-    //    }
-    //}
 
-    //private void OnCollisionEnter(Collision collision) {
-       
-    //}
-    //private void OnCollisionExit(Collision collision) {
-    //    if (collision.gameObject.layer == LayerInfo.PLAYER) {
-    //       // playerOnPlatform = false;
 
-    //    }
-    //}
+    protected void OnCollisionEnter(Collision collision) {
+        if (collision.gameObject.layer == LayerInfo.PLAYER) {
+            if (player) return;
+            
+            if (!unlocked && unlockedByPlayerCollision) {
+                unlocked = true;
+
+            }
+            //  playerOnPlatform = true;
+            player = collision.gameObject;
+            playerRb = player.GetComponent<Rigidbody>();
+            if (!movementStarted)
+                StartCoroutine(WaitThenMove());
+        }
+    }
+    protected void OnCollisionExit(Collision collision) {
+        if (collision.gameObject.layer == LayerInfo.PLAYER) {
+            player = null;
+            playerRb = null;
+
+        }
+    }
 }
 

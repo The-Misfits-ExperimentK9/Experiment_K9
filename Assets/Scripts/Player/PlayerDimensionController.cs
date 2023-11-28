@@ -46,6 +46,7 @@ public class PlayerDimensionController : MonoBehaviour {
 
     // public float DOGProjectionRange = 25f;
 
+    public Collider CurrentProjectionSurface { get => currentProjectionSurface; set => currentProjectionSurface = value; }
 
     private void Awake() {
         DOGToggleKey = Keyboard.current.fKey;
@@ -264,7 +265,7 @@ public class PlayerDimensionController : MonoBehaviour {
             TransitionTo2D();
         }
         else {
-            Debug.Log("Transition area blocked or its not projecting");
+           // Debug.Log("Transition area blocked or its not projecting");
         }
     }
     private void OnDrawGizmos() {
@@ -276,7 +277,6 @@ public class PlayerDimensionController : MonoBehaviour {
         
         movementController_2D.GetComponent<Rigidbody>().isKinematic = false;
         movementController_2D.SetCurrentWall(currentProjectionSurface.GetComponent<WallBehaviour>());
-        StartCoroutine(movementController_2D.EnableCameraRotationAfterSeconds(LockCameraOn3DTranstionTime));
         
         SetWallProjectionToActive();
         
@@ -374,6 +374,7 @@ public class PlayerDimensionController : MonoBehaviour {
     //disable all projections
     public void DisableProjections() {
         if (IsProjecting) {
+          
             player2D.SetActive(false);
             IsProjecting = false;
 

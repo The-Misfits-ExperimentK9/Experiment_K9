@@ -12,14 +12,14 @@ GameObject:
   - component: {fileID: 5173424651020072964}
   - component: {fileID: 6172979962098407571}
   - component: {fileID: 5492511216489602178}
+  - component: {fileID: 5493080623872844013}
   - component: {fileID: 5347047354549260533}
-  - component: {fileID: 3989124309460638971}
   m_Layer: 6
   m_Name: wall_no_transfer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &5777044561863398770
 Transform:
@@ -31,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0.5, y: -0.5, z: -0.5, w: 0.5}
   m_LocalPosition: {x: 4.8, y: 14, z: -64.5}
-  m_LocalScale: {x: 22.44089, y: 1, z: 90.49575}
+  m_LocalScale: {x: 22.44089, y: 0.25, z: 90.49575}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -107,6 +107,22 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5493080623872844013
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2189605769103951444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81324052c1cb77e44bdc37d6a3b30895, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AllowsDimensionTransition: 0
+  IsWalkThroughEnabled: 1
+  IsPassthrough: 0
+  LaunchForce: 10
 --- !u!54 &5347047354549260533
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -134,19 +150,3 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
---- !u!114 &3989124309460638971
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2189605769103951444}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1863eac71e987dc469416279fad703ee, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AllowsDimensionTransition: 0
-  IsWalkThroughEnabled: 1
-  IsPassthrough: 0
-  LaunchForce: 10

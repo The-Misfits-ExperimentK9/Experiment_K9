@@ -42,6 +42,7 @@ public class ButtonBehaviour : ReceivableParent {
 
     //move the button up if it is not at its starting position
     void UnPress() {
+        if (presser == null) {
             if (transform.localPosition.y < -0.01f) {
                 unpressed = false;
                 rb.AddForce(springForce * Time.deltaTime * Vector3.up, ForceMode.Acceleration);
@@ -54,24 +55,25 @@ public class ButtonBehaviour : ReceivableParent {
                 transform.localPosition = tempVec;
                 rb.velocity = Vector3.zero;
             }
-        
+        }
+
     }
 
 
     private void OnCollisionEnter(Collision collision) {
-       // Debug.Log("collision " + collision.gameObject.layer);
+        // Debug.Log("collision " + collision.gameObject.layer);
         if (collision.gameObject.layer == LayerInfo.INTERACTABLE_OBJECT) {
             presser = collision.gameObject;
         }
         //button hit the trigger cube
         //check if the button can be pressed and open door and swap material if so
-        else if(collision.collider.CompareTag("EventTrigger")) {
+        else if (collision.collider.CompareTag("EventTrigger")) {
             if (CanPressButton()) {
                 Activate();
             }
         }
         //otherwise the collision was with something trying to press it so store it as the presser
-       
+
 
     }
     //set materials to pressed and activate the puzzle piece
@@ -89,8 +91,8 @@ public class ButtonBehaviour : ReceivableParent {
     }
 
     private void OnCollisionExit(Collision collision) {
-        //if (collision.gameObject == presser)
-        //    presser = null;
+        if (collision.gameObject == presser)
+            presser = null;
         if (collision.collider.CompareTag("EventTrigger")) {
             Deactivate();
         }

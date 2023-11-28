@@ -17,7 +17,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &4922670036071962917
 Transform:
@@ -157,11 +157,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IsAuto: 1
   IsLocked: 0
+  activator: []
   door: {fileID: 8482270819604309625}
   doorHeight: 10
   doorSpeed: 6
   is2D: 0
   openNegativeRight: 0
+  currentState: 0
+  goalState: 0
 --- !u!54 &3601992485981871508
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -227,7 +230,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &4958753809505954900
 Transform:
@@ -332,7 +335,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &893345449797316511
 Transform:
@@ -491,6 +494,10 @@ PrefabInstance:
     - target: {fileID: 8310837404339325246, guid: cc7781a88adc483428de7d7279fd81bc, type: 3}
       propertyPath: m_Layer
       value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 8310837404339325246, guid: cc7781a88adc483428de7d7279fd81bc, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

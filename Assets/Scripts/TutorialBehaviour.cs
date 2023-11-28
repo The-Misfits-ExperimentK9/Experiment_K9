@@ -6,8 +6,8 @@ using UnityEngine.InputSystem;
 public class TutorialBehaviour : MonoBehaviour {
     List<LevelStateTrigger> activatedTriggers = new();
     [SerializeField] private bool tutorialEnabled = true;
-
-
+    [SerializeField] private PressButtonBehaviour spawnCubeButton;
+    [SerializeField] private BallReceiver_2D ballReceiver2D;
     int index = -1;
 
 
@@ -25,8 +25,17 @@ public class TutorialBehaviour : MonoBehaviour {
                     HandleLeaveWallMessage();   //move to yellow wall and leave wall message
                     break;
                 case 3:
-                case 4:
+
                     HandleThirdTrigger();   //pickup item message
+                    break;
+                case 4:
+                    HandleSpawnCubeMessage();   //spawn cube message
+                    break;
+                case 5:
+                    Handle2DBallMessage();
+                        break;
+                case 6:
+                    HandleDrop2DBallMessage();
                     break;
                 default:
                     PlayerBehaviour.Instance.interfaceScript.DisableActiveTutorials();
@@ -34,7 +43,14 @@ public class TutorialBehaviour : MonoBehaviour {
             }
         }
     }
-
+    public void SetState(LevelStateTrigger trigger, int index) {
+        if (!tutorialEnabled) return;
+        if (activatedTriggers.Contains(trigger)) return;
+        PlayerBehaviour.Instance.interfaceScript.DisableActiveTutorials();  //never show more than 1 tutorial message at a time
+        activatedTriggers.Add(trigger);
+        this.index = index;
+        PlayerBehaviour.Instance.interfaceScript.DisplayTutorialMessageByIndex(index);
+    }
     public void AdvanceState(LevelStateTrigger trigger) {
         if (!tutorialEnabled) return;
         if (activatedTriggers.Contains(trigger)) return;                    //never show the same tutorial message twice
@@ -72,6 +88,23 @@ public class TutorialBehaviour : MonoBehaviour {
     //message to pickup an item will hide when the player picks up an item
     private void HandleThirdTrigger() {
         if (PlayerBehaviour.Instance.pickupController.IsHoldingObject()) {
+            PlayerBehaviour.Instance.interfaceScript.DisableActiveTutorials();
+        }
+    }
+    private void Handle2DBallMessage() {
+        if (PlayerBehaviour.Instance.pickupController.IsHoldingObject()) {
+            PlayerBehaviour.Instance.interfaceScript.DisableActiveTutorials();
+            index++;
+            PlayerBehaviour.Instance.interfaceScript.DisplayTutorialMessageByIndex(index);
+        }
+    }
+    private void HandleSpawnCubeMessage() {
+        if (spawnCubeButton.IsPressed) {
+            PlayerBehaviour.Instance.interfaceScript.DisableActiveTutorials();
+        }
+    }
+    private void HandleDrop2DBallMessage() {
+        if (ballReceiver2D.IsActivated) {
             PlayerBehaviour.Instance.interfaceScript.DisableActiveTutorials();
         }
     }

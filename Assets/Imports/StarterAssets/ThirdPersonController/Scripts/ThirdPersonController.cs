@@ -170,6 +170,7 @@ namespace StarterAssets {
                 }
 
             }
+            else { Cursor.lockState = CursorLockMode.None; }
         }
 
         private void LateUpdate() {
@@ -278,7 +279,7 @@ namespace StarterAssets {
 
             // Check if Rigidbody has significant external forces applied
             Vector3 externalForce = _rigidbody.velocity;
-            float externalForceMagnitude = new Vector3(externalForce.x, 0.0f, externalForce.z).magnitude;
+            float externalForceMagnitude = externalForce.magnitude;
             if (externalForceMagnitude > 0.005f) {
                 // Let the Rigidbody's forces move the player
                 _controller.Move(externalForce * Time.deltaTime);
