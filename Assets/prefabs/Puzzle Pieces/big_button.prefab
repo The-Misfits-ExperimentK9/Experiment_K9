@@ -103,7 +103,7 @@ MonoBehaviour:
   audioSource: {fileID: 0}
   IsLocked: 0
   puzzlePieceToActivate: {fileID: 0}
-  springForce: 25
+  springForce: 10
   pawMeshRenderer: {fileID: 4610327570201250561}
   pressedMaterials:
   - {fileID: 2100000, guid: a52836a8ba85e644d95f01abd699f733, type: 2}
@@ -313,7 +313,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &6142679738353083912
 Transform:

@@ -19,7 +19,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &5777044561863398770
 Transform:
@@ -122,7 +122,7 @@ MonoBehaviour:
   AllowsDimensionTransition: 0
   IsWalkThroughEnabled: 1
   IsPassthrough: 0
-  pushForce: 1
+  LaunchForce: 10
 --- !u!54 &5347047354549260533
 Rigidbody:
   m_ObjectHideFlags: 0

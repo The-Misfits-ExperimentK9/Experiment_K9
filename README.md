@@ -6,7 +6,24 @@ Jordan
 John
 Billy
 Mike
- 
+
+
+<h2>Sprint 6 Changelog</h2>
+<h3>New</h3>
+<ul>
+<li>Added blue shaders to transferable walls to make them more obvious</li>
+<li>Added indoor lighting to tutorial and john level</li>
+<li>Replaced bars with glass walls so they dont mess with the camera</li>
+</ul>
+<h3>Changes</h3>
+<ul>
+<li>Changed 2d camera movement from only horizontal to also vertical</li>
+</ul>
+<h3>Bugfixes</h3> 
+<ul>
+<li>Fixed 2d ball disappearing at some angles</li>
+<li>Fixed 2d ball receiver disappearing due to the new shaders</li>
+</ul>
 
 
 <h2>Sprint 5 Changelog</h2>
@@ -47,6 +64,7 @@ Mike
 <li>Fixed player jumping to incorrect wall when in contact with the ground in some scenarios</li>
 <li>Attempted fixes for camera clipping outside the playable area</li> 
 </ul>
+
 
 
 
