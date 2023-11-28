@@ -33,7 +33,7 @@ TagManager:
   - Triggers
   - InteractableObjectNoPickup
   - IgnorePlayerCollision
-  - 
+  - Ignore2DPlayerAndCamera
   - 
   - 
   - 
