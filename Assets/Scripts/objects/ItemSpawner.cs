@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class ItemSpawner : ActivatablePuzzlePiece
-{
+public class ItemSpawner : ActivatablePuzzlePiece {
     [SerializeField] private GameObject itemToSpawn;
     [SerializeField] private GameObject spawnedObject;
     public override void Activate() {
@@ -23,10 +22,9 @@ public class ItemSpawner : ActivatablePuzzlePiece
         spawnedObject = Instantiate(itemToSpawn, transform.position, Quaternion.identity);
     }
     private void OnTriggerExit(Collider other) {
-        if (other.gameObject.layer == LayerInfo.INTERACTABLE_OBJECT) {
-            if (Vector3.Distance(other.transform.position, transform.position) > 10f) {
-                SpawnItem();
-            }
+        if (spawnedObject && other.gameObject == spawnedObject) {
+            SpawnItem();
+
         }
     }
 

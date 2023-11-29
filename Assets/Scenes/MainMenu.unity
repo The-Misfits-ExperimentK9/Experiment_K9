@@ -1797,7 +1797,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8461153429568851589, guid: a569eedfebd026d4ca7f18f1f7878876, type: 3}
       propertyPath: levelNames.Array.size
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8461153429568851589, guid: a569eedfebd026d4ca7f18f1f7878876, type: 3}
       propertyPath: levelNames.Array.data[0]
@@ -1813,7 +1813,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8461153429568851589, guid: a569eedfebd026d4ca7f18f1f7878876, type: 3}
       propertyPath: levelNames.Array.data[3]
-      value: Level1
+      value: Death and Bounces
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
