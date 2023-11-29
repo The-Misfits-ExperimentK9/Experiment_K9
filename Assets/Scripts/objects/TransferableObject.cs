@@ -96,7 +96,7 @@ public class TransferableObject : GrabbableObject {
         IsBeingHeld = true;
     }
     public override void DropObject() {
-       // Debug.Log("transferable object drop object");
+        Debug.Log("transferable object drop object");
         if (Is3D)
             Drop3D();
         else
@@ -106,7 +106,7 @@ public class TransferableObject : GrabbableObject {
 
 
     public void Drop2D() {
-      //  Debug.Log("Dropping 2d object");
+        Debug.Log("Dropping 2d object");
 
         transform.forward = holder.transform.forward;
 

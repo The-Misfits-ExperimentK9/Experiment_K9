@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class MultiKeyDoor : DoorBehaviour
 {
-    [SerializeField] List<bool> active;
-    int index = 0;
+  //  [SerializeField] List<bool> active;
+    [SerializeField] int numReceiversToActivate;
+    [SerializeField] int index = 0;
 
     // Start is called before the first frame update
     protected override void Start()
@@ -21,10 +22,9 @@ public class MultiKeyDoor : DoorBehaviour
 
     public override void Activate()
     {
-        active[index] = true;
+      //  active[index] = true;
         index++;
-
-        if (index >= active.Count)
+        if (index >= numReceiversToActivate)
         {
             OpenDoor();
         }
@@ -32,7 +32,7 @@ public class MultiKeyDoor : DoorBehaviour
 
     public override void Deactivate(GameObject caller)
     {
-        active[index] = false;
+     //   active[index] = false;
         index--;
 
         CloseDoor();

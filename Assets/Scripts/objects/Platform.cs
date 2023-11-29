@@ -75,7 +75,9 @@ public class Platform : ActivatablePuzzlePiece {
     }
 
     protected void MovePlatform() {
-
+        if (playerRb) {
+            playerRb.velocity = rb.velocity;
+        }
         //if the platform is moving
         if (state == PlatformState.Moving) {
             // var targetPosition = travelLocations[currentTargetIndex];
@@ -120,15 +122,13 @@ public class Platform : ActivatablePuzzlePiece {
         var moveDirection = (currentTravelTarget - transform.position).normalized;
         var velocity = platformMovementSpeed * moveDirection;
         rb.velocity = velocity; // set the Rigidbody's velocity to move the platform
-        if (playerRb) {
-            playerRb.velocity += velocity;
-        }
+        
         state = PlatformState.Moving;
     }
 
     protected IEnumerator WaitThenMove() {
         movementStarted = true;
-        Debug.Log("WaitThenMove");
+        //Debug.Log("WaitThenMove");
         state = PlatformState.Waiting;
         rb.velocity = Vector3.zero;
         yield return new WaitForSeconds(firstLastWaitTime);

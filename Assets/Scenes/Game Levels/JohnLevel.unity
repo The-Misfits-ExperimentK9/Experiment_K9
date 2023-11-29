@@ -8317,21 +8317,33 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerCameraWrapper
       objectReference: {fileID: 0}
+    - target: {fileID: 1750328265095541324, guid: 10b144c380968504d935c9e3949f6f80, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 196.99838
+      objectReference: {fileID: 0}
+    - target: {fileID: 1750328265095541324, guid: 10b144c380968504d935c9e3949f6f80, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 28.474998
+      objectReference: {fileID: 0}
+    - target: {fileID: 1750328265095541324, guid: 10b144c380968504d935c9e3949f6f80, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -195.91975
+      objectReference: {fileID: 0}
     - target: {fileID: 2416929007388417668, guid: 10b144c380968504d935c9e3949f6f80, type: 3}
       propertyPath: spawnPoint
       value: 
       objectReference: {fileID: 1895889953157971715}
     - target: {fileID: 4976584202734474264, guid: 10b144c380968504d935c9e3949f6f80, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 185.1084
+      value: 196.99838
       objectReference: {fileID: 0}
     - target: {fileID: 4976584202734474264, guid: 10b144c380968504d935c9e3949f6f80, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -26.825003
+      value: 28.474998
       objectReference: {fileID: 0}
     - target: {fileID: 4976584202734474264, guid: 10b144c380968504d935c9e3949f6f80, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -154.88974
+      value: -195.91975
       objectReference: {fileID: 0}
     - target: {fileID: 4976584202734474264, guid: 10b144c380968504d935c9e3949f6f80, type: 3}
       propertyPath: m_LocalRotation.w
@@ -8340,6 +8352,10 @@ PrefabInstance:
     - target: {fileID: 4976584202734474264, guid: 10b144c380968504d935c9e3949f6f80, type: 3}
       propertyPath: m_LocalRotation.y
       value: -0.777363
+      objectReference: {fileID: 0}
+    - target: {fileID: 6106370532408573120, guid: 10b144c380968504d935c9e3949f6f80, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 7.0999985
       objectReference: {fileID: 0}
     - target: {fileID: 6750392927762893480, guid: 10b144c380968504d935c9e3949f6f80, type: 3}
       propertyPath: m_LocalPosition.x
@@ -8384,6 +8400,14 @@ PrefabInstance:
     - target: {fileID: 7290586444352009121, guid: 10b144c380968504d935c9e3949f6f80, type: 3}
       propertyPath: field of view
       value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 9124290187480717203, guid: 10b144c380968504d935c9e3949f6f80, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 25.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9124290187480717203, guid: 10b144c380968504d935c9e3949f6f80, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -201.33
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
