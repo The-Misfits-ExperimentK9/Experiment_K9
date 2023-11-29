@@ -336,10 +336,14 @@ public class PlayerDimensionController : MonoBehaviour {
 
         Rigidbody player3DRigidbody = player3D.GetComponent<Rigidbody>();
 
-
-        player3DRigidbody.AddForce(launchDirection * PlayerBehaviour.Instance.player2DMovementController.GetCurrentWall().LaunchForce, ForceMode.Impulse);
+        
+        player3DRigidbody.AddForce(launchDirection * (PlayerBehaviour.Instance.player2DMovementController.GetCurrentWall().LaunchForce * player3DRigidbody.mass), ForceMode.Impulse);
+        //if (PlayerBehaviour.Instance.pickupController.IsHoldingObject()) {
+        //    var objectRb3D = PlayerBehaviour.Instance.pickupController.HeldObject.GetComponent<Rigidbody>();
+        //    objectRb3D.AddForce(launchDirection * (PlayerBehaviour.Instance.player2DMovementController.GetCurrentWall().LaunchForce * objectRb3D.mass), ForceMode.Impulse);
+        //}
         DOGEnabled = !DOGEnabled;
-        player3DRigidbody.AddForce(launchDirection * 0, ForceMode.Impulse);
+        //player3DRigidbody.AddForce(launchDirection * 0, ForceMode.Impulse);
         Physics.IgnoreLayerCollision(LayerInfo.PLAYER, LayerInfo.INTERACTABLE_OBJECT, false);
     }
     //handle enable/disasble of DOG device while in auto mode

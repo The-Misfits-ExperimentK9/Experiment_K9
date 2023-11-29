@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 #if ENABLE_INPUT_SYSTEM 
 using UnityEngine.InputSystem;
@@ -281,6 +282,7 @@ namespace StarterAssets {
             Vector3 externalForce = _rigidbody.velocity;
             float externalForceMagnitude = externalForce.magnitude;
             if (externalForceMagnitude > 0.005f) {
+               // Debug.Log("External force detected: " + externalForce);
                 // Let the Rigidbody's forces move the player
                 _controller.Move(externalForce * Time.deltaTime);
             }
@@ -390,7 +392,7 @@ namespace StarterAssets {
         private void OnFootstep(AnimationEvent animationEvent) {
             if (animationEvent.animatorClipInfo.weight > 0.5f) {
                 if (FootstepAudioClips.Length > 0) {
-                    var index = Random.Range(0, FootstepAudioClips.Length);
+                    var index = UnityEngine.Random.Range(0, FootstepAudioClips.Length);
                     AudioSource.PlayClipAtPoint(FootstepAudioClips[index], transform.TransformPoint(_controller.center), FootstepAudioVolume);
                 }
             }

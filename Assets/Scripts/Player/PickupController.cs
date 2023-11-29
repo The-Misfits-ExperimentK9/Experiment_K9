@@ -39,6 +39,7 @@ public class PickupController : MonoBehaviour {
         
     }
     private void FixedUpdate() {
+        
         if (IsHoldingObject() && PlayerBehaviour.Instance.IsIn3D()) {
             MoveObject();
         }
@@ -74,10 +75,12 @@ public class PickupController : MonoBehaviour {
         }
     }
     private void MoveObject() {
-        if (transform.localPosition.magnitude > 0.2f) {
+        var moveDirection = holdArea.position - heldObjectRigidbody.transform.position;
+        var distance = moveDirection.magnitude;
 
-            var moveDirection = holdArea.position - heldObjectRigidbody.transform.position;
-            heldObjectRigidbody.AddForce(moveDirection * pickupForce, ForceMode.Acceleration);
+        if (distance > 0.2f) {
+           
+            heldObjectRigidbody.AddForce(moveDirection.normalized* pickupForce, ForceMode.Acceleration);
         }
     }
 
