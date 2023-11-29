@@ -25,7 +25,7 @@ public class ConveyerWall : WallBehaviour {
         if (playerRb != null) {
 
 
-            if (!player2D.isActiveAndEnabled) {
+            if (PlayerBehaviour.Instance.IsIn3D()) {
                 playerRb = null;
                 return;
             }
