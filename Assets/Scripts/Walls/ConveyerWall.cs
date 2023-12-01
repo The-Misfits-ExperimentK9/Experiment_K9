@@ -23,13 +23,12 @@ public class ConveyerWall : WallBehaviour {
 
     protected virtual void MovePlayer() {
         if (playerRb != null) {
-
-
             if (PlayerBehaviour.Instance.IsIn3D()) {
                 playerRb = null;
                 return;
             }
             playerRb.AddForce(playerMoveDirection * PlayerMoveForceAmount);
+            Debug.Log("Moving");
         }
     }
     private void OnCollisionEnter(Collision collision) {
