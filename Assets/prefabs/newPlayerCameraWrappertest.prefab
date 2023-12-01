@@ -61,7 +61,7 @@ Transform:
   m_GameObject: {fileID: 74397854644777205}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: 33.61931, y: -10.329067, z: 82.105675}
+  m_LocalPosition: {x: 33.619312, y: -10.329067, z: 82.105675}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -214,6 +214,10 @@ MonoBehaviour:
   offSetAmount: 6
   wallCheckDistance: 0.8
   currentWall: {fileID: 0}
+  Camera2dLookAt: {fileID: 0}
+  CinemachineFollowTarget: {fileID: 0}
+  virtualCamera2D: {fileID: 0}
+  cameraWallConfiner: {fileID: 0}
   Is2DPlayerActive: 0
   CanMove: 1
   maxSpeed2D: 15
@@ -221,6 +225,7 @@ MonoBehaviour:
   JumpHeight: 10.25
   JumpTimeout: 0.5
   FallTimeout: 0.15
+  projectionState: 0
   sprites:
   - {fileID: 21300000, guid: 2643cbf3a2614bf4fb863e26df2f1921, type: 3}
   - {fileID: 21300000, guid: a60c095fa53280448994615b855e8aa2, type: 3}
@@ -354,7 +359,7 @@ Transform:
   m_GameObject: {fileID: 2817393637023723959}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -28.75, y: 3.375, z: -3.5999978}
+  m_LocalPosition: {x: -28.75, y: 3.375, z: -3.6000004}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -682,9 +687,11 @@ MonoBehaviour:
   is3D: 1
   spawnPoint: {fileID: 0}
   interactDisplayRadius: 20
-  interactableLayerMask:
+  receiverLayers:
     serializedVersion: 2
-    m_Bits: 65664
+    m_Bits: 0
+  EnableItemSpawning: 1
+  items: []
 --- !u!114 &5647112630155608246
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -698,13 +705,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player3D: {fileID: 5023980225577663842}
+  directionVectorFromNearestWall: {x: 0, y: 0, z: 0}
+  currentProjectionSurface: {fileID: 0}
+  potentialProjectionSurfaces: []
   player2D: {fileID: 266677610665238099}
   movementController_2D: {fileID: 5895966758457165437}
   dog2DHitbox: {fileID: 7203371137855413276}
+  playerCamRoot: {fileID: 3784293241610158376}
+  VirtualCamera3D: {fileID: 9009892228891423777}
   Camera3D: {fileID: 2817393637023723959}
   Camera2D: {fileID: 74397854644777205}
+  LockCameraOn3DTranstionTime: 1
   playerLeaveWallOffset: 6
-  IsProjecting: 0
+  IsProjecting: 1
   DOGEnabled: 0
 --- !u!114 &8754400608702510881
 MonoBehaviour:
@@ -719,9 +732,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   holdArea: {fileID: 8413178250063108687}
+  sphereHoldAreaLocalPosition: {x: 0, y: 0, z: 0}
+  cubeHoldAreaLocalPosition: {x: 0, y: 0, z: 0}
   HeldObject: {fileID: 0}
   pickupForce: 10
+  pickupDrag: 10
   objectsInInteractRange: []
+  PickupBlockingLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  interactableLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &4384154448399022592
 GameObject:
   m_ObjectHideFlags: 0
@@ -788,7 +810,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2601295727ca480449baeeac47e46d58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  potentialProjectionSurfaces: []
 --- !u!1 &5023980225577663842
 GameObject:
   m_ObjectHideFlags: 0
@@ -890,6 +911,7 @@ MonoBehaviour:
   BottomClamp: -30
   CameraAngleOverride: 0
   LockCameraPosition: 0
+  turnspeed: 1
 --- !u!114 &4224211623182334255
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1201,8 +1223,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6774737294069508098}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -28.75, y: 3.375, z: -3.5999978}
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
+  m_LocalPosition: {x: 19.619312, y: 220.56093, z: -36.394325}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1242,7 +1264,7 @@ Camera:
     height: 1
   near clip plane: 0.2
   far clip plane: 500
-  field of view: 40
+  field of view: 60
   orthographic: 0
   orthographic size: 10
   m_Depth: -1
