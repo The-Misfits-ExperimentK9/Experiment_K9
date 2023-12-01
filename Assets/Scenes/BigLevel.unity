@@ -4249,6 +4249,10 @@ PrefabInstance:
       propertyPath: IsPassthrough
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2368309129661295141, guid: d92c45e0ff4536943bac156697f4001e, type: 3}
+      propertyPath: PlayerMoveForceAmount
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 7033518516474956368, guid: d92c45e0ff4536943bac156697f4001e, type: 3}
       propertyPath: m_LocalScale.x
       value: 49.95821
@@ -16644,7 +16648,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 331349780dd4d75488d01b5e27796554, type: 2}
+  - {fileID: 2100000, guid: 6267ef1ba7a79084099fc5cc080f0f26, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -25110,7 +25114,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 331349780dd4d75488d01b5e27796554, type: 2}
+  - {fileID: 2100000, guid: 6267ef1ba7a79084099fc5cc080f0f26, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -28074,6 +28078,10 @@ PrefabInstance:
     - target: {fileID: 62177792511501584, guid: d35a1612ec770b44898df97a23b3ae49, type: 3}
       propertyPath: m_Name
       value: newPlayerCameraWrappertest
+      objectReference: {fileID: 0}
+    - target: {fileID: 62177792511501584, guid: d35a1612ec770b44898df97a23b3ae49, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1750328265095541324, guid: d35a1612ec770b44898df97a23b3ae49, type: 3}
       propertyPath: m_LocalPosition.x
@@ -38760,6 +38768,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2368309129661295141, guid: d92c45e0ff4536943bac156697f4001e, type: 3}
+      propertyPath: PlayerMoveForceAmount
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 7033518516474956368, guid: d92c45e0ff4536943bac156697f4001e, type: 3}
       propertyPath: m_LocalScale.x
       value: 49.61
@@ -44107,7 +44119,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 331349780dd4d75488d01b5e27796554, type: 2}
+  - {fileID: 2100000, guid: 6267ef1ba7a79084099fc5cc080f0f26, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -50682,7 +50694,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 331349780dd4d75488d01b5e27796554, type: 2}
+  - {fileID: 2100000, guid: 6267ef1ba7a79084099fc5cc080f0f26, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
