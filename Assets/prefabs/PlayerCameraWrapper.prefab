@@ -549,17 +549,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1749976163743187951}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e2c326a22775a6b4e90efbdbdd051fd0, type: 3}
+  m_Script: {fileID: 11500000, guid: 9de7a552d6ee41943840a2eaed84f97d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerTransform: {fileID: 557386753428854205}
-  playerMovementController: {fileID: 5895966758457165437}
-  virtualCamera2D: {fileID: 3488118317138536256}
+  playerTransform: {fileID: 0}
+  playerMovementController: {fileID: 0}
+  virtualCamera2D: {fileID: 0}
   MinAllowedDistanceToWall: 30
   wallLayer:
     serializedVersion: 2
-    m_Bits: 64
-  cornerTransitDuration: 1
+    m_Bits: 0
+  cornerTransitDuration: 0.5
   HorizontalCameraClamp: 25
   transitionSpeed: 5
   resetWaitTime: 2
@@ -719,7 +719,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2817393637023723959}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.045218114, z: -0, w: 0.9989771}
+  m_LocalRotation: {x: -0, y: -0.777363, z: -0, w: 0.62905234}
   m_LocalPosition: {x: 196.99838, y: 57.075005, z: -289.84976}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

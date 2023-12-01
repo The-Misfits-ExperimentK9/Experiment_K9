@@ -35,10 +35,9 @@ public class ConveyerWall : WallBehaviour {
 
         if (collision.gameObject.layer == LayerInfo.PLAYER) {
             if (collision.gameObject.TryGetComponent(out MovementController_2D player2D)) {
-                
+                Debug.Log("Player in Conveyer Wall");
                 playerRb = collision.gameObject.GetComponent<Rigidbody>();
                 this.player2D = player2D;
-
             }
 
         }
