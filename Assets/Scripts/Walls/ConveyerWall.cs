@@ -23,21 +23,23 @@ public class ConveyerWall : WallBehaviour {
 
     protected virtual void MovePlayer() {
         if (playerRb != null) {
-            if (PlayerBehaviour.Instance.IsIn3D()) {
-                playerRb = null;
-                return;
+
+
+
+            if (player2D.Is2DPlayerActive && player2D.GetCurrentWall() == this) {
+                Debug.Log("adding force to player");
+                playerRb.AddForce(playerMoveDirection * PlayerMoveForceAmount);
             }
-            playerRb.AddForce(playerMoveDirection * PlayerMoveForceAmount);
-            Debug.Log("Moving");
         }
     }
     private void OnCollisionEnter(Collision collision) {
 
         if (collision.gameObject.layer == LayerInfo.PLAYER) {
             if (collision.gameObject.TryGetComponent(out MovementController_2D player2D)) {
-                Debug.Log("Player in Conveyer Wall");
+                
                 playerRb = collision.gameObject.GetComponent<Rigidbody>();
                 this.player2D = player2D;
+
             }
 
         }

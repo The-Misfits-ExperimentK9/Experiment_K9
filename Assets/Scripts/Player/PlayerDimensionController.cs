@@ -18,6 +18,7 @@ public class PlayerDimensionController : MonoBehaviour {
     [SerializeField] private GameObject player2D;
     [SerializeField] private MovementController_2D movementController_2D;
     [SerializeField] private Collider dog2DHitbox;
+    [SerializeField] private Vector3 dog2DExtents = new Vector3(0.88f, 4.71f, 4.98f);
 
 
     [Header("Cameras")]
@@ -42,6 +43,7 @@ public class PlayerDimensionController : MonoBehaviour {
     private KeyControl pauseKey;
 
     private Vector3 gizmoDrawLocation = Vector3.zero;
+    private Vector3 gizmoDrawLocation2 = Vector3.zero;
 
 
     // public float DOGProjectionRange = 25f;
@@ -146,7 +148,35 @@ public class PlayerDimensionController : MonoBehaviour {
             player2D.transform.position = closestPointOnBounds;
             player2D.transform.forward = directionToWall;
 
+
+            //perform a physics overlap test to see if the space is free of walls that arent transferable
+            var boxHits = Physics.OverlapBox(closestPointOnBounds, dog2DExtents, Quaternion.identity, LayerMask.GetMask("Walls", "Doors", "Default", "Ground"));
+            
+            gizmoDrawLocation = closestPointOnBounds;
+            //Debug.Log("e: " + dog2DHitbox.bounds.extents);
+            //iterate through anything that was hit
+            if (boxHits.Length > 0) {
+                foreach (var hit in boxHits) {
+                    //Debug.Log("enable: " + hit.name);
+                    //make sure its a wall
+                    if (hit.TryGetComponent(out WallBehaviour wallB)) {
+                        //check if the wall doesnt allow transitioning or walking
+                        if (!wallB.AllowsDimensionTransition || !wallB.IsWalkThroughEnabled) {
+                            //disable the projects and quit out of the method
+                            DisableProjections();
+                            return;
+                        }
+                    }
+                    //door was hit
+                    else {
+                        DisableProjections();
+                        return;
+                    }
+                }
+            }
+
             Set2DSprite(collider);
+          //  Debug.Log("Enabling projections");
             player2D.SetActive(true);
         }
         else {
@@ -175,13 +205,14 @@ public class PlayerDimensionController : MonoBehaviour {
 
 
         //perform a physics overlap test to see if the space is free of walls that arent transferable
-        var boxHits = Physics.OverlapBox(closestPointOnBounds, dog2DHitbox.bounds.extents, Quaternion.identity, LayerMask.GetMask("Walls", "Doors", "Default", "Ground"));
-
+        var boxHits = Physics.OverlapBox(closestPointOnBounds, dog2DExtents, Quaternion.identity, LayerMask.GetMask("Walls", "Doors", "Default", "Ground"));
+       // Debug.Log("u: " + dog2DHitbox.bounds.extents);
+        gizmoDrawLocation2 = closestPointOnBounds;
 
         //iterate through anything that was hit
         if (boxHits.Length > 0) {
             foreach (var hit in boxHits) {
-
+               // Debug.Log("update: " + hit.name);
                 //make sure its a wall
                 if (hit.TryGetComponent(out WallBehaviour wallB)) {
                     //check if the wall doesnt allow transitioning or walking
@@ -194,6 +225,7 @@ public class PlayerDimensionController : MonoBehaviour {
                 //door was hit
                 else {
                     DisableProjections();
+                    return;
                 }
             }
         }
@@ -270,7 +302,10 @@ public class PlayerDimensionController : MonoBehaviour {
     }
     private void OnDrawGizmos() {
         Gizmos.color = Color.red;
-        Gizmos.DrawSphere(gizmoDrawLocation, .5f);
+        //Gizmos.DrawSphere(gizmoDrawLocation, .5f);
+        Gizmos.DrawWireCube(gizmoDrawLocation, dog2DExtents * 2);
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireCube(gizmoDrawLocation2, dog2DExtents * 2);
     }
 
     private void TransitionTo2D() {
@@ -377,8 +412,9 @@ public class PlayerDimensionController : MonoBehaviour {
     }
     //disable all projections
     public void DisableProjections() {
+        
         if (IsProjecting) {
-          
+          //  Debug.Log("Disabling projections");
             player2D.SetActive(false);
             IsProjecting = false;
 
