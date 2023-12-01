@@ -25,11 +25,11 @@ public class ConveyerWall : WallBehaviour {
         if (playerRb != null) {
 
 
-            if (PlayerBehaviour.Instance.IsIn3D()) {
-                playerRb = null;
-                return;
+
+            if (player2D.Is2DPlayerActive && player2D.GetCurrentWall() == this) {
+                Debug.Log("adding force to player");
+                playerRb.AddForce(playerMoveDirection * PlayerMoveForceAmount);
             }
-            playerRb.AddForce(playerMoveDirection * PlayerMoveForceAmount);
         }
     }
     private void OnCollisionEnter(Collision collision) {
