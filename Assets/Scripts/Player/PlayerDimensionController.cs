@@ -17,6 +17,7 @@ public class PlayerDimensionController : MonoBehaviour {
     [Header("Player 2D")]
     [SerializeField] private GameObject player2D;
     [SerializeField] private MovementController_2D movementController_2D;
+    [SerializeField] private SpriteRenderer dog2DSpriteRenderer;
     [SerializeField] private Collider dog2DHitbox;
     [SerializeField] private Vector3 dog2DExtents = new Vector3(0.88f, 4.71f, 4.98f);
 
@@ -60,7 +61,7 @@ public class PlayerDimensionController : MonoBehaviour {
 
         HandlePauseInput();
         HandleAutoModeInput();
-        
+
         if (PlayerBehaviour.Instance.IsIn3D() && DOGEnabled)
             HandleSurfaceProjection();
     }
@@ -143,21 +144,24 @@ public class PlayerDimensionController : MonoBehaviour {
             closestPointOnBounds += directionToWall * wallDrawOffset;
 
             IsProjecting = true;
-
+            player2D.SetActive(true);
+            dog2DSpriteRenderer.enabled = false;
             //move 2d player to this position
+            // Debug.Log("before: " + player2D.transform.forward);
             player2D.transform.position = closestPointOnBounds;
             player2D.transform.forward = directionToWall;
-
+            // Debug.Log("after: " + player2D.transform.forward);
+            Debug.Log(dog2DHitbox.transform.rotation);
 
             //perform a physics overlap test to see if the space is free of walls that arent transferable
-            var boxHits = Physics.OverlapBox(closestPointOnBounds, dog2DExtents, Quaternion.identity, LayerMask.GetMask("Walls", "Doors", "Default", "Ground"));
-            
+            var boxHits = Physics.OverlapBox(closestPointOnBounds, dog2DHitbox.transform.rotation * dog2DExtents, dog2DHitbox.transform.rotation, LayerMask.GetMask("Walls", "Doors", "Default", "Ground"));
+
             gizmoDrawLocation = closestPointOnBounds;
             //Debug.Log("e: " + dog2DHitbox.bounds.extents);
             //iterate through anything that was hit
             if (boxHits.Length > 0) {
                 foreach (var hit in boxHits) {
-                    //Debug.Log("enable: " + hit.name);
+                    //  Debug.Log("enable: " + hit.name);
                     //make sure its a wall
                     if (hit.TryGetComponent(out WallBehaviour wallB)) {
                         //check if the wall doesnt allow transitioning or walking
@@ -176,8 +180,9 @@ public class PlayerDimensionController : MonoBehaviour {
             }
 
             Set2DSprite(collider);
-          //  Debug.Log("Enabling projections");
-            player2D.SetActive(true);
+            //  Debug.Log("Enabling projections");
+            dog2DSpriteRenderer.enabled = true;
+            // player2D.SetActive(true);
         }
         else {
 
@@ -205,14 +210,14 @@ public class PlayerDimensionController : MonoBehaviour {
 
 
         //perform a physics overlap test to see if the space is free of walls that arent transferable
-        var boxHits = Physics.OverlapBox(closestPointOnBounds, dog2DExtents, Quaternion.identity, LayerMask.GetMask("Walls", "Doors", "Default", "Ground"));
-       // Debug.Log("u: " + dog2DHitbox.bounds.extents);
+        var boxHits = Physics.OverlapBox(closestPointOnBounds, dog2DHitbox.transform.rotation * dog2DExtents, dog2DHitbox.transform.rotation, LayerMask.GetMask("Walls", "Doors", "Default", "Ground"));
+        // Debug.Log("u: " + dog2DHitbox.bounds.extents);
         gizmoDrawLocation2 = closestPointOnBounds;
 
         //iterate through anything that was hit
         if (boxHits.Length > 0) {
             foreach (var hit in boxHits) {
-               // Debug.Log("update: " + hit.name);
+                // Debug.Log("update: " + hit.name);
                 //make sure its a wall
                 if (hit.TryGetComponent(out WallBehaviour wallB)) {
                     //check if the wall doesnt allow transitioning or walking
@@ -292,29 +297,29 @@ public class PlayerDimensionController : MonoBehaviour {
 
     public void TryTransitionTo2D() {
         if (movementController_2D.
-            IsProjectionSpaceClear(movementController_2D.transform.position) 
+            IsProjectionSpaceClear(movementController_2D.transform.position)
             && IsProjecting == true) {
             TransitionTo2D();
         }
         else {
-           // Debug.Log("Transition area blocked or its not projecting");
+            // Debug.Log("Transition area blocked or its not projecting");
         }
     }
     private void OnDrawGizmos() {
         Gizmos.color = Color.red;
         //Gizmos.DrawSphere(gizmoDrawLocation, .5f);
-        Gizmos.DrawWireCube(gizmoDrawLocation, dog2DExtents * 2);
+        Gizmos.DrawWireCube(gizmoDrawLocation, dog2DHitbox.transform.rotation * dog2DExtents);
         Gizmos.color = Color.blue;
-        Gizmos.DrawWireCube(gizmoDrawLocation2, dog2DExtents * 2);
+        Gizmos.DrawWireCube(gizmoDrawLocation2, dog2DHitbox.transform.rotation * dog2DExtents);
     }
 
     private void TransitionTo2D() {
-        
+
         movementController_2D.GetComponent<Rigidbody>().isKinematic = false;
         movementController_2D.SetCurrentWall(currentProjectionSurface.GetComponent<WallBehaviour>());
-        
+
         SetWallProjectionToActive();
-        
+
         player3D.SetActive(false);
 
         PlayerBehaviour.Instance.ChangeDimension();
@@ -327,12 +332,12 @@ public class PlayerDimensionController : MonoBehaviour {
             sAssetsInput.ClearInput();
         }
         Physics.IgnoreLayerCollision(LayerInfo.PLAYER, LayerInfo.INTERACTABLE_OBJECT);
-        
+
         //player is in the correct position at the end of this function
 
     }
     public void TransitionTo3D() {
-        VirtualCamera3D.LookAt = player2D.transform;    
+        VirtualCamera3D.LookAt = player2D.transform;
         VirtualCamera3D.Follow = Camera2D.transform;
         PlayerBehaviour.Instance.thirdPersonController.LockCameraPosition = true;
         StartCoroutine(PlayerBehaviour.Instance.thirdPersonController.EnableCameraRotationAfterSeconds(LockCameraOn3DTranstionTime));
@@ -358,7 +363,7 @@ public class PlayerDimensionController : MonoBehaviour {
         }
     }
     public void TransitionTo3DLaunch() {
-        
+
         Vector3 launchDirection = player2D.transform.forward;
 
         //adjust the player 3d model to be in front of the wall offset by a small amount
@@ -371,7 +376,7 @@ public class PlayerDimensionController : MonoBehaviour {
 
         Rigidbody player3DRigidbody = player3D.GetComponent<Rigidbody>();
 
-        
+
         player3DRigidbody.AddForce(launchDirection * (PlayerBehaviour.Instance.player2DMovementController.GetCurrentWall().LaunchForce * player3DRigidbody.mass), ForceMode.Impulse);
         //if (PlayerBehaviour.Instance.pickupController.IsHoldingObject()) {
         //    var objectRb3D = PlayerBehaviour.Instance.pickupController.HeldObject.GetComponent<Rigidbody>();
@@ -412,9 +417,9 @@ public class PlayerDimensionController : MonoBehaviour {
     }
     //disable all projections
     public void DisableProjections() {
-        
+
         if (IsProjecting) {
-          //  Debug.Log("Disabling projections");
+            //  Debug.Log("Disabling projections");
             player2D.SetActive(false);
             IsProjecting = false;
 

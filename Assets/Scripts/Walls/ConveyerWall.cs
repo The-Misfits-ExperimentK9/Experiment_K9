@@ -27,7 +27,7 @@ public class ConveyerWall : WallBehaviour {
 
 
             if (player2D.Is2DPlayerActive && player2D.GetCurrentWall() == this) {
-                Debug.Log("adding force to player");
+               // Debug.Log("adding force to player");
                 playerRb.AddForce(playerMoveDirection * PlayerMoveForceAmount);
             }
         }
