@@ -8,16 +8,24 @@ public class TransferableObject : GrabbableObject {
     [SerializeField] private SpriteRenderer spriteRenderer2D;
     [SerializeField] private float objectDrawOffset = 4f;
     [SerializeField] private SphereCollider sphere;
-
-
-
-
+    [SerializeField] private bool inAir = false;
+    [SerializeField] private AudioClip lowDrop;
+    [SerializeField] private AudioClip mediumDrop;
+    [SerializeField] private AudioClip highDrop;
+    [SerializeField] private AudioSource audioSource;
 
     private void Awake() {
         spriteRenderer2D = displayObject_2D.GetComponent<SpriteRenderer>();
         sphere = displayObject3D_Mesh.GetComponent<SphereCollider>();
         //turn off the physics if the object starts as 2D
         //interactDisplayController.SetInteractIndicatorActive(true);
+
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+        }
+
         if (!Is3D) {
 
             Disable3D();
@@ -79,6 +87,7 @@ public class TransferableObject : GrabbableObject {
         transform.position = holdArea.position;
         //transform.localPosition = offset;
     }
+
     public void Pickup2D(GameObject holder) {
 
         displayObject3D_Mesh.enabled = false;
@@ -103,6 +112,44 @@ public class TransferableObject : GrabbableObject {
             Drop2D();
     }
 
+    // This method checks when a dropped object hits the ground.
+    private void OnCollisionEnter(Collision collision)
+    {
+        Rigidbody rb = GetComponent<Rigidbody>();
+
+        if (inAir)
+        {
+            // If the object hits the ground....
+            if (collision.gameObject.CompareTag("Ground"))
+            {
+                // The inAir bool is set to false, first and foremost.
+                inAir = false;
+            }
+
+            // The magnitude of RigidBody.velocity determines which of the three clips should play.
+            if (rb.velocity.magnitude < 5.0f)
+            {
+                PlaySound(lowDrop);
+            }
+            else if (rb.velocity.magnitude >= 5.0f && rb.velocity.magnitude < 10.0f)
+            {
+                PlaySound(mediumDrop);
+            }
+            else
+            {
+                PlaySound(highDrop);
+            }
+        }
+    }
+
+    private void PlaySound(AudioClip clip)
+    {
+        if (clip != null)
+        {
+            audioSource.clip = clip;
+            audioSource.Play();
+        }
+    }
 
 
     public void Drop2D() {

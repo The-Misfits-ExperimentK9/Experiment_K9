@@ -13,11 +13,10 @@ public class GrabbableObject : MonoBehaviour {
     protected GameObject holder;
     public bool isColliding;
     // Start is called before the first frame update
-    void Start() {
-        
+    void Start() {        
         Is3D = true;
-
     }
+
     // Call this method to set the layer of a GameObject and all of its children
     public void SetLayerRecursively(GameObject obj, int newLayer) {
         if (obj == null) {
@@ -85,7 +84,6 @@ public class GrabbableObject : MonoBehaviour {
         rb3D.constraints = RigidbodyConstraints.None;
         interactDisplayController.SetInteractIndicatorActive(true);
         holder = null;
-        IsBeingHeld = false;
-        
+        IsBeingHeld = false;        
     }
 }
