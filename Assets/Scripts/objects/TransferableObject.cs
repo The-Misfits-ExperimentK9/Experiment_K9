@@ -107,9 +107,14 @@ public class TransferableObject : GrabbableObject {
     public override void DropObject() {
         Debug.Log("transferable object drop object");
         if (Is3D)
+        {
             Drop3D();
+            inAir = true;
+        }
         else
+        {
             Drop2D();
+        }
     }
 
     // This method checks when a dropped object hits the ground.

@@ -30,6 +30,7 @@ namespace StarterAssets {
 
         public AudioClip LandingAudioClip;
         public AudioClip[] FootstepAudioClips;
+        public AudioSource audioSource;
         [Range(0, 1)] public float FootstepAudioVolume = 0.5f;
 
         [Space(10)]
@@ -393,14 +394,14 @@ namespace StarterAssets {
             if (animationEvent.animatorClipInfo.weight > 0.5f) {
                 if (FootstepAudioClips.Length > 0) {
                     var index = UnityEngine.Random.Range(0, FootstepAudioClips.Length);
-                    AudioClip.PlayClipAtPoint(FootstepAudioClips[index], transform.TransformPoint(_controller.center), FootstepAudioVolume);
+                    AudioSource.PlayClipAtPoint(FootstepAudioClips[index], transform.TransformPoint(_controller.center), FootstepAudioVolume);
                 }
             }
         }
 
         private void OnLand(AnimationEvent animationEvent) {
             if (animationEvent.animatorClipInfo.weight > 0.5f) {
-                AudioClip.PlayClipAtPoint(LandingAudioClip, transform.TransformPoint(_controller.center), FootstepAudioVolume);
+                AudioSource.PlayClipAtPoint(LandingAudioClip, transform.TransformPoint(_controller.center), FootstepAudioVolume);
             }
         }
 
