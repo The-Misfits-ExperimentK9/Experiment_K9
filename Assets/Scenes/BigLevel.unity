@@ -304,7 +304,7 @@ PrefabInstance:
     - target: {fileID: 5889834318972051371, guid: 817af57696690fc4cabfa3b043fd2227, type: 3}
       propertyPath: puzzlePieceToActivate
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1815032071}
     - target: {fileID: 7483810403133734016, guid: 817af57696690fc4cabfa3b043fd2227, type: 3}
       propertyPath: m_Name
       value: ball_receive
@@ -354,6 +354,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 817af57696690fc4cabfa3b043fd2227, type: 3}
+--- !u!1 &235730482 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7483810403133734016, guid: 817af57696690fc4cabfa3b043fd2227, type: 3}
+  m_PrefabInstance: {fileID: 154206682}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &237555386
 GameObject:
   m_ObjectHideFlags: 0
@@ -1540,6 +1545,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c50ebd6253d6f6d45aa9dabc14f4aaf4, type: 3}
+--- !u!1 &572825957 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7483810403133734016, guid: 817af57696690fc4cabfa3b043fd2227, type: 3}
+  m_PrefabInstance: {fileID: 1228965388}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &629586194
 GameObject:
   m_ObjectHideFlags: 0
@@ -1761,7 +1771,7 @@ PrefabInstance:
     - target: {fileID: 5889834318972051371, guid: 817af57696690fc4cabfa3b043fd2227, type: 3}
       propertyPath: puzzlePieceToActivate
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1815032071}
     - target: {fileID: 7483810403133734016, guid: 817af57696690fc4cabfa3b043fd2227, type: 3}
       propertyPath: m_Name
       value: ball_receive (2)
@@ -2950,6 +2960,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7247130135663531513, guid: e409130c6b8b967429b7951e988d5f42, type: 3}
+      propertyPath: activator.Array.data[0]
+      value: 
+      objectReference: {fileID: 235730482}
+    - target: {fileID: 7247130135663531513, guid: e409130c6b8b967429b7951e988d5f42, type: 3}
+      propertyPath: activator.Array.data[1]
+      value: 
+      objectReference: {fileID: 572825957}
+    - target: {fileID: 7247130135663531513, guid: e409130c6b8b967429b7951e988d5f42, type: 3}
+      propertyPath: activator.Array.data[2]
+      value: 
+      objectReference: {fileID: 1997643494}
     - target: {fileID: 8046442261491726049, guid: e409130c6b8b967429b7951e988d5f42, type: 3}
       propertyPath: m_Name
       value: Multi_Key_Door
@@ -4376,7 +4398,7 @@ PrefabInstance:
     - target: {fileID: 5889834318972051371, guid: 817af57696690fc4cabfa3b043fd2227, type: 3}
       propertyPath: puzzlePieceToActivate
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1815032071}
     - target: {fileID: 7483810403133734016, guid: 817af57696690fc4cabfa3b043fd2227, type: 3}
       propertyPath: m_Name
       value: ball_receive (1)
@@ -6621,6 +6643,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 41817042d75cca6459336e47941c93bb, type: 3}
+--- !u!114 &1815032071 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7247130135663531513, guid: e409130c6b8b967429b7951e988d5f42, type: 3}
+  m_PrefabInstance: {fileID: 987981485}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7f3b4a2ed4e3534c8036c8fbf88ba2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1817459054
 GameObject:
   m_ObjectHideFlags: 0
@@ -7413,6 +7446,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 10b144c380968504d935c9e3949f6f80, type: 3}
+--- !u!1 &1997643494 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7483810403133734016, guid: 817af57696690fc4cabfa3b043fd2227, type: 3}
+  m_PrefabInstance: {fileID: 662813626}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2001570657
 GameObject:
   m_ObjectHideFlags: 0
