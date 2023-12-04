@@ -552,9 +552,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9de7a552d6ee41943840a2eaed84f97d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerTransform: {fileID: 0}
-  playerMovementController: {fileID: 0}
-  virtualCamera2D: {fileID: 0}
+  playerTransform: {fileID: 557386753428854205}
+  playerMovementController: {fileID: 5895966758457165437}
+  virtualCamera2D: {fileID: 3488118317138536256}
   MinAllowedDistanceToWall: 30
   wallLayer:
     serializedVersion: 2
@@ -1789,7 +1789,7 @@ Transform:
   m_GameObject: {fileID: 6774737294069508098}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.777363, z: -0, w: 0.62905234}
-  m_LocalPosition: {x: 124.726875, y: 42.29015, z: 6.620116}
+  m_LocalPosition: {x: -35.273125, y: 60.290146, z: -53.879883}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
