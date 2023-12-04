@@ -408,10 +408,10 @@ public class PlayerDimensionController : MonoBehaviour {
                 }
             }
             else {
-                if (movementController_2D.CanTransitionOutOfCurrentWall()) {
+                //if (movementController_2D.CanTransitionOutOfCurrentWall()) {
 
-                    TransitionTo3D();
-                }
+                //    TransitionTo3D();
+                //}
             }
         }
     }

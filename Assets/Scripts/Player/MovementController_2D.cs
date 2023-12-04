@@ -596,7 +596,10 @@ public class MovementController_2D : MonoBehaviour {
                 Is2DPlayerActive = false;
                 break;
             case ProjectionState.HoldingObject:
-                spriteRenderer.sprite = sprites[2];
+                if (PlayerBehaviour.Instance.pickupController.HeldObject is TransferableObject)
+                    spriteRenderer.sprite = sprites[2];
+                else
+                    spriteRenderer.sprite = sprites[1];
                 Is2DPlayerActive = false;
                 break;
             case ProjectionState.In2D:
