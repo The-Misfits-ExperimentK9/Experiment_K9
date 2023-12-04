@@ -23,12 +23,6 @@ public class ButtonBehaviour : ReceivableParent {
     //keeps track of who or what pressed the button to check its mass against minimum required
     [SerializeField] private GameObject presser;
 
-    // Start is called before the first frame update
-    void Awake() {
-
-        rb = GetComponent<Rigidbody>();
-    }
-
     void Update() {
         if (!IsPermanentlyPressedOnPress)
             UnPress();

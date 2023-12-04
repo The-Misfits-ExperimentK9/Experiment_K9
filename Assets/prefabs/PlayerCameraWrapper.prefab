@@ -1025,6 +1025,7 @@ MonoBehaviour:
   player2D: {fileID: 266677610665238099}
   movementController_2D: {fileID: 5895966758457165437}
   dog2DHitbox: {fileID: 7203371137855413276}
+  dog2DExtents: {x: 0.88, y: 4.71, z: 4.98}
   playerCamRoot: {fileID: 3784293241610158376}
   VirtualCamera3D: {fileID: 9009892228891423777}
   Camera3D: {fileID: 2817393637023723959}
@@ -1033,6 +1034,10 @@ MonoBehaviour:
   playerLeaveWallOffset: 6
   IsProjecting: 0
   DOGEnabled: 0
+  mergeIn: {fileID: 8300000, guid: c56a15418be08a34aa324ea0bbe6bbbf, type: 3}
+  mergeOut: {fileID: 8300000, guid: 88db1d19c1f5b6f4fb55580f52e6d0a3, type: 3}
+  DOGOn: {fileID: 8300000, guid: 01c7e41afae89b54c81327642997b5ba, type: 3}
+  audioSource: {fileID: 0}
 --- !u!114 &8754400608702510881
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1207,8 +1212,11 @@ MonoBehaviour:
   SprintSpeed: 40
   RotationSmoothTime: 0.12
   SpeedChangeRate: 10
-  LandingAudioClip: {fileID: 0}
-  FootstepAudioClips: []
+  LandingAudioClip: {fileID: 8300000, guid: 10d299823f75b4e49bbf942db2c90e24, type: 3}
+  FootstepAudioClips:
+  - {fileID: 8300000, guid: 44c3c8689df93e845a32f103e170d310, type: 3}
+  - {fileID: 8300000, guid: 964acb0b00e01f54db248ad35975de13, type: 3}
+  audioSource: {fileID: 0}
   FootstepAudioVolume: 0.5
   JumpHeight: 10.75
   Gravity: -110
@@ -1781,7 +1789,7 @@ Transform:
   m_GameObject: {fileID: 6774737294069508098}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.777363, z: -0, w: 0.62905234}
-  m_LocalPosition: {x: 196.99838, y: 57.075005, z: -289.84976}
+  m_LocalPosition: {x: 75.616875, y: 214.47014, z: -77.159874}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

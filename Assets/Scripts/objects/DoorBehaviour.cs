@@ -31,6 +31,19 @@ public class DoorBehaviour : ActivatablePuzzlePiece {
 
     Vector3 openLocalPosition, closedLocalPosition;
 
+    [SerializeField] AudioClip doorOpen;
+    [SerializeField] AudioClip doorClose;
+    [SerializeField] private AudioSource audioSource;
+
+    private void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+        }
+    }
 
     // Start is called before the first frame update
     protected virtual void Start() {
@@ -81,11 +94,17 @@ public class DoorBehaviour : ActivatablePuzzlePiece {
     }
 
     protected void OpenDoor() {
-       // Debug.Log("Opening door");
+        // Debug.Log("Opening door");
+        audioSource.clip = doorOpen;
+        audioSource.Play();
+
         goalState = DoorState.Open;
     }
     protected void CloseDoor() {
         //Debug.Log("Closing door");
+        audioSource.clip = doorClose;
+        audioSource.Play();
+
         goalState = DoorState.Closed;
     }
     public bool IsOpen() {
