@@ -34,7 +34,7 @@ TagManager:
   - InteractableObjectNoPickup
   - IgnorePlayerCollision
   - Ignore2DPlayerAndCamera
-  - 
+  - DEATH
   - 
   - 
   - 
