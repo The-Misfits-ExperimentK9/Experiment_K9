@@ -66,6 +66,7 @@ public class InterfaceBehaviour : MonoBehaviour {
     }
     public void ResetLevel() {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        Time.timeScale = 1;
     }
 
 }
