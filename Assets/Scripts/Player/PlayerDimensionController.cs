@@ -147,15 +147,16 @@ public class PlayerDimensionController : MonoBehaviour {
 
             closestPointOnBounds += directionToWall * wallDrawOffset;
 
-            IsProjecting = true;
+            
             player2D.SetActive(true);
             dog2DSpriteRenderer.enabled = false;
             //move 2d player to this position
             // Debug.Log("before: " + player2D.transform.forward);
             player2D.transform.position = closestPointOnBounds;
             player2D.transform.forward = directionToWall;
-            // Debug.Log("after: " + player2D.transform.forward);
-            Debug.Log(dog2DHitbox.transform.rotation);
+            
+             Debug.Log("after: " + player2D.transform.position);
+            //Debug.Log(dog2DHitbox.transform.rotation);
 
             //perform a physics overlap test to see if the space is free of walls that arent transferable
             var boxHits = Physics.OverlapBox(closestPointOnBounds, dog2DHitbox.transform.rotation * dog2DExtents, dog2DHitbox.transform.rotation, LayerMask.GetMask("Walls", "Doors", "Default", "Ground"));
@@ -185,6 +186,7 @@ public class PlayerDimensionController : MonoBehaviour {
 
             Set2DSprite(collider);
             //  Debug.Log("Enabling projections");
+            IsProjecting = true;
             dog2DSpriteRenderer.enabled = true;
             // player2D.SetActive(true);
         }
@@ -303,7 +305,14 @@ public class PlayerDimensionController : MonoBehaviour {
         if (movementController_2D.
             IsProjectionSpaceClear(movementController_2D.transform.position)
             && IsProjecting == true) {
-            TransitionTo2D();
+
+            var dist = Vector3.Distance(player2D.transform.position, player3D.transform.position);
+           // Debug.Log("dist: " + dist);
+
+            if (Vector3.Distance(player2D.transform.position, player3D.transform.position) < 3.3f) {
+              //  Debug.Log("Transitioning to 2d");
+                TransitionTo2D();
+            }
         }
         else {
             // Debug.Log("Transition area blocked or its not projecting");
