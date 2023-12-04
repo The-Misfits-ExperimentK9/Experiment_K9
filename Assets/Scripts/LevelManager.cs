@@ -81,22 +81,22 @@ public class LevelManager : MonoBehaviour {
     //or if the level should be set to int level.
     //Default is a modifier of 1 (AKA Next level)
     public void IncrementLevel() {
-        SceneManager.LoadScene(Next());
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);
 
     }
-    public void DecrementLevel() {
-        SceneManager.LoadScene(Previous());
-    }
+    //public void DecrementLevel() {
+    //    SceneManager.LoadScene(Previous());
+    //}
     public void LoadLevelByIndex(int sceneNumber) {
         if (sceneNumber < 0 || sceneNumber >= levelNames.Count) {
             throw new System.Exception("Scene number out of range");
         }
         SceneManager.LoadScene(levelNames[sceneNumber]);
     }
-    private void TestChange() {
-        if (Keyboard.current.pageUpKey.wasPressedThisFrame)
-            IncrementLevel();
-        if (Keyboard.current.pageDownKey.wasPressedThisFrame)
-            DecrementLevel();
-    }
+    //private void TestChange() {
+    //    if (Keyboard.current.pageUpKey.wasPressedThisFrame)
+    //        IncrementLevel();
+    //    if (Keyboard.current.pageDownKey.wasPressedThisFrame)
+    //        DecrementLevel();
+    //}
 }
