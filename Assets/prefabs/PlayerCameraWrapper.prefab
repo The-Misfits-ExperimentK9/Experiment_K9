@@ -745,7 +745,7 @@ MonoBehaviour:
   m_StreamingVersion: 20170927
   m_Priority: 10
   m_StandbyUpdate: 2
-  m_LookAt: {fileID: 0}
+  m_LookAt: {fileID: 9124290187480717203}
   m_Follow: {fileID: 637477807531120107}
   m_Lens:
     FieldOfView: 40
@@ -1344,7 +1344,7 @@ MonoBehaviour:
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}
+  m_Camera: {fileID: 7290586444352009121}
 --- !u!114 &7577174382562056574
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1789,7 +1789,7 @@ Transform:
   m_GameObject: {fileID: 6774737294069508098}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.777363, z: -0, w: 0.62905234}
-  m_LocalPosition: {x: 75.616875, y: 214.47014, z: -77.159874}
+  m_LocalPosition: {x: 124.726875, y: 42.29015, z: 6.620116}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
