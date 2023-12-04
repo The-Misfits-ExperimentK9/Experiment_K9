@@ -56,9 +56,13 @@ public class PlayerDimensionController : MonoBehaviour {
         DOGLeaveKey = Keyboard.current.spaceKey;
         pauseKey = Keyboard.current.escapeKey;
         potentialProjectionSurfaces = new();
+        
+    }
+    private void Start() {
+        
     }
     private void Update() {
-
+        PlayerBehaviour.Instance.interfaceScript.SetDogAutoEnabledText(DOGEnabled);
         HandlePauseInput();
         HandleAutoModeInput();
 

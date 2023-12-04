@@ -17,6 +17,7 @@ public class InterfaceBehaviour : MonoBehaviour {
     //[SerializeField] private GameObject player2D;
     //[SerializeField] private GameObject playerBehavior;
     
+    
 
     public void SetDogToggleText(bool dogIsRangedMode) {
         //  dogModeText.text = dogToggleTextPrefix + (dogIsRangedMode ? "Manual" : "Auto");
