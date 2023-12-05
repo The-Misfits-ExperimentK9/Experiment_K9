@@ -35,6 +35,7 @@ public class Lavafloor : MonoBehaviour
 
     private void OnTriggerEnter(Collider other) {
         if (other.gameObject.layer == LayerInfo.PLAYER) {
+            audioSource.loop = false;
             audioSource.clip = death;
             audioSource.Play();
             Debug.Log("Resetting scene");
