@@ -41,6 +41,7 @@ public class PlayerDimensionController : MonoBehaviour {
     [SerializeField] AudioClip mergeIn;
     [SerializeField] AudioClip mergeOut;
     [SerializeField] AudioClip DOGOn;
+    [SerializeField] AudioClip DOGOff;
     [SerializeField] AudioSource audioSource;
 
     private float wallDrawOffset = WALL_DRAW_OFFSET;
@@ -417,8 +418,16 @@ public class PlayerDimensionController : MonoBehaviour {
         if (DOGToggleKey.wasPressedThisFrame) {
             DOGEnabled = !DOGEnabled;
 
-            audioSource.clip = DOGOn;
-            audioSource.Play();
+            if (DOGEnabled)
+            {
+                audioSource.clip = DOGOn;
+                audioSource.Play();
+            }
+            else
+            {
+                audioSource.clip = DOGOff;
+                audioSource.Play();
+            }
 
             PlayerBehaviour.Instance.interfaceScript.SetDogAutoEnabledText(DOGEnabled);
             if (PlayerBehaviour.Instance.IsIn3D()) {

@@ -1037,6 +1037,7 @@ MonoBehaviour:
   mergeIn: {fileID: 8300000, guid: c56a15418be08a34aa324ea0bbe6bbbf, type: 3}
   mergeOut: {fileID: 8300000, guid: 88db1d19c1f5b6f4fb55580f52e6d0a3, type: 3}
   DOGOn: {fileID: 8300000, guid: 01c7e41afae89b54c81327642997b5ba, type: 3}
+  DOGOff: {fileID: 8300000, guid: a64c58f0e5efa5f4f82ba8cb6130e5be, type: 3}
   audioSource: {fileID: 0}
 --- !u!114 &8754400608702510881
 MonoBehaviour:
@@ -1789,7 +1790,7 @@ Transform:
   m_GameObject: {fileID: 6774737294069508098}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.777363, z: -0, w: 0.62905234}
-  m_LocalPosition: {x: -35.273125, y: 60.290146, z: -53.879883}
+  m_LocalPosition: {x: 196.99838, y: 57.075005, z: -289.84976}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
