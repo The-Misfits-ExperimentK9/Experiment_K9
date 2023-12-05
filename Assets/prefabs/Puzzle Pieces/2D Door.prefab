@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 7430509813973884057}
   - component: {fileID: 3736474603912573404}
   - component: {fileID: 1313622089122232798}
-  - component: {fileID: 6953499160630588327}
   - component: {fileID: 8233109344985633931}
   - component: {fileID: 1073438731898492262}
   m_Layer: 12
@@ -109,30 +108,6 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &6953499160630588327
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2383890086792011514}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81324052c1cb77e44bdc37d6a3b30895, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AllowsDimensionTransition: 0
-  IsWalkThroughEnabled: 0
-  IsPassthrough: 0
-  RemoveFromWalkChecks: 0
-  IsMovingWall: 0
-  pushForce: 1
-  movingWall: 0
-  waitTime: 10
-  MoveSpeed: 5
-  initialposition: {fileID: 0}
-  targetposition: {fileID: 0}
-  stopThreshold: 0
 --- !u!54 &8233109344985633931
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -193,7 +168,6 @@ GameObject:
   - component: {fileID: 8521225408983719746}
   - component: {fileID: 8368319522746068073}
   - component: {fileID: 3875602201146312095}
-  - component: {fileID: 8014589314918477486}
   - component: {fileID: 2475922826319931352}
   - component: {fileID: 7591496345353933871}
   m_Layer: 12
@@ -290,30 +264,6 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &8014589314918477486
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6818546584880179065}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81324052c1cb77e44bdc37d6a3b30895, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AllowsDimensionTransition: 0
-  IsWalkThroughEnabled: 0
-  IsPassthrough: 0
-  RemoveFromWalkChecks: 0
-  IsMovingWall: 0
-  pushForce: 1
-  movingWall: 0
-  waitTime: 10
-  MoveSpeed: 5
-  initialposition: {fileID: 0}
-  targetposition: {fileID: 0}
-  stopThreshold: 0
 --- !u!54 &2475922826319931352
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -412,11 +362,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IsAuto: 1
   IsLocked: 0
+  activator: []
   door: {fileID: 2383890086792011514}
   doorHeight: 15
   doorSpeed: 6
   is2D: 0
   openNegativeRight: 1
+  currentState: 0
+  goalState: 0
+  doorOpen: {fileID: 8300000, guid: 4b8fad7c151776e42868255163891617, type: 3}
+  doorClose: {fileID: 8300000, guid: 5fed912198047294a8ba06093b713975, type: 3}
+  audioSource: {fileID: 0}
 --- !u!65 &253898862585324850
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -450,7 +406,6 @@ GameObject:
   - component: {fileID: 3907971138927929576}
   - component: {fileID: 4804393617130865745}
   - component: {fileID: 6329808323965521240}
-  - component: {fileID: 7014866490844381278}
   - component: {fileID: 6761247885935422862}
   - component: {fileID: 36874427320132006}
   m_Layer: 12
@@ -547,30 +502,6 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &7014866490844381278
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8963202955368616719}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81324052c1cb77e44bdc37d6a3b30895, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AllowsDimensionTransition: 0
-  IsWalkThroughEnabled: 0
-  IsPassthrough: 0
-  RemoveFromWalkChecks: 0
-  IsMovingWall: 0
-  pushForce: 1
-  movingWall: 0
-  waitTime: 10
-  MoveSpeed: 5
-  initialposition: {fileID: 0}
-  targetposition: {fileID: 0}
-  stopThreshold: 0
 --- !u!54 &6761247885935422862
 Rigidbody:
   m_ObjectHideFlags: 0

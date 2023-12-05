@@ -28,11 +28,30 @@ public class ItemSpawnerDoorOpener : MonoBehaviour {
     [Header("Time Settings")]
     [SerializeField] float closeDelay = 1f;
 
+    [Header("Audio")]
+    [SerializeField] AudioClip doorOpen;
+    [SerializeField] AudioClip doorClose;
+    [SerializeField] private AudioSource audioSource;
+
+    private void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+        }
+    }
 
     public void OpenDoors() {
+        audioSource.clip = doorOpen;
+        audioSource.Play();
         StartCoroutine(OpenOrCloseDoors(true));
     }
-    public void CloseDoors() {
+    public void CloseDoors()
+    {
+        audioSource.clip = doorClose;
+        audioSource.Play();
         StartCoroutine(OpenOrCloseDoors(false));
     }
 
