@@ -5,7 +5,7 @@ using UnityEngine;
 public class ActivatorControlledConveyorWall : ActivatablePuzzlePiece
 {
     [SerializeField] ConveyerWall wallPart;
-    [SerializeField] private float playerMoveForcePerActivator = 25f;
+    [SerializeField] private float playerMoveForcePerActivator = 1000f;
     int index = 0;
 
     // Start is called before the first frame update

@@ -6098,7 +6098,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2368309129661295141, guid: d92c45e0ff4536943bac156697f4001e, type: 3}
       propertyPath: PlayerMoveForceAmount
-      value: 500
+      value: 5000
       objectReference: {fileID: 0}
     - target: {fileID: 2368309129661295141, guid: d92c45e0ff4536943bac156697f4001e, type: 3}
       propertyPath: playerMoveDirection.x
@@ -7386,7 +7386,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2368309129661295141, guid: d92c45e0ff4536943bac156697f4001e, type: 3}
       propertyPath: PlayerMoveForceAmount
-      value: 500
+      value: 5000
       objectReference: {fileID: 0}
     - target: {fileID: 2368309129661295141, guid: d92c45e0ff4536943bac156697f4001e, type: 3}
       propertyPath: playerMoveDirection.y
