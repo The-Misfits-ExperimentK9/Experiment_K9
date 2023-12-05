@@ -6,6 +6,7 @@ public class ActivatorControlledConveyorWall : ActivatablePuzzlePiece
 {
     [SerializeField] ConveyerWall wallPart;
     [SerializeField] private float playerMoveForcePerActivator = 1000f;
+    [SerializeField] private List<GameObject> activator;
     int index = 0;
 
     // Start is called before the first frame update
@@ -23,5 +24,4 @@ public class ActivatorControlledConveyorWall : ActivatablePuzzlePiece
     {
         wallPart.PlayerMoveForceAmount = playerMoveForcePerActivator * --index;
     }
-
 }
