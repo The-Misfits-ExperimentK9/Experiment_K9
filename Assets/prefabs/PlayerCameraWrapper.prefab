@@ -720,7 +720,7 @@ Transform:
   m_GameObject: {fileID: 2817393637023723959}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.777363, z: -0, w: 0.62905234}
-  m_LocalPosition: {x: 196.99838, y: 57.075005, z: -289.84976}
+  m_LocalPosition: {x: 181.57846, y: 57.075005, z: -293.1385}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1024,6 +1024,7 @@ MonoBehaviour:
   potentialProjectionSurfaces: []
   player2D: {fileID: 266677610665238099}
   movementController_2D: {fileID: 5895966758457165437}
+  dog2DSpriteRenderer: {fileID: 641710048873724522}
   dog2DHitbox: {fileID: 7203371137855413276}
   dog2DExtents: {x: 0.88, y: 4.71, z: 4.98}
   playerCamRoot: {fileID: 3784293241610158376}
@@ -1790,7 +1791,7 @@ Transform:
   m_GameObject: {fileID: 6774737294069508098}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.777363, z: -0, w: 0.62905234}
-  m_LocalPosition: {x: 196.99838, y: 57.075005, z: -289.84976}
+  m_LocalPosition: {x: 44.726875, y: 42.29015, z: 300.2819}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

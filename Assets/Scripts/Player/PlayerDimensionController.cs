@@ -47,6 +47,13 @@ public class PlayerDimensionController : MonoBehaviour {
     private Vector3 gizmoDrawLocation = Vector3.zero;
     private Vector3 gizmoDrawLocation2 = Vector3.zero;
 
+    [Header("Sound Clips")]
+    [SerializeField] AudioClip mergeIn;
+    [SerializeField] AudioClip mergeOut;
+    [SerializeField] AudioClip DOGOn;
+    [SerializeField] AudioClip DOGOff;
+    [SerializeField] AudioSource audioSource;
+
 
     // public float DOGProjectionRange = 25f;
 
@@ -57,7 +64,13 @@ public class PlayerDimensionController : MonoBehaviour {
         DOGLeaveKey = Keyboard.current.spaceKey;
         pauseKey = Keyboard.current.escapeKey;
         potentialProjectionSurfaces = new();
-        
+
+        audioSource = GetComponent<AudioSource>();
+
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+        }
     }
     private void Start() {
         
@@ -339,7 +352,10 @@ public class PlayerDimensionController : MonoBehaviour {
         Gizmos.DrawWireCube(gizmoDrawLocation2, dog2DHitbox.transform.rotation * dog2DExtents);
     }
 
-    private void TransitionTo2D() {
+    private void TransitionTo2D()
+    {
+        audioSource.clip = mergeIn;
+        audioSource.Play();
 
         movementController_2D.GetComponent<Rigidbody>().isKinematic = false;
         movementController_2D.SetCurrentWall(currentProjectionSurface.GetComponent<WallBehaviour>());
@@ -363,6 +379,9 @@ public class PlayerDimensionController : MonoBehaviour {
 
     }
     public void TransitionTo3D() {
+        audioSource.clip = mergeOut;
+        audioSource.Play();
+
         VirtualCamera3D.LookAt = player2D.transform;
         VirtualCamera3D.Follow = Camera2D.transform;
         PlayerBehaviour.Instance.thirdPersonController.LockCameraPosition = true;
@@ -372,6 +391,9 @@ public class PlayerDimensionController : MonoBehaviour {
         Physics.IgnoreLayerCollision(LayerInfo.PLAYER, LayerInfo.INTERACTABLE_OBJECT, false);
     }
     private void MovePlayerOutOfWall(Vector3 newPos) {
+        audioSource.clip = mergeOut;
+        audioSource.Play();
+
         player2D.SetActive(false);
         PlayerBehaviour.Instance.pickupController.ClearList();
         ClearSurfaces();
@@ -389,6 +411,8 @@ public class PlayerDimensionController : MonoBehaviour {
         }
     }
     public void TransitionTo3DLaunch() {
+        audioSource.clip = mergeOut;
+        audioSource.Play();
 
         Vector3 launchDirection = player2D.transform.forward;
 
@@ -424,6 +448,18 @@ public class PlayerDimensionController : MonoBehaviour {
         if (DOGToggleKey.wasPressedThisFrame) {
             DOGEnabled = !DOGEnabled;
             PlayerBehaviour.Instance.interfaceScript.SetDogAutoEnabledText(DOGEnabled);
+
+            if (DOGEnabled)
+            {
+                audioSource.clip = DOGOn;
+                audioSource.Play();
+            }
+            else
+            {
+                audioSource.clip = DOGOff;
+                audioSource.Play();
+            }
+
             if (PlayerBehaviour.Instance.IsIn3D()) {
                 if (IsProjecting) {
                     DisableProjections();
