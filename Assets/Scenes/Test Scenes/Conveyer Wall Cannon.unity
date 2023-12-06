@@ -135,6 +135,7 @@ GameObject:
   - component: {fileID: 41859345}
   - component: {fileID: 41859344}
   - component: {fileID: 41859343}
+  - component: {fileID: 41859347}
   m_Layer: 6
   m_Name: Wall
   m_TagString: Untagged
@@ -228,6 +229,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &41859347
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 41859342}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1863eac71e987dc469416279fad703ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AllowsDimensionTransition: 0
+  IsWalkThroughEnabled: 0
+  IsPassthrough: 0
+  LaunchForce: 10
 --- !u!1 &44171159
 GameObject:
   m_ObjectHideFlags: 0
@@ -1220,6 +1237,7 @@ GameObject:
   - component: {fileID: 155373031}
   - component: {fileID: 155373030}
   - component: {fileID: 155373029}
+  - component: {fileID: 155373032}
   m_Layer: 6
   m_Name: Cube (8)
   m_TagString: Untagged
@@ -1313,6 +1331,22 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 155373027}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &155373032
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 155373027}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1863eac71e987dc469416279fad703ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AllowsDimensionTransition: 0
+  IsWalkThroughEnabled: 0
+  IsPassthrough: 0
+  LaunchForce: 10
 --- !u!1 &161723637
 GameObject:
   m_ObjectHideFlags: 0
@@ -1325,7 +1359,8 @@ GameObject:
   - component: {fileID: 161723641}
   - component: {fileID: 161723640}
   - component: {fileID: 161723639}
-  m_Layer: 0
+  - component: {fileID: 161723642}
+  m_Layer: 6
   m_Name: Cube (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1418,6 +1453,22 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 161723637}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &161723642
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 161723637}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1863eac71e987dc469416279fad703ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AllowsDimensionTransition: 0
+  IsWalkThroughEnabled: 0
+  IsPassthrough: 0
+  LaunchForce: 10
 --- !u!1 &209220218
 GameObject:
   m_ObjectHideFlags: 0
@@ -2837,6 +2888,7 @@ GameObject:
   - component: {fileID: 416263860}
   - component: {fileID: 416263859}
   - component: {fileID: 416263858}
+  - component: {fileID: 416263861}
   m_Layer: 6
   m_Name: Cube (7)
   m_TagString: Untagged
@@ -2930,6 +2982,22 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 416263856}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &416263861
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 416263856}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1863eac71e987dc469416279fad703ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AllowsDimensionTransition: 0
+  IsWalkThroughEnabled: 0
+  IsPassthrough: 0
+  LaunchForce: 10
 --- !u!1 &422292238
 GameObject:
   m_ObjectHideFlags: 0
@@ -3493,6 +3561,7 @@ GameObject:
   - component: {fileID: 507573795}
   - component: {fileID: 507573794}
   - component: {fileID: 507573793}
+  - component: {fileID: 507573796}
   m_Layer: 6
   m_Name: Cube (6)
   m_TagString: Untagged
@@ -3586,6 +3655,22 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 507573791}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &507573796
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 507573791}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1863eac71e987dc469416279fad703ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AllowsDimensionTransition: 0
+  IsWalkThroughEnabled: 0
+  IsPassthrough: 0
+  LaunchForce: 10
 --- !u!1 &508044414
 GameObject:
   m_ObjectHideFlags: 0
@@ -4464,7 +4549,8 @@ GameObject:
   - component: {fileID: 663437654}
   - component: {fileID: 663437653}
   - component: {fileID: 663437652}
-  m_Layer: 0
+  - component: {fileID: 663437655}
+  m_Layer: 6
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4557,6 +4643,22 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 663437650}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &663437655
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 663437650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1863eac71e987dc469416279fad703ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AllowsDimensionTransition: 0
+  IsWalkThroughEnabled: 0
+  IsPassthrough: 0
+  LaunchForce: 10
 --- !u!1 &666757219
 GameObject:
   m_ObjectHideFlags: 0
@@ -7610,6 +7712,7 @@ GameObject:
   - component: {fileID: 1326191847}
   - component: {fileID: 1326191846}
   - component: {fileID: 1326191845}
+  - component: {fileID: 1326191849}
   m_Layer: 6
   m_Name: Wall
   m_TagString: Untagged
@@ -7703,6 +7806,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1326191849
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1326191844}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1863eac71e987dc469416279fad703ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AllowsDimensionTransition: 0
+  IsWalkThroughEnabled: 0
+  IsPassthrough: 0
+  LaunchForce: 10
 --- !u!1 &1338581899
 GameObject:
   m_ObjectHideFlags: 0
@@ -7798,6 +7917,7 @@ GameObject:
   - component: {fileID: 1352443057}
   - component: {fileID: 1352443056}
   - component: {fileID: 1352443055}
+  - component: {fileID: 1352443059}
   m_Layer: 6
   m_Name: Cube (6)
   m_TagString: Untagged
@@ -7891,6 +8011,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!114 &1352443059
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1352443054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1863eac71e987dc469416279fad703ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AllowsDimensionTransition: 0
+  IsWalkThroughEnabled: 0
+  IsPassthrough: 0
+  LaunchForce: 10
 --- !u!1 &1364808258
 GameObject:
   m_ObjectHideFlags: 0
@@ -8716,7 +8852,8 @@ GameObject:
   - component: {fileID: 1491727757}
   - component: {fileID: 1491727756}
   - component: {fileID: 1491727755}
-  m_Layer: 0
+  - component: {fileID: 1491727758}
+  m_Layer: 6
   m_Name: Cube (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8809,6 +8946,22 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1491727753}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1491727758
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1491727753}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1863eac71e987dc469416279fad703ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AllowsDimensionTransition: 0
+  IsWalkThroughEnabled: 0
+  IsPassthrough: 0
+  LaunchForce: 10
 --- !u!1 &1513758438
 GameObject:
   m_ObjectHideFlags: 0
@@ -10232,6 +10385,7 @@ GameObject:
   - component: {fileID: 1730824115}
   - component: {fileID: 1730824114}
   - component: {fileID: 1730824113}
+  - component: {fileID: 1730824117}
   m_Layer: 6
   m_Name: Cube (5)
   m_TagString: Untagged
@@ -10325,6 +10479,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!114 &1730824117
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1730824112}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1863eac71e987dc469416279fad703ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AllowsDimensionTransition: 0
+  IsWalkThroughEnabled: 0
+  IsPassthrough: 0
+  LaunchForce: 10
 --- !u!1 &1746698277
 GameObject:
   m_ObjectHideFlags: 0
@@ -10337,6 +10507,7 @@ GameObject:
   - component: {fileID: 1746698280}
   - component: {fileID: 1746698279}
   - component: {fileID: 1746698278}
+  - component: {fileID: 1746698282}
   m_Layer: 6
   m_Name: Wall
   m_TagString: Untagged
@@ -10430,6 +10601,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!114 &1746698282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1746698277}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1863eac71e987dc469416279fad703ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AllowsDimensionTransition: 0
+  IsWalkThroughEnabled: 0
+  IsPassthrough: 0
+  LaunchForce: 10
 --- !u!1 &1747560045
 GameObject:
   m_ObjectHideFlags: 0
@@ -12181,6 +12368,7 @@ GameObject:
   - component: {fileID: 2109135682}
   - component: {fileID: 2109135681}
   - component: {fileID: 2109135680}
+  - component: {fileID: 2109135684}
   m_Layer: 6
   m_Name: Wall
   m_TagString: Untagged
@@ -12274,6 +12462,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!114 &2109135684
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2109135679}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1863eac71e987dc469416279fad703ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AllowsDimensionTransition: 0
+  IsWalkThroughEnabled: 0
+  IsPassthrough: 0
+  LaunchForce: 10
 --- !u!1001 &2112320611
 PrefabInstance:
   m_ObjectHideFlags: 0
