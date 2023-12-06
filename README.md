@@ -25,6 +25,8 @@ Mike
 </ul>
 <h3>Bugfixes</h3> 
 <ul>
+<li> Fixed dog ascending</li>
+<li> Fixed dog teleporting glitch </li>
 <li>Fixed 2d ball disappearing at some angles</li>
 <li>Fixed 2d ball receiver disappearing due to the new shaders</li>
 <li>2d camera changes on wall transfer a less jarring</li>

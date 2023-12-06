@@ -184,7 +184,7 @@ public class MovementController_2D : MonoBehaviour {
 
 
     private void Move() {
-
+        Debug.LogError(transform.position);
         float targetSpeed = maxSpeed2D;
 
         var input = GetInput();
@@ -402,7 +402,6 @@ public class MovementController_2D : MonoBehaviour {
             //    TransitionToNewAxis(closestPoint, wallB);
 
             //}
-
             if (pastwall == null || IsWallAtNewAngle(wallB.transform)) {
                 Debug.Log("1");
                 SetCurrentWall(wallB);
