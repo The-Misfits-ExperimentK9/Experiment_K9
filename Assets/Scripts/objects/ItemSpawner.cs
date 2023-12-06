@@ -14,18 +14,16 @@ public class ItemSpawner : ActivatablePuzzlePiece {
         //do nothing
     }
 
-
     void SpawnItem() {
         if (spawnedObject != null) {
             Destroy(spawnedObject);
         }
         spawnedObject = Instantiate(itemToSpawn, transform.position, Quaternion.identity);
     }
+
     private void OnTriggerExit(Collider other) {
         if (spawnedObject && other.gameObject == spawnedObject) {
             SpawnItem();
-
         }
     }
-
 }
