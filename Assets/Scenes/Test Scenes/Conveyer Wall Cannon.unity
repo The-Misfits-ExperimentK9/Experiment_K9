@@ -4357,7 +4357,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 756690542528958971, guid: b2705ed3faf55cf4395196d84eb8accc, type: 3}
       propertyPath: AllowsDimensionTransition
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7033518516474956368, guid: b2705ed3faf55cf4395196d84eb8accc, type: 3}
       propertyPath: m_LocalScale.x
