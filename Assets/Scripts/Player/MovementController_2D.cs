@@ -389,10 +389,12 @@ public class MovementController_2D : MonoBehaviour {
     public void HandleWallCollision(Collider collider, WallBehaviour wallB, bool convex) {
 
         if (PlayerBehaviour.Instance.IsIn3D()) return;
+        
 
         var closestPoint = collider.ClosestPointOnBounds(transform.position);
 
         if (wallB.IsWalkThroughEnabled) {
+           // Debug.Log("HandleWallCollision");
             WallBehaviour pastwall = currentWall;
             SetCurrentWall(wallB);
             //if (pastwall == null || IsPerpendicular(wallB.transform, pastwall.transform)) {
@@ -435,6 +437,7 @@ public class MovementController_2D : MonoBehaviour {
 
 
             if (currentWall == wallB && !PlayerBehaviour.Instance.IsIn3D() || currentWall == null && !PlayerBehaviour.Instance.IsIn3D()) {
+                Debug.Log(collision.gameObject.name + " exited");
 
                 UpdateWallStatus();
 
@@ -596,7 +599,10 @@ public class MovementController_2D : MonoBehaviour {
                 Is2DPlayerActive = false;
                 break;
             case ProjectionState.HoldingObject:
-                spriteRenderer.sprite = sprites[2];
+                if (PlayerBehaviour.Instance.pickupController.HeldObject is TransferableObject)
+                    spriteRenderer.sprite = sprites[2];
+                else
+                    spriteRenderer.sprite = sprites[1];
                 Is2DPlayerActive = false;
                 break;
             case ProjectionState.In2D:
