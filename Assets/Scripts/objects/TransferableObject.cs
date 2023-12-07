@@ -8,7 +8,7 @@ public class TransferableObject : GrabbableObject {
     [SerializeField] private SpriteRenderer spriteRenderer2D;
     [SerializeField] private float objectDrawOffset = 4f;
     [SerializeField] private SphereCollider sphere;
-    [SerializeField] private bool inAir = false;
+    [SerializeField] private bool inAir = true;
     [SerializeField] private AudioClip lowDrop;
     [SerializeField] private AudioClip mediumDrop;
     [SerializeField] private AudioClip highDrop;
@@ -46,7 +46,6 @@ public class TransferableObject : GrabbableObject {
 
     public void Set3DDisplayMode(bool is3D) {
         Is3D = is3D;
-
     }
     public void Enable3D() {
         //sphere.enabled = false;
@@ -126,7 +125,7 @@ public class TransferableObject : GrabbableObject {
         if (inAir)
         {
             // If the object hits the ground....
-            if (collision.gameObject.CompareTag("Ground"))
+            if (collision.gameObject.CompareTag("Ground") || collision.gameObject.CompareTag("Default"))
             {
                 // The inAir bool is set to false, first and foremost.
                 inAir = false;
@@ -148,6 +147,14 @@ public class TransferableObject : GrabbableObject {
                 PlaySound(highDrop);
                 Debug.Log("Playing high drop sound.");
             }
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Ground") || collision.gameObject.CompareTag("Default"))
+        {
+            inAir = true;
         }
     }
 

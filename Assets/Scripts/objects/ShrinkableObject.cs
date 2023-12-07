@@ -7,7 +7,7 @@ public class ShrinkableObject : GrabbableObject {
     public float unShrunkScale;
     public float shrinkScale;
     public float shrinkTime;
-    [SerializeField] private bool inAir = false;
+    [SerializeField] private bool inAir = true;
     [SerializeField] private AudioClip lowDrop;
     [SerializeField] private AudioClip mediumDrop;
     [SerializeField] private AudioClip highDrop;
@@ -78,6 +78,14 @@ public class ShrinkableObject : GrabbableObject {
             {
                 PlaySound(highDrop);
             }
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            inAir = true;
         }
     }
 

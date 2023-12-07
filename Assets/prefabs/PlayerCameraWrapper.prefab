@@ -1006,6 +1006,17 @@ MonoBehaviour:
   items:
   - {fileID: 1690357427171370152, guid: 8129f25da6251bf41ae8a32e6be7ccc6, type: 3}
   - {fileID: 1304167074492356921, guid: 17513ab5914eb2d4cb8bf0ccd9430ae8, type: 3}
+  barks:
+  - {fileID: 8300000, guid: 288f9444c001f5847b37cfb04b339ce9, type: 3}
+  - {fileID: 8300000, guid: 02db5f6da4a896f4fbfa52eb1f8694d1, type: 3}
+  - {fileID: 8300000, guid: 507ab53b92288664980996c70a40320a, type: 3}
+  - {fileID: 8300000, guid: 704964a8ac5d36647ac5ab0e6f49d830, type: 3}
+  - {fileID: 8300000, guid: 74f74afd0566bb541ae0d94e5f52c8ca, type: 3}
+  - {fileID: 8300000, guid: 4b0954b43e5b9664ba02631561e49ffe, type: 3}
+  - {fileID: 8300000, guid: 4a085e49d41ff874dbde5f6668a79140, type: 3}
+  - {fileID: 8300000, guid: 9ca8a7ff0adca3647906ccefc177187f, type: 3}
+  - {fileID: 8300000, guid: 15078d83806e9564f80ff2fb8f809c67, type: 3}
+  - {fileID: 8300000, guid: 7607fda7c8011914e8f3cb11fc0b6947, type: 3}
 --- !u!114 &5647112630155608246
 MonoBehaviour:
   m_ObjectHideFlags: 0

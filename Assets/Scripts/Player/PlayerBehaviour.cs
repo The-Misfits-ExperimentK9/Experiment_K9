@@ -35,6 +35,7 @@ public class PlayerBehaviour : MonoBehaviour {
     public bool is3D = true;                               //handles checking if the player is in 3d or 2d mode
 
     private KeyControl resetKey;                             //which key to use for interaction, set in Start()
+
     [Header("Spawn")]
     [SerializeField] private GameObject spawnPoint;
 
@@ -48,11 +49,28 @@ public class PlayerBehaviour : MonoBehaviour {
     private List<Collider> receivables = new(); //list of potential ball receivers
     private BallReceiver closestBallReceiver;
 
-
     [Header("Development")]
     public bool EnableItemSpawning = true;
     public List<GameObject> items = new();
     private KeyControl spawnKey1, spawnKey2;
+
+    [Header("Audio/Barking")]
+    [SerializeField] List<AudioClip> barks;
+    AudioSource audioSource;
+    int barkIndex;
+    int barkChance;
+    int randomBarkNumber;
+
+    private void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+        }
+    }
+
     private void Start() {
         //set singleton
         if (Instance == null) {
@@ -75,6 +93,10 @@ public class PlayerBehaviour : MonoBehaviour {
         else {
             Debug.LogError("Missing player 3d when assigning controller scripts");
         }
+
+        // At the start, the random number the random barking mechanism needs
+        // to hit will be randomly generated.
+        randomBarkNumber = Random.Range(1, 2001);
     }
 
     public void SetPaused(bool paused) {
@@ -83,12 +105,23 @@ public class PlayerBehaviour : MonoBehaviour {
     }
 
     void Update() {
+        // Each frame, barkChance will get assigned to a random number between
+        // 1 and 2000.
+        barkChance = Random.Range(1, 2001);
+
+        // Regardless of player input, if barkChance lands on the random number
+        // generated, the dog will bark, and the random number gets re-rolled.
+        if (barkChance == randomBarkNumber)
+        {
+            Bark();
+            randomBarkNumber = Random.Range(1, 2001);
+        }
 
         if (!paused) {
             if (canResetLocation) {
                 HandleResetInput();
             }
-            //only check bal receivers while holding object and in 3d
+            //only check ball receivers while holding object and in 3d
             if (pickupController.IsHoldingObject() && is3D) {
                 FindNearestReceiverAndActivateHologram();
             }
@@ -260,6 +293,14 @@ public class PlayerBehaviour : MonoBehaviour {
     }
     public BallReceiver GetClosestReceiver() {
         return closestBallReceiver;
+    }
+
+    public void Bark()
+    {
+        barkIndex = Random.Range(0, barks.Count);
+
+        audioSource.clip = barks[barkIndex];
+        audioSource.Play();
     }
 
     //public GameObject GetClosestReciever() {
