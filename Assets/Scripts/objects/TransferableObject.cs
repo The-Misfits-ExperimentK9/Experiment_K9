@@ -8,11 +8,11 @@ public class TransferableObject : GrabbableObject {
     [SerializeField] private SpriteRenderer spriteRenderer2D;
     [SerializeField] private float objectDrawOffset = 4f;
     [SerializeField] private SphereCollider sphere;
-    [SerializeField] private bool inAir = true;
-    [SerializeField] private AudioClip lowDrop;
-    [SerializeField] private AudioClip mediumDrop;
-    [SerializeField] private AudioClip highDrop;
-    [SerializeField] private AudioSource audioSource;
+    public bool inAir = true;
+    public AudioClip lowDrop;
+    public AudioClip mediumDrop;
+    public AudioClip highDrop;
+    public AudioSource audioSource;
 
     private void Awake() {
         spriteRenderer2D = displayObject_2D.GetComponent<SpriteRenderer>();
@@ -119,54 +119,15 @@ public class TransferableObject : GrabbableObject {
     // This method checks when a dropped object touches something.
     private void OnCollisionEnter(Collision collision)
     {
-        Rigidbody rb = GetComponent<Rigidbody>();
-        Debug.Log("Collision detected with: " + collision.gameObject.name);
-
-        if (inAir)
-        {
-            // If the object hits the ground....
-            if (collision.gameObject.CompareTag("Ground") || collision.gameObject.CompareTag("Default"))
-            {
-                // The inAir bool is set to false, first and foremost.
-                inAir = false;
-                Debug.Log("It hit the ground!");
-            }
-
-            // The magnitude of RigidBody.velocity determines which of the three clips should play.
-            if (rb.velocity.magnitude < 5.0f)
-            {
-                PlaySound(lowDrop);
-                Debug.Log("Playing low drop sound.");
-            }
-            else if (rb.velocity.magnitude >= 5.0f && rb.velocity.magnitude < 10.0f)
-            {
-                PlaySound(mediumDrop);
-                Debug.Log("Playing medium drop sound.");
-            }
-            else
-            {
-                PlaySound(highDrop);
-                Debug.Log("Playing high drop sound.");
-            }
-        }
+        
     }
 
     private void OnCollisionExit(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Ground") || collision.gameObject.CompareTag("Default"))
-        {
-            inAir = true;
-        }
+        
     }
 
-    private void PlaySound(AudioClip clip)
-    {
-        if (clip != null)
-        {
-            audioSource.clip = clip;
-            audioSource.Play();
-        }
-    }
+    
 
 
     public void Drop2D() {

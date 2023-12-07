@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ObjectInteractDisplayController : MonoBehaviour {
@@ -41,9 +42,48 @@ public class ObjectInteractDisplayController : MonoBehaviour {
     }
     private void OnCollisionEnter(Collision collision) {
         tObject.isColliding = true;
+        if (tObject is TransferableObject transferObject) {
+            
+            Rigidbody rb = GetComponent<Rigidbody>();
+            Debug.Log("Collision detected with: " + collision.gameObject.name);
+
+            if (transferObject.inAir) {
+                // If the object hits the ground....
+                if (collision.gameObject.layer == LayerInfo.GROUND) {
+                    // The inAir bool is set to false, first and foremost.
+                    transferObject.inAir = false;
+                    Debug.Log("It hit the ground!");
+                }
+
+                // The magnitude of RigidBody.velocity determines which of the three clips should play.
+                if (rb.velocity.magnitude < 5.0f) {
+                    PlaySound(transferObject.lowDrop, transferObject);
+                    Debug.Log("Playing low drop sound.");
+                }
+                else if (rb.velocity.magnitude >= 5.0f && rb.velocity.magnitude < 10.0f) {
+                    PlaySound(transferObject.mediumDrop, transferObject);
+                    Debug.Log("Playing medium drop sound.");
+                }
+                else {
+                    PlaySound(transferObject.highDrop, transferObject);
+                    Debug.Log("Playing high drop sound.");
+                }
+            }
+        }
+    }
+    private void PlaySound(AudioClip clip, TransferableObject tSoundObject) {
+        if (clip != null) {
+            tSoundObject.audioSource.clip = clip;
+            tSoundObject.audioSource.Play();
+        }
     }
     private void OnCollisionExit(Collision collision) {
         tObject.isColliding = false;
+        if (tObject is TransferableObject transferObject) {
+            if (collision.gameObject.layer == LayerInfo.GROUND) {
+                transferObject.inAir = true;
+            }
+        }
     }
 
     private void OnTriggerEnter(Collider other) {
