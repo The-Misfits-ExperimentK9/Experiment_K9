@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 112000000, guid: 2dd4975b4f31b26459acbbc6d3980502, type: 2}
-  m_LightingSettings: {fileID: 4890085278179872738, guid: 79ab8d2de6ac5a544a43453136084499, type: 2}
+  m_LightingSettings: {fileID: 4890085278179872738, guid: 4f96e81911a102849b7327c6099d126a, type: 2}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -574,11 +574,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7202856513385130611, guid: ef9b83ad25577bd4b83ed79316ccf0dc, type: 3}
       propertyPath: m_Intensity
-      value: 6
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7202856513385130611, guid: ef9b83ad25577bd4b83ed79316ccf0dc, type: 3}
       propertyPath: m_BounceIntensity
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1787,6 +1787,10 @@ PrefabInstance:
       propertyPath: m_AreaSize.y
       value: 2.1742687
       objectReference: {fileID: 0}
+    - target: {fileID: 7202856513385130611, guid: ef9b83ad25577bd4b83ed79316ccf0dc, type: 3}
+      propertyPath: m_BounceIntensity
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 8309439426993961846, guid: ef9b83ad25577bd4b83ed79316ccf0dc, type: 3}
       propertyPath: m_LocalRotation.y
       value: 0.9999574
@@ -2280,11 +2284,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7202856513385130611, guid: ef9b83ad25577bd4b83ed79316ccf0dc, type: 3}
       propertyPath: m_Intensity
-      value: 6
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7202856513385130611, guid: ef9b83ad25577bd4b83ed79316ccf0dc, type: 3}
       propertyPath: m_BounceIntensity
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3476,11 +3480,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7202856513385130611, guid: ef9b83ad25577bd4b83ed79316ccf0dc, type: 3}
       propertyPath: m_Intensity
-      value: 6
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7202856513385130611, guid: ef9b83ad25577bd4b83ed79316ccf0dc, type: 3}
       propertyPath: m_BounceIntensity
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3545,11 +3549,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7202856513385130611, guid: ef9b83ad25577bd4b83ed79316ccf0dc, type: 3}
       propertyPath: m_Intensity
-      value: 6
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7202856513385130611, guid: ef9b83ad25577bd4b83ed79316ccf0dc, type: 3}
       propertyPath: m_BounceIntensity
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3801,11 +3805,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7202856513385130611, guid: ef9b83ad25577bd4b83ed79316ccf0dc, type: 3}
       propertyPath: m_Intensity
-      value: 6
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7202856513385130611, guid: ef9b83ad25577bd4b83ed79316ccf0dc, type: 3}
       propertyPath: m_BounceIntensity
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3875,11 +3879,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7202856513385130611, guid: ef9b83ad25577bd4b83ed79316ccf0dc, type: 3}
       propertyPath: m_Intensity
-      value: 6
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7202856513385130611, guid: ef9b83ad25577bd4b83ed79316ccf0dc, type: 3}
       propertyPath: m_BounceIntensity
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4144,11 +4148,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7202856513385130611, guid: ef9b83ad25577bd4b83ed79316ccf0dc, type: 3}
       propertyPath: m_Intensity
-      value: 6
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7202856513385130611, guid: ef9b83ad25577bd4b83ed79316ccf0dc, type: 3}
       propertyPath: m_BounceIntensity
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4715,11 +4719,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7202856513385130611, guid: ef9b83ad25577bd4b83ed79316ccf0dc, type: 3}
       propertyPath: m_Intensity
-      value: 6
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7202856513385130611, guid: ef9b83ad25577bd4b83ed79316ccf0dc, type: 3}
       propertyPath: m_BounceIntensity
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4849,11 +4853,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7202856513385130611, guid: ef9b83ad25577bd4b83ed79316ccf0dc, type: 3}
       propertyPath: m_Intensity
-      value: 6
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7202856513385130611, guid: ef9b83ad25577bd4b83ed79316ccf0dc, type: 3}
       propertyPath: m_BounceIntensity
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5423,11 +5427,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7202856513385130611, guid: ef9b83ad25577bd4b83ed79316ccf0dc, type: 3}
       propertyPath: m_Intensity
-      value: 6
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7202856513385130611, guid: ef9b83ad25577bd4b83ed79316ccf0dc, type: 3}
       propertyPath: m_BounceIntensity
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6452,11 +6456,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7202856513385130611, guid: ef9b83ad25577bd4b83ed79316ccf0dc, type: 3}
       propertyPath: m_Intensity
-      value: 6
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7202856513385130611, guid: ef9b83ad25577bd4b83ed79316ccf0dc, type: 3}
       propertyPath: m_BounceIntensity
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6651,11 +6655,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7202856513385130611, guid: ef9b83ad25577bd4b83ed79316ccf0dc, type: 3}
       propertyPath: m_Intensity
-      value: 6
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7202856513385130611, guid: ef9b83ad25577bd4b83ed79316ccf0dc, type: 3}
       propertyPath: m_BounceIntensity
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6915,11 +6919,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7202856513385130611, guid: ef9b83ad25577bd4b83ed79316ccf0dc, type: 3}
       propertyPath: m_Intensity
-      value: 6
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7202856513385130611, guid: ef9b83ad25577bd4b83ed79316ccf0dc, type: 3}
       propertyPath: m_BounceIntensity
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6984,11 +6988,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7202856513385130611, guid: ef9b83ad25577bd4b83ed79316ccf0dc, type: 3}
       propertyPath: m_Intensity
-      value: 6
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7202856513385130611, guid: ef9b83ad25577bd4b83ed79316ccf0dc, type: 3}
       propertyPath: m_BounceIntensity
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -11229,11 +11233,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7202856513385130611, guid: ef9b83ad25577bd4b83ed79316ccf0dc, type: 3}
       propertyPath: m_Intensity
-      value: 6
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7202856513385130611, guid: ef9b83ad25577bd4b83ed79316ccf0dc, type: 3}
       propertyPath: m_BounceIntensity
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -11508,11 +11512,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7202856513385130611, guid: ef9b83ad25577bd4b83ed79316ccf0dc, type: 3}
       propertyPath: m_Intensity
-      value: 6
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7202856513385130611, guid: ef9b83ad25577bd4b83ed79316ccf0dc, type: 3}
       propertyPath: m_BounceIntensity
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
