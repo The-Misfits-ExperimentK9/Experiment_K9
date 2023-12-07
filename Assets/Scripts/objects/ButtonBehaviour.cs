@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ButtonBehaviour : ReceivableParent {
     public bool IsLocked = false;
-    [SerializeField] private ActivatablePuzzlePiece puzzlePieceToActivate;
+    [SerializeField] private List<ActivatablePuzzlePiece> puzzlePieceToActivate;
 
 
 
@@ -80,12 +80,14 @@ public class ButtonBehaviour : ReceivableParent {
     public override void Activate() {
         base.Activate();
         pawMeshRenderer.SetMaterials(pressedMaterials);
-        puzzlePieceToActivate.Activate();
+        for (int i = 0; i < puzzlePieceToActivate.Count; i++)
+            puzzlePieceToActivate[i].Activate();
     }
     //set materials back to unpressed and deactivate the puzzle piece
     public override void Deactivate() {
         pawMeshRenderer.SetMaterials(unPressedMaterials);
-        puzzlePieceToActivate.Deactivate(gameObject);
+        for (int i = 0; i < puzzlePieceToActivate.Count; i++)
+            puzzlePieceToActivate[i].Deactivate(gameObject);
 
         base.Deactivate();
     }
