@@ -331,7 +331,7 @@ public class PlayerDimensionController : MonoBehaviour {
         }
     }
     private void OnDrawGizmos() {
-        Debug.Log("hit this");
+        //Debug.Log("hit this");
         Gizmos.color = Color.red;
         //Gizmos.DrawSphere(gizmoDrawLocation, .5f);
         Gizmos.DrawWireCube(gizmoDrawLocation, dog2DHitbox.transform.rotation * dog2DExtents);
