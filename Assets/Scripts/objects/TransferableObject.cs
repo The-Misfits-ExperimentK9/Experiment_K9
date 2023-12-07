@@ -129,6 +129,7 @@ public class TransferableObject : GrabbableObject {
             {
                 // The inAir bool is set to false, first and foremost.
                 inAir = false;
+                Debug.Log("It hit the ground!");
             }
 
             // The magnitude of RigidBody.velocity determines which of the three clips should play.
