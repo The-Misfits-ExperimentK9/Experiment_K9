@@ -37,6 +37,21 @@ public class Platform : ActivatablePuzzlePiece {
     }
     [SerializeField] protected PlatformState state;
 
+    [SerializeField] AudioClip startMoving;
+    [SerializeField] AudioClip moving;
+    [SerializeField] AudioClip stopMoving;
+    [SerializeField] private AudioSource audioSource;
+
+    private void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+        }
+    }
+
     protected void Start() {
         if (travelLocations == null || travelLocations.Count < 2) {
             Debug.LogWarning("Insufficient travel locations provided.");
@@ -80,15 +95,21 @@ public class Platform : ActivatablePuzzlePiece {
         }
 
         MovePlatform();
-
-
     }
 
-    public void StartMoving() {
-        if (unlocked) {
+    public IEnumerator StartMoving() {
+        if (unlocked)
+        {
+            audioSource.clip = startMoving;
+            audioSource.Play();
+
+            while (audioSource.isPlaying)
+            {
+                yield return null;
+            }
+
             GetNextTargetLocation();
         }
-
     }
 
     protected void MovePlatform() {
@@ -131,9 +152,7 @@ public class Platform : ActivatablePuzzlePiece {
             }
             //move the platform if not at a destination
             else {
-
-
-
+                audioSource.Play();
             }
         }
     }
@@ -149,10 +168,17 @@ public class Platform : ActivatablePuzzlePiece {
             var velocity = platformMovementSpeed * moveDirection;
             rb.velocity = velocity; // set the Rigidbody's velocity to move the platform
             state = PlatformState.Moving;
+            audioSource.clip = moving;
+            audioSource.loop = true;
         }
     }
 
     protected IEnumerator WaitThenMove(bool stop) {
+        audioSource.Stop();
+        audioSource.loop = false;
+        audioSource.clip = stopMoving;
+        audioSource.Play();
+
         movementStarted = true;
         //Debug.Log("WaitThenMove");
         state = PlatformState.Waiting;

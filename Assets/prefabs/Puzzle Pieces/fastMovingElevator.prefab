@@ -152,6 +152,12 @@ MonoBehaviour:
   platformMovementSpeed: 100
   firstLastWaitTime: 2
   player: {fileID: 0}
+  currentTargetIndex: 1
   unlocked: 0
   unlockedByPlayerCollision: 1
+  stay: 0
   state: 0
+  startMoving: {fileID: 8300000, guid: 7a86ba68a78a2c9488421dea4d7cad4f, type: 3}
+  moving: {fileID: 8300000, guid: cd2bf60c55fcd0f46812f2d85204e331, type: 3}
+  stopMoving: {fileID: 8300000, guid: 307048eaca9350b428bffca6b3b66f20, type: 3}
+  audioSource: {fileID: 0}
