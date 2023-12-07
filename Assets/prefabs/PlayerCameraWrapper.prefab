@@ -549,7 +549,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1749976163743187951}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e2c326a22775a6b4e90efbdbdd051fd0, type: 3}
+  m_Script: {fileID: 11500000, guid: 9de7a552d6ee41943840a2eaed84f97d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   playerTransform: {fileID: 557386753428854205}
@@ -558,8 +558,8 @@ MonoBehaviour:
   MinAllowedDistanceToWall: 30
   wallLayer:
     serializedVersion: 2
-    m_Bits: 64
-  cornerTransitDuration: 1
+    m_Bits: 0
+  cornerTransitDuration: 0.5
   HorizontalCameraClamp: 25
   transitionSpeed: 5
   resetWaitTime: 2
@@ -720,7 +720,7 @@ Transform:
   m_GameObject: {fileID: 2817393637023723959}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.777363, z: -0, w: 0.62905234}
-  m_LocalPosition: {x: 178.3201, y: 57.075005, z: -293.83344}
+  m_LocalPosition: {x: 181.57846, y: 57.075005, z: -293.1385}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -745,7 +745,7 @@ MonoBehaviour:
   m_StreamingVersion: 20170927
   m_Priority: 10
   m_StandbyUpdate: 2
-  m_LookAt: {fileID: 0}
+  m_LookAt: {fileID: 9124290187480717203}
   m_Follow: {fileID: 637477807531120107}
   m_Lens:
     FieldOfView: 40
@@ -1006,6 +1006,17 @@ MonoBehaviour:
   items:
   - {fileID: 1690357427171370152, guid: 8129f25da6251bf41ae8a32e6be7ccc6, type: 3}
   - {fileID: 1304167074492356921, guid: 17513ab5914eb2d4cb8bf0ccd9430ae8, type: 3}
+  barks:
+  - {fileID: 8300000, guid: 288f9444c001f5847b37cfb04b339ce9, type: 3}
+  - {fileID: 8300000, guid: 02db5f6da4a896f4fbfa52eb1f8694d1, type: 3}
+  - {fileID: 8300000, guid: 507ab53b92288664980996c70a40320a, type: 3}
+  - {fileID: 8300000, guid: 704964a8ac5d36647ac5ab0e6f49d830, type: 3}
+  - {fileID: 8300000, guid: 74f74afd0566bb541ae0d94e5f52c8ca, type: 3}
+  - {fileID: 8300000, guid: 4b0954b43e5b9664ba02631561e49ffe, type: 3}
+  - {fileID: 8300000, guid: 4a085e49d41ff874dbde5f6668a79140, type: 3}
+  - {fileID: 8300000, guid: 9ca8a7ff0adca3647906ccefc177187f, type: 3}
+  - {fileID: 8300000, guid: 15078d83806e9564f80ff2fb8f809c67, type: 3}
+  - {fileID: 8300000, guid: 7607fda7c8011914e8f3cb11fc0b6947, type: 3}
 --- !u!114 &5647112630155608246
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1034,7 +1045,12 @@ MonoBehaviour:
   LockCameraOn3DTranstionTime: 1
   playerLeaveWallOffset: 6
   IsProjecting: 0
-  DOGEnabled: 1
+  DOGEnabled: 0
+  mergeIn: {fileID: 8300000, guid: c56a15418be08a34aa324ea0bbe6bbbf, type: 3}
+  mergeOut: {fileID: 8300000, guid: 88db1d19c1f5b6f4fb55580f52e6d0a3, type: 3}
+  DOGOn: {fileID: 8300000, guid: 01c7e41afae89b54c81327642997b5ba, type: 3}
+  DOGOff: {fileID: 8300000, guid: a64c58f0e5efa5f4f82ba8cb6130e5be, type: 3}
+  audioSource: {fileID: 0}
 --- !u!114 &8754400608702510881
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1209,8 +1225,11 @@ MonoBehaviour:
   SprintSpeed: 40
   RotationSmoothTime: 0.12
   SpeedChangeRate: 10
-  LandingAudioClip: {fileID: 0}
-  FootstepAudioClips: []
+  LandingAudioClip: {fileID: 8300000, guid: 10d299823f75b4e49bbf942db2c90e24, type: 3}
+  FootstepAudioClips:
+  - {fileID: 8300000, guid: 44c3c8689df93e845a32f103e170d310, type: 3}
+  - {fileID: 8300000, guid: 964acb0b00e01f54db248ad35975de13, type: 3}
+  audioSource: {fileID: 0}
   FootstepAudioVolume: 0.5
   JumpHeight: 10.75
   Gravity: -110
@@ -1221,7 +1240,7 @@ MonoBehaviour:
   GroundedRadius: 4.5
   GroundLayers:
     serializedVersion: 2
-    m_Bits: 10624
+    m_Bits: 8576
   CinemachineCameraTarget: {fileID: 3784293241610158376}
   TopClamp: 70
   BottomClamp: -30
@@ -1338,7 +1357,7 @@ MonoBehaviour:
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}
+  m_Camera: {fileID: 7290586444352009121}
 --- !u!114 &7577174382562056574
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1783,7 +1802,7 @@ Transform:
   m_GameObject: {fileID: 6774737294069508098}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.777363, z: -0, w: 0.62905234}
-  m_LocalPosition: {x: 178.3201, y: 57.075005, z: -293.83344}
+  m_LocalPosition: {x: 44.726875, y: 42.29015, z: 300.2819}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
