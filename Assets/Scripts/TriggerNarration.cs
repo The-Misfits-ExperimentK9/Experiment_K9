@@ -7,7 +7,6 @@ public class TriggerNarration : MonoBehaviour
     public AudioClip narrationClip; 
     private AudioSource audioSource;
     [SerializeField] private bool onlyPlayOnce = true;
-    [SerializeField] private ActivatablePuzzlePiece puzzlePieceToActivate;
 
     void Start() {
         if (!narrationClip) {
@@ -22,8 +21,6 @@ public class TriggerNarration : MonoBehaviour
     private void Update() {
         if (onlyPlayOnce) {
             if (!audioSource.isPlaying && audioSource.time > 0) {
-                if (puzzlePieceToActivate)
-                    puzzlePieceToActivate.Activate();
                 gameObject.SetActive(false); 
             }
         }
@@ -31,12 +28,7 @@ public class TriggerNarration : MonoBehaviour
 
     void OnTriggerEnter(Collider other) {
         if (other.gameObject.layer == LayerInfo.PLAYER) {
-            if (PlayerBehaviour.Instance.TutorialEnabled)
-                PlayNarration();
-            else {
-                if (puzzlePieceToActivate)
-                    puzzlePieceToActivate.Activate();
-            }
+            PlayNarration();
         }
     }
 
@@ -44,8 +36,5 @@ public class TriggerNarration : MonoBehaviour
         if (!audioSource.isPlaying) {
             audioSource.Play();
         }
-    }
-    public void StopNarration() {
-        audioSource.Stop();
     }
 }
