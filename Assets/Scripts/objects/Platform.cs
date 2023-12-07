@@ -129,12 +129,6 @@ public class Platform : ActivatablePuzzlePiece {
                     GetNextTargetLocation();
                 }
             }
-            //move the platform if not at a destination
-            else {
-
-
-
-            }
         }
     }
     protected virtual bool GotToDestination() {
@@ -158,8 +152,10 @@ public class Platform : ActivatablePuzzlePiece {
         state = PlatformState.Waiting;
         rb.velocity = Vector3.zero;
         yield return new WaitForSeconds(firstLastWaitTime);
-        if (!stop)
+        if (!stop) {
+            //play sound here
             GetNextTargetLocation();
+        }
         yield return null;
     }
 
