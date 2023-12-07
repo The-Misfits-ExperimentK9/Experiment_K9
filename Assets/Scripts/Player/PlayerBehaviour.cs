@@ -96,7 +96,7 @@ public class PlayerBehaviour : MonoBehaviour {
 
         // At the start, the random number the random barking mechanism needs
         // to hit will be randomly generated.
-        randomBarkNumber = Random.Range(1, 2001);
+        randomBarkNumber = Random.Range(1, 20001);
     }
 
     public void SetPaused(bool paused) {
@@ -107,14 +107,14 @@ public class PlayerBehaviour : MonoBehaviour {
     void Update() {
         // Each frame, barkChance will get assigned to a random number between
         // 1 and 2000.
-        barkChance = Random.Range(1, 2001);
+        barkChance = Random.Range(1, 20001);
 
         // Regardless of player input, if barkChance lands on the random number
         // generated, the dog will bark, and the random number gets re-rolled.
         if (barkChance == randomBarkNumber)
         {
             Bark();
-            randomBarkNumber = Random.Range(1, 2001);
+            randomBarkNumber = Random.Range(1, 20001);
         }
 
         if (!paused) {

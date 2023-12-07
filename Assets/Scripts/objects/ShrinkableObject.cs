@@ -59,7 +59,7 @@ public class ShrinkableObject : GrabbableObject {
         if (inAir)
         {
             // If the object hits the ground....
-            if (collision.gameObject.CompareTag("Ground"))
+            if (collision.gameObject.CompareTag("Ground") || collision.gameObject.CompareTag("Default"))
             {
                 // The inAir bool is set to false, first and foremost.
                 inAir = false;
@@ -83,7 +83,7 @@ public class ShrinkableObject : GrabbableObject {
 
     private void OnCollisionExit(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Ground"))
+        if (collision.gameObject.CompareTag("Ground") || collision.gameObject.CompareTag("Default"))
         {
             inAir = true;
         }
