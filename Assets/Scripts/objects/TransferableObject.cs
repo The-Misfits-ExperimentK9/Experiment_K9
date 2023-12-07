@@ -117,10 +117,11 @@ public class TransferableObject : GrabbableObject {
         }
     }
 
-    // This method checks when a dropped object hits the ground.
+    // This method checks when a dropped object touches something.
     private void OnCollisionEnter(Collision collision)
     {
         Rigidbody rb = GetComponent<Rigidbody>();
+        Debug.Log("Collision detected with: " + collision.gameObject.name);
 
         if (inAir)
         {
@@ -135,14 +136,17 @@ public class TransferableObject : GrabbableObject {
             if (rb.velocity.magnitude < 5.0f)
             {
                 PlaySound(lowDrop);
+                Debug.Log("Playing low drop sound.");
             }
             else if (rb.velocity.magnitude >= 5.0f && rb.velocity.magnitude < 10.0f)
             {
                 PlaySound(mediumDrop);
+                Debug.Log("Playing medium drop sound.");
             }
             else
             {
                 PlaySound(highDrop);
+                Debug.Log("Playing high drop sound.");
             }
         }
     }
