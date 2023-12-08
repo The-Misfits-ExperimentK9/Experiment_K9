@@ -165,9 +165,6 @@ MonoBehaviour:
   openNegativeRight: 0
   currentState: 0
   goalState: 0
-  doorOpen: {fileID: 8300000, guid: 4b8fad7c151776e42868255163891617, type: 3}
-  doorClose: {fileID: 8300000, guid: 5fed912198047294a8ba06093b713975, type: 3}
-  audioSource: {fileID: 0}
 --- !u!54 &3601992485981871508
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -502,8 +499,7 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 288963238029891637, guid: cc7781a88adc483428de7d7279fd81bc, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
