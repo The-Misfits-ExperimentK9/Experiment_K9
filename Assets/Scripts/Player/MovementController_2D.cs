@@ -184,7 +184,7 @@ public class MovementController_2D : MonoBehaviour {
 
 
     private void Move() {
-        
+        Debug.LogError(transform.position);
         float targetSpeed = maxSpeed2D;
 
         var input = GetInput();

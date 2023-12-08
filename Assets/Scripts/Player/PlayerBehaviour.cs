@@ -52,8 +52,7 @@ public class PlayerBehaviour : MonoBehaviour {
     [Header("Development")]
     public bool EnableItemSpawning = true;
     public List<GameObject> items = new();
-    public bool TutorialEnabled = true;
-    private KeyControl spawnKey1, spawnKey2, tutorialSkipKey;
+    private KeyControl spawnKey1, spawnKey2;
     private void Start() {
         //set singleton
         if (Instance == null) {
@@ -66,7 +65,6 @@ public class PlayerBehaviour : MonoBehaviour {
         resetKey = Keyboard.current.rKey;
         spawnKey1 = Keyboard.current.digit1Key;
         spawnKey2 = Keyboard.current.digit2Key;
-        tutorialSkipKey = Keyboard.current.f1Key;
         interactRadarGameObject.GetComponent<SphereCollider>().radius = interactDisplayRadius;
 
         //grab the controller scripts from the 3d player object
@@ -85,13 +83,7 @@ public class PlayerBehaviour : MonoBehaviour {
     }
 
     void Update() {
-        if (tutorialSkipKey.wasPressedThisFrame) {
-            TutorialEnabled = false;
-            var triggers = FindObjectsOfType<TriggerNarration>();
-            foreach (var trigger in triggers) {
-                trigger.StopNarration();
-            }
-        }
+
         if (!paused) {
             if (canResetLocation) {
                 HandleResetInput();

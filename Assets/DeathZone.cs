@@ -13,7 +13,7 @@ public class DeathZone : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer == LayerInfo.DEATH && !gameObject.transform.parent.GetComponent<GrabbableObject>().IsBeingHeld)
+        if (other.gameObject.layer == LayerInfo.DEATH)
         {
             gameObject.transform.root.position = player3D.transform.position + (-player3D.transform.forward * 15f);
             Debug.Log("died");
