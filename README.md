@@ -17,7 +17,10 @@ Mike
 <li>Main Menu</li>
 <li>Level Selection system</li>
 <li>Level Reset, quit, main menu while in game</li>
-<li>Additional tutorial messages</li>
+<li>Fully revamped tutorial</li>
+<li>More audio</li>
+<li>Narration in tutorial</li>
+<li>3 new levels</li>
 </ul>
 <h3>Changes</h3>
 <ul>
@@ -25,6 +28,8 @@ Mike
 </ul>
 <h3>Bugfixes</h3> 
 <ul>
+<li> Fixed dog ascending</li>
+<li> Fixed dog teleporting glitch </li>
 <li>Fixed 2d ball disappearing at some angles</li>
 <li>Fixed 2d ball receiver disappearing due to the new shaders</li>
 <li>2d camera changes on wall transfer a less jarring</li>
