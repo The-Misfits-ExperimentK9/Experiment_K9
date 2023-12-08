@@ -17,11 +17,11 @@ public abstract class ReceivableParent : MonoBehaviour {
         {
             audioSource = gameObject.AddComponent<AudioSource>();
         }
-
-        audioSource.clip = audioClip;
     }
 
     public virtual void Activate() {
+        audioSource.clip = audioClip;
+
         IsActivated = true;
         if (glowPath != null)
         {
