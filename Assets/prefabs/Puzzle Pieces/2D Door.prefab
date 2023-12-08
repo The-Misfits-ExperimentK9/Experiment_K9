@@ -124,15 +124,7 @@ MonoBehaviour:
   AllowsDimensionTransition: 0
   IsWalkThroughEnabled: 0
   IsPassthrough: 0
-  RemoveFromWalkChecks: 0
-  IsMovingWall: 0
-  pushForce: 1
-  movingWall: 0
-  waitTime: 10
-  MoveSpeed: 5
-  initialposition: {fileID: 0}
-  targetposition: {fileID: 0}
-  stopThreshold: 0
+  LaunchForce: 10
 --- !u!54 &8233109344985633931
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -305,15 +297,7 @@ MonoBehaviour:
   AllowsDimensionTransition: 0
   IsWalkThroughEnabled: 0
   IsPassthrough: 0
-  RemoveFromWalkChecks: 0
-  IsMovingWall: 0
-  pushForce: 1
-  movingWall: 0
-  waitTime: 10
-  MoveSpeed: 5
-  initialposition: {fileID: 0}
-  targetposition: {fileID: 0}
-  stopThreshold: 0
+  LaunchForce: 10
 --- !u!54 &2475922826319931352
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -412,11 +396,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IsAuto: 1
   IsLocked: 0
+  activator: []
   door: {fileID: 2383890086792011514}
   doorHeight: 15
   doorSpeed: 6
   is2D: 0
   openNegativeRight: 1
+  currentState: 0
+  goalState: 0
+  doorOpen: {fileID: 8300000, guid: 4b8fad7c151776e42868255163891617, type: 3}
+  doorClose: {fileID: 8300000, guid: 5fed912198047294a8ba06093b713975, type: 3}
+  audioSource: {fileID: 0}
 --- !u!65 &253898862585324850
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -562,15 +552,7 @@ MonoBehaviour:
   AllowsDimensionTransition: 0
   IsWalkThroughEnabled: 0
   IsPassthrough: 0
-  RemoveFromWalkChecks: 0
-  IsMovingWall: 0
-  pushForce: 1
-  movingWall: 0
-  waitTime: 10
-  MoveSpeed: 5
-  initialposition: {fileID: 0}
-  targetposition: {fileID: 0}
-  stopThreshold: 0
+  LaunchForce: 10
 --- !u!54 &6761247885935422862
 Rigidbody:
   m_ObjectHideFlags: 0

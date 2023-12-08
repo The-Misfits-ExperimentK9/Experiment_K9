@@ -142,6 +142,9 @@ MonoBehaviour:
   door1EndRotation: {x: 0, y: 90, z: 90}
   door2EndRotation: {x: 180, y: 90, z: 90}
   closeDelay: 1
+  doorOpen: {fileID: 8300000, guid: 36da2d4063033e140b34a6262c05685f, type: 3}
+  doorClose: {fileID: 8300000, guid: 36da2d4063033e140b34a6262c05685f, type: 3}
+  audioSource: {fileID: 0}
 --- !u!1001 &7616353020249971240
 PrefabInstance:
   m_ObjectHideFlags: 0

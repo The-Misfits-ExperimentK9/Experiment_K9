@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ButtonBehaviour : ReceivableParent {
     public bool IsLocked = false;
-    [SerializeField] private List<ActivatablePuzzlePiece> puzzlePieceToActivate;
+    [SerializeField] private ActivatablePuzzlePiece puzzlePieceToActivate;
 
 
 
@@ -23,9 +23,8 @@ public class ButtonBehaviour : ReceivableParent {
     //keeps track of who or what pressed the button to check its mass against minimum required
     [SerializeField] private GameObject presser;
 
-    // Start is called before the first frame update
-    void Awake() {
-
+    private void Awake()
+    {
         rb = GetComponent<Rigidbody>();
     }
 
@@ -80,14 +79,12 @@ public class ButtonBehaviour : ReceivableParent {
     public override void Activate() {
         base.Activate();
         pawMeshRenderer.SetMaterials(pressedMaterials);
-        for (int i = 0; i < puzzlePieceToActivate.Count; i++)
-            puzzlePieceToActivate[i].Activate();
+        puzzlePieceToActivate.Activate();
     }
     //set materials back to unpressed and deactivate the puzzle piece
     public override void Deactivate() {
         pawMeshRenderer.SetMaterials(unPressedMaterials);
-        for (int i = 0; i < puzzlePieceToActivate.Count; i++)
-            puzzlePieceToActivate[i].Deactivate(gameObject);
+        puzzlePieceToActivate.Deactivate(gameObject);
 
         base.Deactivate();
     }
