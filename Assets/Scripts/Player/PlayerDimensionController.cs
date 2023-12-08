@@ -30,6 +30,10 @@ public class PlayerDimensionController : MonoBehaviour {
     [SerializeField] private GameObject Camera2D;
     [SerializeField] private float LockCameraOn3DTranstionTime = 1f;
 
+    [Header("DogTopHatThingy")]
+    [SerializeField] private GameObject dogTopHatThingyOff;
+    [SerializeField] private GameObject dogTopHatThingyOn;
+
     [Header("Launch")]
     [SerializeField] private float playerLeaveWallOffset = 6f;
     // [SerializeField] private float launchForce = 10f;
@@ -163,7 +167,7 @@ public class PlayerDimensionController : MonoBehaviour {
             player2D.transform.forward = directionToWall;
             movementController_2D.GetComponent<Rigidbody>().position = closestPointOnBounds;
             // Debug.Log("after: " + player2D.transform.forward);
-            Debug.Log(dog2DHitbox.transform.rotation);
+          //  Debug.Log(dog2DHitbox.transform.rotation);
             
             
             //Debug.Log(dog2DHitbox.transform.rotation);
@@ -343,7 +347,7 @@ public class PlayerDimensionController : MonoBehaviour {
 
         movementController_2D.GetComponent<Rigidbody>().isKinematic = false;
         movementController_2D.SetCurrentWall(currentProjectionSurface.GetComponent<WallBehaviour>());
-        Debug.Log(player2D.transform.position);
+       // Debug.Log(player2D.transform.position);
         SetWallProjectionToActive();
         PlayerBehaviour.Instance.ChangeDimension();
         player3D.SetActive(false);
@@ -363,6 +367,7 @@ public class PlayerDimensionController : MonoBehaviour {
 
     }
     public void TransitionTo3D() {
+        Debug.Log("Transitioning to 3d");
         VirtualCamera3D.LookAt = player2D.transform;
         VirtualCamera3D.Follow = Camera2D.transform;
         PlayerBehaviour.Instance.thirdPersonController.LockCameraPosition = true;
@@ -423,6 +428,8 @@ public class PlayerDimensionController : MonoBehaviour {
         }
         if (DOGToggleKey.wasPressedThisFrame) {
             DOGEnabled = !DOGEnabled;
+            dogTopHatThingyOff.SetActive(!DOGEnabled);
+            dogTopHatThingyOn.SetActive(DOGEnabled);
             PlayerBehaviour.Instance.interfaceScript.SetDogAutoEnabledText(DOGEnabled);
             if (PlayerBehaviour.Instance.IsIn3D()) {
                 if (IsProjecting) {
@@ -509,7 +516,7 @@ public class PlayerDimensionController : MonoBehaviour {
         }
         //enable the projection on the closest wall
         closest.TryGetComponent(out WallBehaviour wallB);
-        if (closest != null && wallB.AllowsDimensionTransition && IsProjecting) {
+        if (closest != null && wallB.AllowsDimensionTransition) {
             currentProjectionSurface = closest;
             if (IsProjecting) {
                 UpdateProjectionPosition(currentProjectionSurface, closestPointOnBounds);
