@@ -23,7 +23,8 @@ public class TriggerNarration : MonoBehaviour
         if (onlyPlayOnce) {
             if (!audioSource.isPlaying && audioSource.time > 0) {
                 //hide the object
-                puzzlePiece.Activate();
+                if (puzzlePiece)
+                    puzzlePiece.Activate();
                 gameObject.SetActive(false); 
             }
         }
