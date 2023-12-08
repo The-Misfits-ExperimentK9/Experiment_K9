@@ -7,6 +7,7 @@ public class TriggerNarration : MonoBehaviour
     public AudioClip narrationClip; 
     private AudioSource audioSource;
     [SerializeField] private bool onlyPlayOnce = true;
+    [SerializeField] private ActivatablePuzzlePiece puzzlePiece;
 
     void Start() {
         if (!narrationClip) {
@@ -21,6 +22,7 @@ public class TriggerNarration : MonoBehaviour
     private void Update() {
         if (onlyPlayOnce) {
             if (!audioSource.isPlaying && audioSource.time > 0) {
+                puzzlePiece.Activate();
                 gameObject.SetActive(false); 
             }
         }
@@ -39,6 +41,7 @@ public class TriggerNarration : MonoBehaviour
     }
     public void StopNarration() {
         if (audioSource.isPlaying) {
+            puzzlePiece.Activate();
             audioSource.Stop();
         }
     }
