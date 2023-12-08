@@ -152,7 +152,10 @@ public class Platform : ActivatablePuzzlePiece {
             }
             //move the platform if not at a destination
             else {
-                audioSource.Play();
+                if (!audioSource.isPlaying)
+                {
+                    audioSource.Play();
+                }
             }
         }
     }
