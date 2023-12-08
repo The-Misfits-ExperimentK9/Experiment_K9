@@ -55,6 +55,10 @@ public class MovementController_2D : MonoBehaviour {
 
     private Vector3 gizmoDrawLoc, gizmoDrawLoc2;
 
+    [Header("Audio")]
+    [SerializeField] AudioClip jumpSound;
+    [SerializeField] AudioSource audioSource;
+
     public enum ProjectionState {
         OutOfRange,
         HoldingObject,
@@ -95,6 +99,13 @@ public class MovementController_2D : MonoBehaviour {
     void Awake() {
         dogCollider2D = GetComponent<Collider>();
         jumpKey = Keyboard.current.wKey;
+
+        audioSource = GetComponent<AudioSource>();
+
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+        }
     }
     private void Start() {
 
@@ -274,6 +285,9 @@ public class MovementController_2D : MonoBehaviour {
             if (_jumpTimeoutDelta >= 0.0f) {
                 _jumpTimeoutDelta -= Time.deltaTime;
             }
+
+            audioSource.clip = jumpSound;
+            audioSource.Play();
         }
         else {
             // reset the jump timeout timer

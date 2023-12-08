@@ -226,6 +226,8 @@ MonoBehaviour:
   JumpHeight: 10.25
   JumpTimeout: 0.01
   FallTimeout: 0.05
+  jumpSound: {fileID: 8300000, guid: 88b727cbc6ae39544988349b4bec236a, type: 3}
+  audioSource: {fileID: 0}
   projectionState: 0
   sprites:
   - {fileID: 21300000, guid: 2643cbf3a2614bf4fb863e26df2f1921, type: 3}
@@ -720,7 +722,7 @@ Transform:
   m_GameObject: {fileID: 2817393637023723959}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.777363, z: -0, w: 0.62905234}
-  m_LocalPosition: {x: 181.57846, y: 57.075005, z: -293.1385}
+  m_LocalPosition: {x: 196.99838, y: 57.075005, z: -289.84976}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1229,6 +1231,7 @@ MonoBehaviour:
   FootstepAudioClips:
   - {fileID: 8300000, guid: 44c3c8689df93e845a32f103e170d310, type: 3}
   - {fileID: 8300000, guid: 964acb0b00e01f54db248ad35975de13, type: 3}
+  jumpSound: {fileID: 8300000, guid: 88b727cbc6ae39544988349b4bec236a, type: 3}
   audioSource: {fileID: 0}
   FootstepAudioVolume: 0.5
   JumpHeight: 10.75
@@ -1802,7 +1805,7 @@ Transform:
   m_GameObject: {fileID: 6774737294069508098}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.777363, z: -0, w: 0.62905234}
-  m_LocalPosition: {x: 44.726875, y: 42.29015, z: 300.2819}
+  m_LocalPosition: {x: 196.99838, y: 57.075005, z: -289.84976}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

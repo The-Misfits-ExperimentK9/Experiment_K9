@@ -28,8 +28,9 @@ namespace StarterAssets {
         [Tooltip("Acceleration and deceleration")]
         public float SpeedChangeRate = 10.0f;
 
-        public AudioClip LandingAudioClip;
-        public AudioClip[] FootstepAudioClips;
+        [SerializeField] AudioClip LandingAudioClip;
+        [SerializeField] AudioClip[] FootstepAudioClips;
+        [SerializeField] AudioClip jumpSound;
         public AudioSource audioSource;
         [Range(0, 1)] public float FootstepAudioVolume = 0.5f;
 
@@ -133,6 +134,15 @@ namespace StarterAssets {
             if (_mainCamera == null) {
                 _mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
             }
+
+            audioSource = GetComponent<AudioSource>();
+
+            if (audioSource == null)
+            {
+                audioSource = gameObject.AddComponent<AudioSource>();
+            }
+
+            audioSource.volume = 0.5f;
         }
 
         private void Start() {
@@ -344,6 +354,9 @@ namespace StarterAssets {
                 if (_jumpTimeoutDelta >= 0.0f) {
                     _jumpTimeoutDelta -= Time.deltaTime;
                 }
+
+                audioSource.clip = jumpSound;
+                audioSource.Play();
             }
             else {
                 // reset the jump timeout timer
