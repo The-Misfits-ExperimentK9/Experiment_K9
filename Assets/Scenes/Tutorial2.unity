@@ -2039,6 +2039,10 @@ PrefabInstance:
       propertyPath: narrationClip
       value: 
       objectReference: {fileID: 8300000, guid: 84102d14b00ce1f45b60ce31feb98c2e, type: 3}
+    - target: {fileID: 4101351372866791139, guid: 29e8a8480b3c6a24e9f113f6fa1df541, type: 3}
+      propertyPath: puzzlePieceToActivate
+      value: 
+      objectReference: {fileID: 1775272589}
     - target: {fileID: 7539780167896001764, guid: 29e8a8480b3c6a24e9f113f6fa1df541, type: 3}
       propertyPath: m_LocalScale.z
       value: 59.916683
@@ -14040,6 +14044,10 @@ PrefabInstance:
       value: Door
       objectReference: {fileID: 0}
     - target: {fileID: 4835048637079389831, guid: 661267eb891b5904580f830d0297da52, type: 3}
+      propertyPath: IsAuto
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4835048637079389831, guid: 661267eb891b5904580f830d0297da52, type: 3}
       propertyPath: currentState
       value: 1
       objectReference: {fileID: 0}
@@ -14088,6 +14096,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 661267eb891b5904580f830d0297da52, type: 3}
+--- !u!114 &1775272589 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4835048637079389831, guid: 661267eb891b5904580f830d0297da52, type: 3}
+  m_PrefabInstance: {fileID: 1775272588}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c70814509f202dc47852c0197e386218, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1785910015
 GameObject:
   m_ObjectHideFlags: 0
