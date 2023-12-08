@@ -56,6 +56,11 @@ MonoBehaviour:
   spriteRenderer2D: {fileID: 0}
   objectDrawOffset: 4
   sphere: {fileID: 0}
+  inAir: 0
+  lowDrop: {fileID: 8300000, guid: 5d38832ba9f80f24f97a1d4d139cdd00, type: 3}
+  mediumDrop: {fileID: 8300000, guid: 84de1e9fc56300041a5d490c093b32db, type: 3}
+  highDrop: {fileID: 8300000, guid: 2198e1c084a25ad4692f29b7a9ae3606, type: 3}
+  audioSource: {fileID: 0}
 --- !u!1 &3426124303402463909
 GameObject:
   m_ObjectHideFlags: 0
