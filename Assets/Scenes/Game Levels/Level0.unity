@@ -6010,6 +6010,10 @@ PrefabInstance:
       propertyPath: glowPath.Array.data[0]
       value: 
       objectReference: {fileID: 1803570357}
+    - target: {fileID: 55013569138097356, guid: 93719739f4fb3fd4cb4a98f97441f21d, type: 3}
+      propertyPath: puzzlePieceToActivate.Array.data[0]
+      value: 
+      objectReference: {fileID: 1707799148}
     - target: {fileID: 1236909505349986478, guid: 93719739f4fb3fd4cb4a98f97441f21d, type: 3}
       propertyPath: m_LocalScale.x
       value: 1.3
