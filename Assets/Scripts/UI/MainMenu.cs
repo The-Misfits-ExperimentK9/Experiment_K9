@@ -13,10 +13,11 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private GameObject levelSelectAnchor;
     [SerializeField] private GameObject levelSelectButtonPrefab;
     [SerializeField] private Button[] levelButtons;
+    private float buttonHeight = 100;
     private Button selectedButton;
     // Start is called before the first frame update
     void Start()
-    {
+    {   
         levelButtons = new Button[levelManager.levelNames.Count];
         for (int x = 0;x < levelManager.levelNames.Count; x++) {
             CreateLevelButton(x);
@@ -24,8 +25,13 @@ public class MainMenu : MonoBehaviour
     }
     void CreateLevelButton(int index) {
         var button = Instantiate(levelSelectButtonPrefab, levelSelectAnchor.transform).GetComponent<Button>();
+        var buttonTransform = button.GetComponent<RectTransform>();
+        
         button.GetComponentInChildren<TextMeshProUGUI>().text = levelManager.levelNames[index];
-        button.transform.position = new Vector3(levelSelectAnchor.transform.position.x, levelSelectAnchor.transform.position.y - (index * 100), levelSelectAnchor.transform.position.z);
+        buttonTransform.anchoredPosition = Vector2.zero;
+        if (index != 0) {
+            buttonTransform.anchoredPosition = new Vector2(0, -buttonHeight * index);
+        }
         button.onClick.AddListener(SetLoadIndex);
         levelButtons[index] = button;
         

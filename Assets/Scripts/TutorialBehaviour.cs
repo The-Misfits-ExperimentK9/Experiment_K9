@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class TutorialBehaviour : MonoBehaviour {
     List<LevelStateTrigger> activatedTriggers = new();
-    [SerializeField] private bool tutorialEnabled = true;
+  //  [SerializeField] private bool tutorialEnabled = true;
     [SerializeField] private PressButtonBehaviour spawnCubeButton;
     [SerializeField] private BallReceiver_2D ballReceiver2D;
     int index = -1;
@@ -13,7 +13,7 @@ public class TutorialBehaviour : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        if (tutorialEnabled) {
+        if (PlayerBehaviour.Instance.TutorialEnabled) {
             switch (index) {
                 case 0:
                     HandleFirstTrigger();   //turn on DOG message
@@ -44,7 +44,7 @@ public class TutorialBehaviour : MonoBehaviour {
         }
     }
     public void SetState(LevelStateTrigger trigger, int index) {
-        if (!tutorialEnabled) return;
+        if (!PlayerBehaviour.Instance.TutorialEnabled) return;
         if (activatedTriggers.Contains(trigger)) return;
         PlayerBehaviour.Instance.interfaceScript.DisableActiveTutorials();  //never show more than 1 tutorial message at a time
         activatedTriggers.Add(trigger);
@@ -52,7 +52,7 @@ public class TutorialBehaviour : MonoBehaviour {
         PlayerBehaviour.Instance.interfaceScript.DisplayTutorialMessageByIndex(index);
     }
     public void AdvanceState(LevelStateTrigger trigger) {
-        if (!tutorialEnabled) return;
+        if (!PlayerBehaviour.Instance.TutorialEnabled) return;
         if (activatedTriggers.Contains(trigger)) return;                    //never show the same tutorial message twice
 
         PlayerBehaviour.Instance.interfaceScript.DisableActiveTutorials();  //never show more than 1 tutorial message at a time
