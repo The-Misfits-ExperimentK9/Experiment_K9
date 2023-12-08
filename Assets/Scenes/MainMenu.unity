@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1797,7 +1797,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8461153429568851589, guid: a569eedfebd026d4ca7f18f1f7878876, type: 3}
       propertyPath: levelNames.Array.size
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8461153429568851589, guid: a569eedfebd026d4ca7f18f1f7878876, type: 3}
       propertyPath: levelNames.Array.data[0]
@@ -1805,19 +1805,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8461153429568851589, guid: a569eedfebd026d4ca7f18f1f7878876, type: 3}
       propertyPath: levelNames.Array.data[1]
-      value: Level0
+      value: MissMyBall
       objectReference: {fileID: 0}
     - target: {fileID: 8461153429568851589, guid: a569eedfebd026d4ca7f18f1f7878876, type: 3}
       propertyPath: levelNames.Array.data[2]
-      value: Jolieslevel
+      value: ObstacleAvoidance
       objectReference: {fileID: 0}
     - target: {fileID: 8461153429568851589, guid: a569eedfebd026d4ca7f18f1f7878876, type: 3}
       propertyPath: levelNames.Array.data[3]
-      value: JohnLevel
+      value: MovingAndGrooving
       objectReference: {fileID: 0}
     - target: {fileID: 8461153429568851589, guid: a569eedfebd026d4ca7f18f1f7878876, type: 3}
       propertyPath: levelNames.Array.data[4]
-      value: Death and Bounces
+      value: Yeet
       objectReference: {fileID: 0}
     - target: {fileID: 8461153429568851589, guid: a569eedfebd026d4ca7f18f1f7878876, type: 3}
       propertyPath: levelNames.Array.data[5]
