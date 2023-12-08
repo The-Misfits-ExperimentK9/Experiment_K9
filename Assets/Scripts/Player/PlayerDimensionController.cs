@@ -516,7 +516,7 @@ public class PlayerDimensionController : MonoBehaviour {
         }
         //enable the projection on the closest wall
         closest.TryGetComponent(out WallBehaviour wallB);
-        if (closest != null && wallB.AllowsDimensionTransition && IsProjecting) {
+        if (closest != null && wallB.AllowsDimensionTransition) {
             currentProjectionSurface = closest;
             if (IsProjecting) {
                 UpdateProjectionPosition(currentProjectionSurface, closestPointOnBounds);
