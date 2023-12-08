@@ -37,4 +37,9 @@ public class TriggerNarration : MonoBehaviour
             audioSource.Play();
         }
     }
+    public void StopNarration() {
+        if (audioSource.isPlaying) {
+            audioSource.Stop();
+        }
+    }
 }
