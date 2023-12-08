@@ -30,6 +30,10 @@ public class PlayerDimensionController : MonoBehaviour {
     [SerializeField] private GameObject Camera2D;
     [SerializeField] private float LockCameraOn3DTranstionTime = 1f;
 
+    [Header("DogTopHatThingy")]
+    [SerializeField] private GameObject dogTopHatThingyOff;
+    [SerializeField] private GameObject dogTopHatThingyOn;
+
     [Header("Launch")]
     [SerializeField] private float playerLeaveWallOffset = 6f;
     // [SerializeField] private float launchForce = 10f;
@@ -423,6 +427,8 @@ public class PlayerDimensionController : MonoBehaviour {
         }
         if (DOGToggleKey.wasPressedThisFrame) {
             DOGEnabled = !DOGEnabled;
+            dogTopHatThingyOff.SetActive(!DOGEnabled);
+            dogTopHatThingyOn.SetActive(DOGEnabled);
             PlayerBehaviour.Instance.interfaceScript.SetDogAutoEnabledText(DOGEnabled);
             if (PlayerBehaviour.Instance.IsIn3D()) {
                 if (IsProjecting) {
