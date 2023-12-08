@@ -719,8 +719,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2817393637023723959}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.045218114, z: -0, w: 0.9989771}
-  m_LocalPosition: {x: 196.99838, y: 57.075005, z: -289.84976}
+  m_LocalRotation: {x: -0, y: -0.777363, z: -0, w: 0.62905234}
+  m_LocalPosition: {x: 177.72015, y: 57.075005, z: -293.9614}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1904,7 +1904,7 @@ Transform:
   m_GameObject: {fileID: 6774737294069508098}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.777363, z: -0, w: 0.62905234}
-  m_LocalPosition: {x: 196.99838, y: 57.075005, z: -289.84976}
+  m_LocalPosition: {x: 175.23688, y: 2.090148, z: -200.21986}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2573,6 +2573,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PickupItemMessage
       objectReference: {fileID: 0}
+    - target: {fileID: 1956477793910376349, guid: e70ebb95f1603a347ade9fb1bb0c3501, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -270
+      objectReference: {fileID: 0}
     - target: {fileID: 2442990236094769608, guid: e70ebb95f1603a347ade9fb1bb0c3501, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -2584,6 +2588,22 @@ PrefabInstance:
     - target: {fileID: 2606557874445328026, guid: e70ebb95f1603a347ade9fb1bb0c3501, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2729296730961578212, guid: e70ebb95f1603a347ade9fb1bb0c3501, type: 3}
+      propertyPath: m_fontColor.b
+      value: 0.23584908
+      objectReference: {fileID: 0}
+    - target: {fileID: 2729296730961578212, guid: e70ebb95f1603a347ade9fb1bb0c3501, type: 3}
+      propertyPath: m_fontColor.g
+      value: 0.23584908
+      objectReference: {fileID: 0}
+    - target: {fileID: 2729296730961578212, guid: e70ebb95f1603a347ade9fb1bb0c3501, type: 3}
+      propertyPath: m_fontColor.r
+      value: 0.23584908
+      objectReference: {fileID: 0}
+    - target: {fileID: 2729296730961578212, guid: e70ebb95f1603a347ade9fb1bb0c3501, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4282137660
       objectReference: {fileID: 0}
     - target: {fileID: 3483556439460823307, guid: e70ebb95f1603a347ade9fb1bb0c3501, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2628,6 +2648,34 @@ PrefabInstance:
     - target: {fileID: 3917131449379972070, guid: e70ebb95f1603a347ade9fb1bb0c3501, type: 3}
       propertyPath: m_Name
       value: LeaveWallMessage
+      objectReference: {fileID: 0}
+    - target: {fileID: 4409317026006806257, guid: e70ebb95f1603a347ade9fb1bb0c3501, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 60662aec89d79d040b977512145696be, type: 3}
+    - target: {fileID: 4409317026006806257, guid: e70ebb95f1603a347ade9fb1bb0c3501, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4409317026006806257, guid: e70ebb95f1603a347ade9fb1bb0c3501, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4409317026006806257, guid: e70ebb95f1603a347ade9fb1bb0c3501, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4865176066520482270, guid: e70ebb95f1603a347ade9fb1bb0c3501, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6410635120155558242, guid: e70ebb95f1603a347ade9fb1bb0c3501, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -809
+      objectReference: {fileID: 0}
+    - target: {fileID: 6410635120155558242, guid: e70ebb95f1603a347ade9fb1bb0c3501, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6768711235060410883, guid: e70ebb95f1603a347ade9fb1bb0c3501, type: 3}
       propertyPath: m_IsActive
@@ -2762,6 +2810,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 3973961944444345345}
     - target: {fileID: 8735395586250520716, guid: e70ebb95f1603a347ade9fb1bb0c3501, type: 3}
+      propertyPath: leaveWallPrompt
+      value: 
+      objectReference: {fileID: 5973284690811585828}
+    - target: {fileID: 8735395586250520716, guid: e70ebb95f1603a347ade9fb1bb0c3501, type: 3}
       propertyPath: tutorialMessages.Array.size
       value: 7
       objectReference: {fileID: 0}
@@ -2781,6 +2833,18 @@ PrefabInstance:
       propertyPath: tutorialMessages.Array.data[5]
       value: 
       objectReference: {fileID: 7224596564331345846}
+    - target: {fileID: 8873445615001857307, guid: e70ebb95f1603a347ade9fb1bb0c3501, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.9987786
+      objectReference: {fileID: 0}
+    - target: {fileID: 8873445615001857307, guid: e70ebb95f1603a347ade9fb1bb0c3501, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.28503513
+      objectReference: {fileID: 0}
+    - target: {fileID: 8873445615001857307, guid: e70ebb95f1603a347ade9fb1bb0c3501, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -270
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -2800,6 +2864,11 @@ GameObject:
 --- !u!1 &2827626495243511580 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3917131449379972070, guid: e70ebb95f1603a347ade9fb1bb0c3501, type: 3}
+  m_PrefabInstance: {fileID: 1252507692681200890}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5973284690811585828 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4865176066520482270, guid: e70ebb95f1603a347ade9fb1bb0c3501, type: 3}
   m_PrefabInstance: {fileID: 1252507692681200890}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &7224596564331345846 stripped

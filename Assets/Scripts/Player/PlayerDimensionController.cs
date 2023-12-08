@@ -345,6 +345,7 @@ public class PlayerDimensionController : MonoBehaviour {
 
     private void TransitionTo2D() {
 
+        PlayerBehaviour.Instance.interfaceScript.ToggleWallPrompt();
         movementController_2D.GetComponent<Rigidbody>().isKinematic = false;
         movementController_2D.SetCurrentWall(currentProjectionSurface.GetComponent<WallBehaviour>());
        // Debug.Log(player2D.transform.position);
@@ -377,6 +378,7 @@ public class PlayerDimensionController : MonoBehaviour {
         Physics.IgnoreLayerCollision(LayerInfo.PLAYER, LayerInfo.INTERACTABLE_OBJECT, false);
     }
     private void MovePlayerOutOfWall(Vector3 newPos) {
+        PlayerBehaviour.Instance.interfaceScript.ToggleWallPrompt();
         player2D.SetActive(false);
         PlayerBehaviour.Instance.pickupController.ClearList();
         ClearSurfaces();
