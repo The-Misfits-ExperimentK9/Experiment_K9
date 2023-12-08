@@ -5480,6 +5480,10 @@ PrefabInstance:
       propertyPath: VirtualCamera3D
       value: 
       objectReference: {fileID: 391627030}
+    - target: {fileID: 5973284690811585828, guid: 10b144c380968504d935c9e3949f6f80, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6106370532408573120, guid: 10b144c380968504d935c9e3949f6f80, type: 3}
       propertyPath: m_LocalPosition.x
       value: 269.80002
