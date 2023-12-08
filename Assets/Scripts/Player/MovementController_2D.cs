@@ -111,7 +111,7 @@ public class MovementController_2D : MonoBehaviour {
             }
             //Move2D();
             if (currentWall.AllowsDimensionTransition && !PlayerBehaviour.Instance.playerDimensionController.DOGEnabled) {
-                PlayerBehaviour.Instance.playerDimensionController.TransitionTo3D();
+               // PlayerBehaviour.Instance.playerDimensionController.TransitionTo3D();
             }
         }
         else {
