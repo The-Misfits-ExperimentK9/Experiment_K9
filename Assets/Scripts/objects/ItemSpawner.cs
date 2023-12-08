@@ -4,8 +4,8 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class ItemSpawner : ActivatablePuzzlePiece {
-    [SerializeField] private GameObject itemToSpawn;
-    [SerializeField] private GameObject spawnedObject;
+    [SerializeField] protected GameObject itemToSpawn;
+    [SerializeField] protected GameObject spawnedObject;
     public override void Activate() {
         SpawnItem();
     }
@@ -14,18 +14,16 @@ public class ItemSpawner : ActivatablePuzzlePiece {
         //do nothing
     }
 
-
-    void SpawnItem() {
+    protected virtual void SpawnItem() {
         if (spawnedObject != null) {
             Destroy(spawnedObject);
         }
         spawnedObject = Instantiate(itemToSpawn, transform.position, Quaternion.identity);
     }
+
     private void OnTriggerExit(Collider other) {
         if (spawnedObject && other.gameObject == spawnedObject) {
             SpawnItem();
-
         }
     }
-
 }

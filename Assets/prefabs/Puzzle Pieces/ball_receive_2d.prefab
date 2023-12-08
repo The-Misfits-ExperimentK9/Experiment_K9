@@ -157,6 +157,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   glowPath: {fileID: 0}
+  audioClip: {fileID: 8300000, guid: c2e8f95b0be5d9443ad4b3b8eb4c461c, type: 3}
   audioSource: {fileID: 0}
   outsideOff: {fileID: 8094651229222769077}
   outsideOn: {fileID: 7958001866761031471}

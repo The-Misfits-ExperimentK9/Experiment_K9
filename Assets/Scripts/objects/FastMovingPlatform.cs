@@ -5,6 +5,7 @@ using UnityEngine;
 public class FastMovingPlatform : Platform
 {
     bool movingUp = true;
+
     protected override bool GotToDestination() {
         return movingUp ? transform.position.y >= currentTravelTarget.y : transform.position.y <= currentTravelTarget.y;
 
