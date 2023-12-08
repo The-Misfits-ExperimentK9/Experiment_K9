@@ -275,6 +275,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 25888a0ace8ba174fa3f1547bf60defa, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 64d2cd3f60a9e254496727becde9389d, type: 2}
     - target: {fileID: 919132149155446097, guid: 25888a0ace8ba174fa3f1547bf60defa, type: 3}
       propertyPath: m_Name
       value: sphere
