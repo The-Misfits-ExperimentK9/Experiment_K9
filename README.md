@@ -17,7 +17,10 @@ Mike
 <li>Main Menu</li>
 <li>Level Selection system</li>
 <li>Level Reset, quit, main menu while in game</li>
-<li>Additional tutorial messages</li>
+<li>Fully revamped tutorial</li>
+<li>More audio</li>
+<li>Narration in tutorial</li>
+<li>3 new levels</li>
 </ul>
 <h3>Changes</h3>
 <ul>
