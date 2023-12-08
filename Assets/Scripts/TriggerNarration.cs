@@ -22,6 +22,7 @@ public class TriggerNarration : MonoBehaviour
     private void Update() {
         if (onlyPlayOnce) {
             if (!audioSource.isPlaying && audioSource.time > 0) {
+                //hide the object
                 puzzlePiece.Activate();
                 gameObject.SetActive(false); 
             }
@@ -35,6 +36,7 @@ public class TriggerNarration : MonoBehaviour
     }
 
     private void PlayNarration() {
+        //show the object
         if (!audioSource.isPlaying) {
             audioSource.Play();
         }
