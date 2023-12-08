@@ -31,7 +31,12 @@ public class TriggerNarration : MonoBehaviour
 
     void OnTriggerEnter(Collider other) {
         if (other.gameObject.layer == LayerInfo.PLAYER) {
-            PlayNarration();
+            if (PlayerBehaviour.Instance.TutorialEnabled)
+                PlayNarration();
+            else {
+                if (puzzlePieceToActivate)
+                    puzzlePieceToActivate.Activate();
+            }
         }
     }
 
@@ -39,5 +44,8 @@ public class TriggerNarration : MonoBehaviour
         if (!audioSource.isPlaying) {
             audioSource.Play();
         }
+    }
+    public void StopNarration() {
+        audioSource.Stop();
     }
 }
