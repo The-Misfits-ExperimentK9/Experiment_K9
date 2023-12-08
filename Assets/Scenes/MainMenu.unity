@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1797,7 +1797,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8461153429568851589, guid: a569eedfebd026d4ca7f18f1f7878876, type: 3}
       propertyPath: levelNames.Array.size
-      value: 8
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8461153429568851589, guid: a569eedfebd026d4ca7f18f1f7878876, type: 3}
       propertyPath: levelNames.Array.data[0]
@@ -1809,23 +1809,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8461153429568851589, guid: a569eedfebd026d4ca7f18f1f7878876, type: 3}
       propertyPath: levelNames.Array.data[2]
-      value: JohnLevel
+      value: Jolieslevel
       objectReference: {fileID: 0}
     - target: {fileID: 8461153429568851589, guid: a569eedfebd026d4ca7f18f1f7878876, type: 3}
       propertyPath: levelNames.Array.data[3]
+      value: JohnLevel
+      objectReference: {fileID: 0}
+    - target: {fileID: 8461153429568851589, guid: a569eedfebd026d4ca7f18f1f7878876, type: 3}
+      propertyPath: levelNames.Array.data[4]
       value: Death and Bounces
       objectReference: {fileID: 0}
     - target: {fileID: 8461153429568851589, guid: a569eedfebd026d4ca7f18f1f7878876, type: 3}
       propertyPath: levelNames.Array.data[5]
-      value: Jolieslevel
+      value: Level1
       objectReference: {fileID: 0}
     - target: {fileID: 8461153429568851589, guid: a569eedfebd026d4ca7f18f1f7878876, type: 3}
       propertyPath: levelNames.Array.data[6]
-      value: BigLevel
+      value: MazeLevel
       objectReference: {fileID: 0}
     - target: {fileID: 8461153429568851589, guid: a569eedfebd026d4ca7f18f1f7878876, type: 3}
       propertyPath: levelNames.Array.data[7]
       value: MazeLevel
+      objectReference: {fileID: 0}
+    - target: {fileID: 8461153429568851589, guid: a569eedfebd026d4ca7f18f1f7878876, type: 3}
+      propertyPath: levelNames.Array.data[8]
+      value: Tutorial
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

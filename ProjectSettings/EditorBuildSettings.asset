@@ -18,7 +18,7 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: 56792a9f35f5eaa4996c10a09952826e
   - enabled: 1
-    path: Assets/Scenes/Tutorial2.unity
+    path: Assets/Scenes/Tutorial.unity
     guid: ac5e354f4d982d2429658091bcc7a91f
   - enabled: 1
     path: Assets/Scenes/Game Levels/Level0.unity
@@ -35,10 +35,10 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Game Levels/Level1.unity
     guid: 726afafd6b26ea44d955239506bb2372
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/BigLevel.unity
     guid: b1cb48ce6fd903443a485afa2dca33de
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/MazeLevel.unity
     guid: b7dda9076a4337645b9425ce9ae387eb
   - enabled: 1
