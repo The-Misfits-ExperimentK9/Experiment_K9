@@ -21,16 +21,16 @@ EditorBuildSettings:
     path: Assets/Scenes/Game Levels/Tutorial.unity
     guid: ac5e354f4d982d2429658091bcc7a91f
   - enabled: 1
-    path: Assets/Scenes/Game Levels/Level0.unity
+    path: Assets/Scenes/Game Levels/MissMyBall.unity
     guid: 07b7dd0b3debffa4d829da4cb1e5e5d7
   - enabled: 1
     path: Assets/Scenes/Game Levels/Jolieslevel.unity
     guid: 1f674399319809e4487900c2611692bf
   - enabled: 1
-    path: Assets/Scenes/Game Levels/JohnLevel.unity
+    path: Assets/Scenes/Game Levels/MovingAndGrooving.unity
     guid: 7915b0f649b05cf488873cfb314cd746
   - enabled: 1
-    path: Assets/Scenes/Game Levels/Death and Bounces.unity
+    path: Assets/Scenes/Game Levels/Bouncy.unity
     guid: 0d559577f8f0523439b87cda69634429
   - enabled: 0
     path: Assets/Scenes/Level1.unity
