@@ -453,6 +453,7 @@ public class MovementController_2D : MonoBehaviour {
 
     private void UpdateWallStatus() {
         if (CheckIfInCurrentWall()) {
+
             //do nothing still in the wall
         }
         else {

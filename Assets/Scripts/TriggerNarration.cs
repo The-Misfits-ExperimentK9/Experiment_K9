@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -40,8 +41,10 @@ public class TriggerNarration : MonoBehaviour
                 {
                     canvases[x].SetActive(false);
                 }
-                gameObject.SetActive(false);
+                Debug.Log("Narration finished");
                 if (puzzlePiece != null) puzzlePiece.Activate();
+                gameObject.SetActive(false);
+                
             }
         }
 
@@ -67,7 +70,7 @@ public class TriggerNarration : MonoBehaviour
     void OnTriggerEnter(Collider other) {
         if (other.gameObject.layer == LayerInfo.PLAYER) {
             PlayNarration();
-            canvases[0].SetActive(true);
+            
         }
     }
 
@@ -80,5 +83,7 @@ public class TriggerNarration : MonoBehaviour
     public void StopNarration()
     {
         audioSource.Stop();
+        if (puzzlePiece != null) puzzlePiece.Activate();
+        gameObject.SetActive(false);
     }
 }

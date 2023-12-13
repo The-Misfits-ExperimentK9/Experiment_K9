@@ -3952,7 +3952,7 @@ GameObject:
   - component: {fileID: 540667181}
   m_Layer: 0
   m_Name: TutorialBehavior2
-  m_TagString: Untagged
+  m_TagString: TutorialBehaviour
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -14073,8 +14073,12 @@ PrefabInstance:
       value: Door
       objectReference: {fileID: 0}
     - target: {fileID: 4835048637079389831, guid: 661267eb891b5904580f830d0297da52, type: 3}
-      propertyPath: currentState
+      propertyPath: IsAuto
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4835048637079389831, guid: 661267eb891b5904580f830d0297da52, type: 3}
+      propertyPath: currentState
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7958814969306850961, guid: 661267eb891b5904580f830d0297da52, type: 3}
       propertyPath: m_LocalPosition.x

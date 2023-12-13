@@ -4184,7 +4184,7 @@ GameObject:
   - component: {fileID: 540667181}
   m_Layer: 0
   m_Name: TutorialBehavior2
-  m_TagString: Untagged
+  m_TagString: TutorialBehaviour
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
