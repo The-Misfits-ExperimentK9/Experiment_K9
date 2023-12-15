@@ -8,6 +8,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -383949895657087872, guid: 661267eb891b5904580f830d0297da52, type: 3}
+      propertyPath: m_Volume
+      value: 0.75
+      objectReference: {fileID: 0}
     - target: {fileID: 1137512628395776315, guid: 661267eb891b5904580f830d0297da52, type: 3}
       propertyPath: m_Name
       value: Multi_Key_Door
