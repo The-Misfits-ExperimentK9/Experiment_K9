@@ -79,6 +79,7 @@ public class PlayerDimensionController : MonoBehaviour {
     }
     private void HandlePauseInput() {
         if (pauseKey.wasPressedThisFrame) {
+            Debug.Log("paused: " + paused);
             paused = !paused;
 
             PlayerBehaviour.Instance.SetPaused(paused);
