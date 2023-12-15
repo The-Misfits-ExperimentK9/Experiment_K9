@@ -93,10 +93,7 @@ public class MovementController_2D : MonoBehaviour {
                 Move();
             }
             //Move2D();
-            if (currentWall.AllowsDimensionTransition && !PlayerBehaviour.Instance.playerDimensionController.DOGEnabled) {
-                // PlayerBehaviour.Instance.playerDimensionController.TransitionTo3D();
-                PlayerBehaviour.Instance.playerDimensionController.TransitionTo3D();
-            }
+            
         }
         else {
             //HandleWallCollision
@@ -363,37 +360,7 @@ public class MovementController_2D : MonoBehaviour {
     }
     #endregion
 
-    #region Custom Collision for if the player is within the wall bounds
-    private void AABBCheckForWallLeaving() {
-        if (!IsWithinAllowedWallBounds()) {
-            HandleWallExit();
-        }
-    }
-    private bool IsWithinAllowedWallBounds() {
-        var wallBounds = currentWallCollider.bounds;
-        var playerBounds = dogCollider2D.bounds;
-        // Check the direction of transform.right to determine which bounds to check
-        if (Mathf.Abs(transform.right.x) > Mathf.Abs(transform.right.z)) {
-            // Movement in X and Y directions
-            return IsWithinBounds(wallBounds, playerBounds, checkX: true, checkY: true, checkZ: false);
-        }
-        else {
-            // Movement in Z and Y directions
-            return IsWithinBounds(wallBounds, playerBounds, checkX: false, checkY: true, checkZ: true);
-        }
-    }
-    private bool IsWithinBounds(Bounds wallBounds, Bounds playerBounds, bool checkX, bool checkY, bool checkZ) {
-        // Check each axis individually based on the boolean flags
-        bool withinX = !checkX || (playerBounds.min.x >= wallBounds.min.x && playerBounds.max.x <= wallBounds.max.x);
-        bool withinY = !checkY || (playerBounds.min.y >= wallBounds.min.y && playerBounds.max.y <= wallBounds.max.y);
-        bool withinZ = !checkZ || (playerBounds.min.z >= wallBounds.min.z && playerBounds.max.z <= wallBounds.max.z);
-        return withinX && withinY && withinZ;
-    }
-    private void HandleWallExit() {
-        // Handle the wall exit logic here
-        Debug.Log("Exited wall bounds");
-    }
-    #endregion
+    
     #region checking if in current wall
     private void UpdateWallStatus() {
         if (CheckIfInCurrentWall()) {
