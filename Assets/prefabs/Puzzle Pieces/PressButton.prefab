@@ -131,6 +131,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   glowPath: {fileID: 0}
+  audioClip: {fileID: 8300000, guid: 71feac249fe097444be9465ad6137306, type: 3}
   audioSource: {fileID: 5370045519988057116}
   activatablePuzzlePiece: {fileID: 0}
   button: {fileID: 7176115529648052997}
@@ -190,7 +191,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0

@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem.XR;
-
-public class Platform : ActivatablePuzzlePiece {
-
+public class Platform : ActivatablePuzzlePiece
+{
     public List<Vector3> travelLocations;
     public float platformMovementSpeed = 5f;
     public float firstLastWaitTime = 2.0f;
-
     [SerializeField] GameObject player;
     protected Rigidbody playerRb;
     protected Rigidbody rb;
@@ -20,36 +18,47 @@ public class Platform : ActivatablePuzzlePiece {
     protected float distanceToCheck = .1f;
     [SerializeField] private bool unlocked = false;
     protected bool movementStarted = false;
-
     [SerializeField] private bool unlockedByPlayerCollision = true;
-
     [SerializeField] private bool stay = false;
-
     private bool pause = false;
     //   [SerializeField] private bool dontMoveWithoutPlayer = true;
-
     protected Vector3 currentTravelTarget;
-
     protected Vector3 lastPos, firstPos;
-    public enum PlatformState {
+    public enum PlatformState
+    {
         Waiting,
         Moving,
     }
     [SerializeField] protected PlatformState state;
-
-    protected void Start() {
-        if (travelLocations == null || travelLocations.Count < 2) {
+    [SerializeField] AudioClip startMoving;
+    [SerializeField] AudioClip moving;
+    [SerializeField] AudioClip stopMoving;
+    [SerializeField] private AudioSource audioSource;
+    private void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+        }
+    }
+    protected void Start()
+    {
+        if (travelLocations == null || travelLocations.Count < 2)
+        {
             Debug.LogWarning("Insufficient travel locations provided.");
             return;
         }
-        else {
+        else
+        {
             lastPos = travelLocations[^1];
             firstPos = travelLocations[0];
         }
         state = PlatformState.Waiting;
         rb = GetComponent<Rigidbody>();
     }
-    public override void Activate() {
+    public override void Activate()
+    {
         if (stay)
         {
             pause = true;
@@ -60,8 +69,8 @@ public class Platform : ActivatablePuzzlePiece {
         if (!unlockedByPlayerCollision)
             StartCoroutine(WaitThenMove(false));
     }
-
-    public override void Deactivate(GameObject caller) {
+    public override void Deactivate(GameObject caller)
+    {
         unlocked = false;
         pause = false;
         if (stay)
@@ -72,70 +81,89 @@ public class Platform : ActivatablePuzzlePiece {
             StartCoroutine(WaitThenMove(false));
         }
     }
-
-    protected void FixedUpdate() {
-        if (travelLocations == null || travelLocations.Count < 2) {
+    protected void FixedUpdate()
+    {
+        if (travelLocations == null || travelLocations.Count < 2)
+        {
             Debug.LogWarning("Insufficient travel locations provided.");
             return;
         }
-
         MovePlatform();
-
-
     }
-
-    public void StartMoving() {
-        if (unlocked) {
-            GetNextTargetLocation();
+    public IEnumerator StartMoving()
+    {
+        if (unlocked)
+        {
+            audioSource.clip = startMoving;
+            audioSource.Play();
+            while (audioSource.isPlaying)
+            {
+                yield return null;
+            }
+                GetNextTargetLocation();
+            }
         }
-
-    }
-
-    protected void MovePlatform() {
-        if (playerRb) {
-            playerRb.velocity = rb.velocity;
-        }
-        //if the platform is moving
-        if (state == PlatformState.Moving) {
-            // var targetPosition = travelLocations[currentTargetIndex];
-            //check how close it is to the target
-            //reached a destination
-            if (GotToDestination()) {
-                if (pause)
+        protected void MovePlatform()
+        {
+            if (playerRb)
+            {
+                playerRb.velocity = rb.velocity;
+            }
+            //if the platform is moving
+            if (state == PlatformState.Moving)
+            {
+                // var targetPosition = travelLocations[currentTargetIndex];
+                //check how close it is to the target
+                //reached a destination
+                if (GotToDestination())
                 {
-                    //currentTargetIndex = 0;
-                    //state = PlatformState.Waiting;
-                    StartCoroutine(WaitThenMove(true));
-                    return;
-                }
-                //end pos
-                if (Vector3.Distance(currentTravelTarget, lastPos) < .1f) {
-                    StartCoroutine(WaitThenMove(false));
-                    isMovingForward = false;
-                    currentTargetIndex--;
-                }
-                //start pos
-                else if (Vector3.Distance(currentTravelTarget, firstPos) < .1f) {
-                    StartCoroutine(WaitThenMove(false));
-                    isMovingForward = true;
-                    currentTargetIndex++;
-                }
-                //middle point
-                else {
-                    if (isMovingForward)
-                        currentTargetIndex++;
-                    else
+                    if (pause)
+                    {
+                        //currentTargetIndex = 0;
+                        //state = PlatformState.Waiting;
+                        StartCoroutine(WaitThenMove(true));
+                        return;
+                    }
+                    //end pos
+                    if (Vector3.Distance(currentTravelTarget, lastPos) < .1f)
+                    {
+                        StartCoroutine(WaitThenMove(false));
+                        isMovingForward = false;
                         currentTargetIndex--;
-                    GetNextTargetLocation();
+                    }
+                    //start pos
+                    else if (Vector3.Distance(currentTravelTarget, firstPos) < .1f)
+                    {
+                        StartCoroutine(WaitThenMove(false));
+                        isMovingForward = true;
+                        currentTargetIndex++;
+                    }
+                    //middle point
+                    else
+                    {
+                        if (isMovingForward)
+                            currentTargetIndex++;
+                        else
+                            currentTargetIndex--;
+                        GetNextTargetLocation();
+                    }
+                }
+                //move the platform if not at a destination
+                else
+                {
+                    if (!audioSource.isPlaying)
+                    {
+                        audioSource.Play();
+                    }
                 }
             }
         }
-    }
-    protected virtual bool GotToDestination() {
+    protected virtual bool GotToDestination()
+    {
         return (currentTravelTarget - transform.position).sqrMagnitude <= distanceToCheck;
     }
-
-    protected virtual void GetNextTargetLocation() {
+    protected virtual void GetNextTargetLocation()
+    {
         if (!stay)
         {
             currentTravelTarget = travelLocations[currentTargetIndex];
@@ -143,30 +171,38 @@ public class Platform : ActivatablePuzzlePiece {
             var velocity = platformMovementSpeed * moveDirection;
             rb.velocity = velocity; // set the Rigidbody's velocity to move the platform
             state = PlatformState.Moving;
+            audioSource.clip = moving;
+            audioSource.loop = true;
         }
     }
-
-    protected IEnumerator WaitThenMove(bool stop) {
+    protected IEnumerator WaitThenMove(bool stop)
+    {
+        audioSource.Stop();
+        audioSource.loop = false;
+        audioSource.clip = stopMoving;
+        audioSource.Play();
         movementStarted = true;
         //Debug.Log("WaitThenMove");
         state = PlatformState.Waiting;
         rb.velocity = Vector3.zero;
         yield return new WaitForSeconds(firstLastWaitTime);
-        if (!stop) {
+        if (!stop)
+        {
             //play sound here
-            GetNextTargetLocation();
+            if (!stop)
+                GetNextTargetLocation();
         }
         yield return null;
     }
-
-
-    protected void OnCollisionEnter(Collision collision) {
-        if (collision.gameObject.layer == LayerInfo.PLAYER) {
+    protected void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.layer == LayerInfo.PLAYER)
+        {
             if (player) return;
-            
-            if (!unlocked && unlockedByPlayerCollision) {
-                unlocked = true;
 
+            if (!unlocked && unlockedByPlayerCollision)
+            {
+                unlocked = true;
             }
             //  playerOnPlatform = true;
             if (unlocked)
@@ -178,12 +214,12 @@ public class Platform : ActivatablePuzzlePiece {
             }
         }
     }
-    protected void OnCollisionExit(Collision collision) {
-        if (collision.gameObject.layer == LayerInfo.PLAYER) {
+    protected void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.layer == LayerInfo.PLAYER)
+        {
             player = null;
             playerRb = null;
-
         }
     }
 }
-
