@@ -6,7 +6,6 @@ using UnityEngine.InputSystem;
 public class TutorialBehaviour2 : MonoBehaviour
 {
     List<LevelStateTrigger2> activatedTriggers = new();
-    [SerializeField] private bool tutorialEnabled = true;
     [SerializeField] private PressButtonBehaviour spawnCubeButton;
     [SerializeField] private BallReceiver_2D ballReceiver2D;
     int index = -1;
@@ -19,7 +18,7 @@ public class TutorialBehaviour2 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (tutorialEnabled)
+        if (PlayerBehaviour.Instance.TutorialEnabled)
         {
             switch (index)
             {
@@ -46,7 +45,7 @@ public class TutorialBehaviour2 : MonoBehaviour
     }
     public void SetState(LevelStateTrigger2 trigger, int index)
     {
-        if (!tutorialEnabled) return;
+        if (!PlayerBehaviour.Instance.TutorialEnabled) return;
         if (activatedTriggers.Contains(trigger)) return;
         PlayerBehaviour.Instance.interfaceScript.DisableActiveTutorials();  //never show more than 1 tutorial message at a time
         activatedTriggers.Add(trigger);
@@ -56,7 +55,7 @@ public class TutorialBehaviour2 : MonoBehaviour
     }
     public void AdvanceState(LevelStateTrigger2 trigger)
     {
-        if (!tutorialEnabled) return;
+        if (!PlayerBehaviour.Instance.TutorialEnabled) return;
         if (activatedTriggers.Contains(trigger)) return;                    //never show the same tutorial message twice
 
         PlayerBehaviour.Instance.interfaceScript.DisableActiveTutorials();  //never show more than 1 tutorial message at a time

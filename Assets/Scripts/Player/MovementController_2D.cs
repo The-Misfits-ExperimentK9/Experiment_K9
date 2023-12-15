@@ -109,10 +109,7 @@ public class MovementController_2D : MonoBehaviour {
             if (CanMove) {
                 Move();
             }
-            //Move2D();
-            if (currentWall.AllowsDimensionTransition && !PlayerBehaviour.Instance.playerDimensionController.DOGEnabled) {
-               // PlayerBehaviour.Instance.playerDimensionController.TransitionTo3D();
-            }
+            
         }
         else {
             //HandleWallCollision
@@ -403,12 +400,12 @@ public class MovementController_2D : MonoBehaviour {
 
             //}
             if (pastwall == null || IsWallAtNewAngle(wallB.transform)) {
-                Debug.Log("1");
+              //  Debug.Log("1");
                 SetCurrentWall(wallB);
                 TransitionToNewAxis(closestPoint, wallB);
             }
             else if (convex) {
-                Debug.Log("2");
+              //  Debug.Log("2");
                 SetCurrentWall(wallB);
                 TransitionToNewAxis(closestPoint, wallB);
             }
@@ -422,7 +419,7 @@ public class MovementController_2D : MonoBehaviour {
         if (PlayerBehaviour.Instance.IsIn3D()) return;
 
         if (collision.gameObject.TryGetComponent(out WallBehaviour wallB)) {
-
+           // Debug.Log("wallB " + wallB.name);
             //if (wallB.IsWalkThroughEnabled) {
 
             HandleWallCollision(collision.collider, wallB, false);
@@ -437,7 +434,7 @@ public class MovementController_2D : MonoBehaviour {
 
 
             if (currentWall == wallB && !PlayerBehaviour.Instance.IsIn3D()) {
-                Debug.Log(collision.gameObject.name + " exited");
+                //Debug.Log(collision.gameObject.name + " exited");
 
                 UpdateWallStatus();
 
@@ -453,9 +450,11 @@ public class MovementController_2D : MonoBehaviour {
 
     private void UpdateWallStatus() {
         if (CheckIfInCurrentWall()) {
+
             //do nothing still in the wall
         }
         else {
+        //    Debug.Log("update wall status exit wall");
             PlayerBehaviour.Instance.playerDimensionController.TransitionTo3D();
         }
     }
@@ -467,19 +466,25 @@ public class MovementController_2D : MonoBehaviour {
         var ray = new Ray(transform.position, -transform.forward);
         var hits = Physics.RaycastAll(ray, 10f, LayerMask.GetMask("Walls"));
 
-        foreach (var item in hits) {
-            Debug.Log("wall hit " + item.rigidbody.gameObject.name);
-        }
+        
 
         if (Physics.Raycast(transform.position, -transform.forward,
             out var hit, wallCheckDistance, LayerMask.GetMask("Walls"))) {
             if (hit.collider.gameObject == currentWall.gameObject) {
-                transform.position = hit.point + wallCheckDistance / 2 * -transform.forward;
+                
                 return true;
             }
             else {
-                currentWall = hit.collider.GetComponent<WallBehaviour>();
-                return true;
+                var newWallB = hit.collider.GetComponent<WallBehaviour>();
+                if (newWallB.IsWalkThroughEnabled)
+                {
+                    currentWall = hit.collider.GetComponent<WallBehaviour>();
+                    transform.position = hit.point + wallCheckDistance / 4 * transform.forward;
+                   // Debug.Log("player moved closer to wall");
+                    return true;
+                }
+                return false;
+                
             }
         }
         return false;

@@ -3952,7 +3952,7 @@ GameObject:
   - component: {fileID: 540667181}
   m_Layer: 0
   m_Name: TutorialBehavior2
-  m_TagString: Untagged
+  m_TagString: TutorialBehaviour
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7268,6 +7268,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8735395586250520716, guid: e70ebb95f1603a347ade9fb1bb0c3501, type: 3}
+      propertyPath: leaveWallPrompt
+      value: 
+      objectReference: {fileID: 1193283844}
+    - target: {fileID: 8735395586250520716, guid: e70ebb95f1603a347ade9fb1bb0c3501, type: 3}
       propertyPath: tutorialMessages.Array.size
       value: 10
       objectReference: {fileID: 0}
@@ -7372,6 +7376,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7395c88fc05754541af7e175421b68ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1193283844 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4865176066520482270, guid: e70ebb95f1603a347ade9fb1bb0c3501, type: 3}
+  m_PrefabInstance: {fileID: 1193283841}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1209378223
 GameObject:
   m_ObjectHideFlags: 0
@@ -14064,8 +14073,12 @@ PrefabInstance:
       value: Door
       objectReference: {fileID: 0}
     - target: {fileID: 4835048637079389831, guid: 661267eb891b5904580f830d0297da52, type: 3}
-      propertyPath: currentState
+      propertyPath: IsAuto
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4835048637079389831, guid: 661267eb891b5904580f830d0297da52, type: 3}
+      propertyPath: currentState
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7958814969306850961, guid: 661267eb891b5904580f830d0297da52, type: 3}
       propertyPath: m_LocalPosition.x
