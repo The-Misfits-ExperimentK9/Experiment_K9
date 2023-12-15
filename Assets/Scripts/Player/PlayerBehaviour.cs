@@ -104,6 +104,9 @@ public class PlayerBehaviour : MonoBehaviour {
                 HandleItemSpawning();
             }
         }
+        else {
+            Cursor.lockState = CursorLockMode.None;
+        }
     }
     void HandleItemSpawning() {
         if (spawnKey1.wasPressedThisFrame) {
