@@ -843,6 +843,9 @@ MonoBehaviour:
   openNegativeRight: 0
   currentState: 0
   goalState: 0
+  doorOpen: {fileID: 0}
+  doorClose: {fileID: 0}
+  audioSource: {fileID: 0}
   numReceiversToActivate: 2
   index: 0
 --- !u!1 &66347915
@@ -1019,11 +1022,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1750328265095541324, guid: 10b144c380968504d935c9e3949f6f80, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 109.175
+      value: 84.575
       objectReference: {fileID: 0}
     - target: {fileID: 1750328265095541324, guid: 10b144c380968504d935c9e3949f6f80, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -29.689697
+      value: -246.58972
       objectReference: {fileID: 0}
     - target: {fileID: 2416929007388417668, guid: 10b144c380968504d935c9e3949f6f80, type: 3}
       propertyPath: interfaceScript
@@ -1035,11 +1038,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4976584202734474264, guid: 10b144c380968504d935c9e3949f6f80, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 109.175
+      value: 84.575
       objectReference: {fileID: 0}
     - target: {fileID: 4976584202734474264, guid: 10b144c380968504d935c9e3949f6f80, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -29.689697
+      value: -246.58972
       objectReference: {fileID: 0}
     - target: {fileID: 4976584202734474264, guid: 10b144c380968504d935c9e3949f6f80, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1107,11 +1110,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9124290187480717203, guid: 10b144c380968504d935c9e3949f6f80, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 105.8
+      value: 81.2
       objectReference: {fileID: 0}
     - target: {fileID: 9124290187480717203, guid: 10b144c380968504d935c9e3949f6f80, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -35.1
+      value: -252
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
