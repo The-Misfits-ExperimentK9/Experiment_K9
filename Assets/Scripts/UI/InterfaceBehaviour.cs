@@ -11,6 +11,7 @@ public class InterfaceBehaviour : MonoBehaviour {
     // private string dogToggleTextPrefix = "D.O.G. Mode: ";
     private string dogEnabledPrefix = "D.O.G. Transfer: ";
     [SerializeField] private GameObject pauseMenu;
+    [SerializeField] private GameObject leaveWallPrompt;
     [SerializeField] private List<GameObject> tutorialMessages;
     
     //[SerializeField] private GameObject player3D;
@@ -51,6 +52,18 @@ public class InterfaceBehaviour : MonoBehaviour {
         for (int x = 0; x < tutorialMessages.Count; x++) {
             tutorialMessages[x].SetActive(false);
 
+        }
+    }
+
+    public void ToggleWallPrompt()
+    {
+        if (leaveWallPrompt.activeInHierarchy)
+        {
+            leaveWallPrompt.SetActive(false);
+        }
+        else
+        {
+            leaveWallPrompt.SetActive(true);
         }
     }
     

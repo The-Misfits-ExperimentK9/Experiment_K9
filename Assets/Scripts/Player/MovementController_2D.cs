@@ -8,8 +8,7 @@ using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
-public class MovementController_2D : MonoBehaviour
-{
+public class MovementController_2D : MonoBehaviour {
     #region Variables
     [Header("Physics")]
     [SerializeField] private Rigidbody rb;
@@ -48,8 +47,7 @@ public class MovementController_2D : MonoBehaviour
     [Header("Audio")]
     [SerializeField] AudioClip jumpSound;
     [SerializeField] AudioSource audioSource;
-    public enum ProjectionState
-    {
+    public enum ProjectionState {
         OutOfRange,
         HoldingObject,
         In2D,
@@ -77,45 +75,32 @@ public class MovementController_2D : MonoBehaviour
     #endregion
     #region Start and Update
     // Start is called before the first frame update
-    void Awake()
-    {
+    void Awake() {
         dogCollider2D = GetComponent<Collider>();
         jumpKey = Keyboard.current.wKey;
         audioSource = GetComponent<AudioSource>();
-        if (audioSource == null)
-        {
+        if (audioSource == null) {
             audioSource = gameObject.AddComponent<AudioSource>();
         }
     }
-    private void Start()
-    {
+    private void Start() {
     }
     // Update is called once per frame
-    void FixedUpdate()
-    {
-        if (!PlayerBehaviour.Instance.IsIn3D())
-        {
+    void FixedUpdate() {
+        if (!PlayerBehaviour.Instance.IsIn3D()) {
             ApplyFriction();
-            if (CanMove)
-            {
+            if (CanMove) {
                 Move();
             }
             //Move2D();
-            if (currentWall.AllowsDimensionTransition && !PlayerBehaviour.Instance.playerDimensionController.DOGEnabled)
-            {
-                // PlayerBehaviour.Instance.playerDimensionController.TransitionTo3D();
-                PlayerBehaviour.Instance.playerDimensionController.TransitionTo3D();
-            }
+            
         }
-        else
-        {
+        else {
             //HandleWallCollision
         }
     }
-    private void Update()
-    {
-        if (gravityEnabled)
-        {
+    private void Update() {
+        if (gravityEnabled) {
             GroundedCheck();
             JumpAndGravity();
         }
@@ -123,8 +108,7 @@ public class MovementController_2D : MonoBehaviour
     #endregion
 
     #region gizmos
-    private void OnDrawGizmosSelected()
-    {
+    private void OnDrawGizmosSelected() {
         Color transparentGreen = new Color(0.0f, 1.0f, 0.0f, 0.35f);
         Color transparentRed = new Color(1.0f, 0.0f, 0.0f, 0.35f);
         if (Grounded) Gizmos.color = transparentGreen;
@@ -134,8 +118,7 @@ public class MovementController_2D : MonoBehaviour
             new Vector3(transform.position.x, transform.position.y - GroundedOffset, transform.position.z),
             GroundedRadius);
     }
-    private void OnDrawGizmos()
-    {
+    private void OnDrawGizmos() {
         Gizmos.color = Color.white;
         Gizmos.DrawSphere(gizmoDrawLoc, 1f);
         Gizmos.color = Color.magenta;
@@ -143,74 +126,59 @@ public class MovementController_2D : MonoBehaviour
     }
     #endregion
     #region GroundedCheck, Friction, Move, Jump, Gravity
-    private void ApplyFriction()
-    {
+    private void ApplyFriction() {
         Vector3 frictionDirection;
-        if (gravityEnabled)
-        {
+        if (gravityEnabled) {
             frictionDirection = new(-rb.velocity.x, 0f, -rb.velocity.z);
         }
-        else
-        {
+        else {
             frictionDirection = new(-rb.velocity.x, -rb.velocity.y, -rb.velocity.z);
         }
         rb.AddForce(frictionDirection * Friction);
     }
-    private void GroundedCheck()
-    {
+    private void GroundedCheck() {
         // set sphere position, with offset
         Vector3 spherePosition = new(transform.position.x, transform.position.y - GroundedOffset,
             transform.position.z);
         var hits = Physics.OverlapSphere(spherePosition, GroundedRadius, GroundLayers,
             QueryTriggerInteraction.Ignore);
-        if (hits.Length > 0)
-        {
-            if (hits.Length == 1)
-            {
-                if (hits[0] == currentWall)
-                {
+        if (hits.Length > 0) {
+            if (hits.Length == 1) {
+                if (hits[0] == currentWall) {
                     Grounded = false;
                     return;
                 }
             }
             Grounded = true;
         }
-        else
-        {
+        else {
             Grounded = false;
         }
     }
-    private void Move()
-    {
+    private void Move() {
 
         // Debug.LogError(transform.position);
         float targetSpeed = maxSpeed2D;
         var input = GetInput();
-        if (input.x < 0)
-        {
+        if (input.x < 0) {
             spriteRenderer.flipX = true;
         }
-        else if (input.x > 0)
-        {
+        else if (input.x > 0) {
             spriteRenderer.flipX = false;
         }
-        if (input.x < .01f && input.x > -.01f)
-        {
+        if (input.x < .01f && input.x > -.01f) {
             targetSpeed = 0.0f;
         }
-        else
-        {
+        else {
         }
         // accelerate or decelerate to target speed
         _speedHorizontal = targetSpeed;
         var left = -transform.right;
         Vector3 directionX = left * input.x;
-        if (!gravityEnabled)
-        {
+        if (!gravityEnabled) {
             if (input.y < .01f && input.y > -.01f)
                 targetSpeed = 0.0f;
-            else
-            {
+            else {
                 targetSpeed = maxSpeed2D;
             }
             _speedVertical = targetSpeed;
@@ -220,77 +188,64 @@ public class MovementController_2D : MonoBehaviour
             rb.AddForce((directionX * _speedHorizontal +
                         directionY * _speedVertical) * movementForceMultiplier);
             //clamp overal velocity at moveSpeed2D
-            if (rb.velocity.magnitude > maxSpeed2D)
-            {
+            if (rb.velocity.magnitude > maxSpeed2D) {
                 rb.velocity = rb.velocity.normalized * maxSpeed2D;
             }
         }
         //gravity is enabled
-        else
-        {
+        else {
             //add horizontal force
             rb.AddForce(directionX * (_speedHorizontal * movementForceMultiplier * 6f));
             //clamp horizontal velocity at moveSpeed2D
-            if (Mathf.Abs(rb.velocity.x) > maxSpeed2D)
-            {
+            if (Mathf.Abs(rb.velocity.x) > maxSpeed2D) {
                 rb.velocity = new Vector3(Mathf.Clamp(rb.velocity.x, -maxSpeed2D, maxSpeed2D), rb.velocity.y, Mathf.Clamp(rb.velocity.z, -maxSpeed2D, maxSpeed2D));
             }
             rb.velocity = new Vector3(rb.velocity.x, _verticalVelocity, rb.velocity.x); //apply gravity
             //Debug.Log(rb.velocity);
         }
     }
-    private void JumpAndGravity()
-    {
-        if (Grounded)
-        {
+    private void JumpAndGravity() {
+        if (Grounded) {
             // reset the fall timeout timer
             _fallTimeoutDelta = FallTimeout;
             // update animator if using character
             // stop our velocity dropping infinitely when grounded
-            if (_verticalVelocity < 0.0f)
-            {
+            if (_verticalVelocity < 0.0f) {
                 _verticalVelocity = -2f;
             }
             // Jump
-            if (jumpKey.wasPressedThisFrame && _jumpTimeoutDelta <= 0.0f)
-            {
+            if (jumpKey.wasPressedThisFrame && _jumpTimeoutDelta <= 0.0f) {
                 // the square root of H * -2 * G = how much velocity needed to reach desired height
                 _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
                 // update animator if using character
             }
             // jump timeout
-            if (_jumpTimeoutDelta >= 0.0f)
-            {
+            if (_jumpTimeoutDelta >= 0.0f) {
                 _jumpTimeoutDelta -= Time.deltaTime;
             }
             audioSource.clip = jumpSound;
             audioSource.Play();
         }
-        else
-        {
+        else {
             // reset the jump timeout timer
             _jumpTimeoutDelta = JumpTimeout;
             // fall timeout
-            if (_fallTimeoutDelta >= 0.0f)
-            {
+            if (_fallTimeoutDelta >= 0.0f) {
                 _fallTimeoutDelta -= Time.deltaTime;
             }
-            else
-            {
+            else {
                 // update animator if using character
             }
         }
         // apply gravity over time if under terminal (multiply by delta time twice to linearly speed up over time)
-        if (_verticalVelocity < _terminalVelocity)
-        {
+        if (_verticalVelocity < _terminalVelocity) {
             _verticalVelocity += Gravity * Time.deltaTime;
         }
     }
     //handles player movement in 2D
     #endregion
     #region transition to a new axis
-    void TransitionToNewAxis(Vector3 closestPointOnBounds, WallBehaviour wall)
-    {
+    void TransitionToNewAxis(Vector3 closestPointOnBounds, WallBehaviour wall) {
         Debug.Log("TransitionToNewAxis");
         // Store the current world position of the CinemachineFollowTarget
         Vector3 originalFollowTargetPosition = Camera.main.transform.position;
@@ -323,53 +278,42 @@ public class MovementController_2D : MonoBehaviour
     }
     //locks the axes to the up/down/left/right on the wall
     //prevents the dog from slipping into the or out of the wall
-    public void LockPlayerMovementInForwardDirection()
-    {
+    public void LockPlayerMovementInForwardDirection() {
         var right = transform.right;
         var fwd = transform.forward;
-        if (fwd.x > 0.1)
-        {
+        if (fwd.x > 0.1) {
             cameraWallConfiner.SetZeroRotaion(-90f);
         }
-        else if (fwd.x < -0.1)
-        {
+        else if (fwd.x < -0.1) {
             cameraWallConfiner.SetZeroRotaion(90f);
         }
-        else if (fwd.y > 0.1 || fwd.y < -0.0001)
-        {
+        else if (fwd.y > 0.1 || fwd.y < -0.0001) {
             Debug.LogError("Unsupported behaviour - doggo on floor");
         }
-        else if (fwd.z > 0.1)
-        {
+        else if (fwd.z > 0.1) {
             cameraWallConfiner.SetZeroRotaion(180f);
         }
-        else if (fwd.z < -0.1)
-        {
+        else if (fwd.z < -0.1) {
             cameraWallConfiner.SetZeroRotaion(0f);
         }
         //crazy floating point errors
-        if (right.x > 0.0001 || right.x < -0.0001)
-        {
+        if (right.x > 0.0001 || right.x < -0.0001) {
             rb.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotation;
         }
-        else if (right.y > 0.0001 || right.y < -0.0001)
-        {
+        else if (right.y > 0.0001 || right.y < -0.0001) {
             Debug.LogError("Unsupported behaviour - doggo on floor");
         }
-        else if (right.z > 0.0001 || right.z < -0.0001)
-        {
+        else if (right.z > 0.0001 || right.z < -0.0001) {
             rb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezeRotation;
         }
     }
     #endregion
     #region Unity Collision Methods
-    public void HandleWallCollision(Collider collider, WallBehaviour wallB, bool convex)
-    {
+    public void HandleWallCollision(Collider collider, WallBehaviour wallB, bool convex) {
         if (PlayerBehaviour.Instance.IsIn3D()) return;
 
         var closestPoint = collider.ClosestPointOnBounds(transform.position);
-        if (wallB.IsWalkThroughEnabled)
-        {
+        if (wallB.IsWalkThroughEnabled) {
             // Debug.Log("HandleWallCollision");
             WallBehaviour pastwall = currentWall;
             SetCurrentWall(wallB);
@@ -377,246 +321,180 @@ public class MovementController_2D : MonoBehaviour
             //    SetCurrentWall(wallB);
             //    TransitionToNewAxis(closestPoint, wallB);
             //}
-            if (pastwall == null || IsWallAtNewAngle(wallB.transform))
-            {
+            if (pastwall == null || IsWallAtNewAngle(wallB.transform)) {
                 Debug.Log("1");
                 SetCurrentWall(wallB);
                 TransitionToNewAxis(closestPoint, wallB);
             }
-            else if (convex)
-            {
+            else if (convex) {
                 Debug.Log("2");
                 SetCurrentWall(wallB);
                 TransitionToNewAxis(closestPoint, wallB);
             }
         }
     }
-    private bool IsWallAtNewAngle(Transform wall)
-    {
+    private bool IsWallAtNewAngle(Transform wall) {
         return wall.up != transform.forward && -wall.up != transform.forward;
     }
-    private void OnCollisionEnter(Collision collision)
-    {
+    private void OnCollisionEnter(Collision collision) {
         if (PlayerBehaviour.Instance.IsIn3D()) return;
-        if (collision.gameObject.TryGetComponent(out WallBehaviour wallB))
-        {
+        if (collision.gameObject.TryGetComponent(out WallBehaviour wallB)) {
             //if (wallB.IsWalkThroughEnabled) {
             HandleWallCollision(collision.collider, wallB, false);
             //}
         }
     }
-    private void OnCollisionExit(Collision collision)
-    {
+    private void OnCollisionExit(Collision collision) {
         if (PlayerBehaviour.Instance.IsIn3D()) return;
-        if (collision.gameObject.TryGetComponent(out WallBehaviour wallB))
-        {
-            if (currentWall == wallB && !PlayerBehaviour.Instance.IsIn3D())
-            {
-                if (currentWall == wallB && !PlayerBehaviour.Instance.IsIn3D() || currentWall == null && !PlayerBehaviour.Instance.IsIn3D())
-                {
+        if (collision.gameObject.TryGetComponent(out WallBehaviour wallB)) {
+            if (currentWall == wallB && !PlayerBehaviour.Instance.IsIn3D()) {
+                if (currentWall == wallB && !PlayerBehaviour.Instance.IsIn3D() || currentWall == null && !PlayerBehaviour.Instance.IsIn3D()) {
                     Debug.Log(collision.gameObject.name + " exited");
                     UpdateWallStatus();
                 }
-                else if (PlayerBehaviour.Instance.IsIn3D())
-                {
+                else if (PlayerBehaviour.Instance.IsIn3D()) {
                     //currentWall = null;
                 }
             }
         }
     }
-        #endregion
+    #endregion
 
-        #region Custom Collision for if the player is within the wall bounds
-        private void AABBCheckForWallLeaving()
-        {
-            if (!IsWithinAllowedWallBounds())
-            {
-                HandleWallExit();
-            }
+    
+    #region checking if in current wall
+    private void UpdateWallStatus() {
+        if (CheckIfInCurrentWall()) {
+            //do nothing still in the wall
         }
-        private bool IsWithinAllowedWallBounds()
-        {
-            var wallBounds = currentWallCollider.bounds;
-            var playerBounds = dogCollider2D.bounds;
-            // Check the direction of transform.right to determine which bounds to check
-            if (Mathf.Abs(transform.right.x) > Mathf.Abs(transform.right.z))
-            {
-                // Movement in X and Y directions
-                return IsWithinBounds(wallBounds, playerBounds, checkX: true, checkY: true, checkZ: false);
-            }
-            else
-            {
-                // Movement in Z and Y directions
-                return IsWithinBounds(wallBounds, playerBounds, checkX: false, checkY: true, checkZ: true);
-            }
+        else {
+            PlayerBehaviour.Instance.playerDimensionController.TransitionTo3D();
         }
-        private bool IsWithinBounds(Bounds wallBounds, Bounds playerBounds, bool checkX, bool checkY, bool checkZ)
-        {
-            // Check each axis individually based on the boolean flags
-            bool withinX = !checkX || (playerBounds.min.x >= wallBounds.min.x && playerBounds.max.x <= wallBounds.max.x);
-            bool withinY = !checkY || (playerBounds.min.y >= wallBounds.min.y && playerBounds.max.y <= wallBounds.max.y);
-            bool withinZ = !checkZ || (playerBounds.min.z >= wallBounds.min.z && playerBounds.max.z <= wallBounds.max.z);
-            return withinX && withinY && withinZ;
-        }
-        private void HandleWallExit()
-        {
-            // Handle the wall exit logic here
-            Debug.Log("Exited wall bounds");
-        }
-        #endregion
-        #region checking if in current wall
-        private void UpdateWallStatus()
-        {
-            if (CheckIfInCurrentWall())
-            {
-                //do nothing still in the wall
-            }
-            else
-            {
-                PlayerBehaviour.Instance.playerDimensionController.TransitionTo3D();
-            }
-        }
-        bool CheckIfInCurrentWall()
-        {
-            if (currentWall == null)
-            {
-                return false;
-            }
-            var ray = new Ray(transform.position, -transform.forward);
-            var hits = Physics.RaycastAll(ray, 10f, LayerMask.GetMask("Walls"));
-            foreach (var item in hits)
-            {
-                Debug.Log("wall hit " + item.rigidbody.gameObject.name);
-            }
-            if (Physics.Raycast(transform.position, -transform.forward,
-                out var hit, wallCheckDistance, LayerMask.GetMask("Walls")))
-            {
-                if (hit.collider.gameObject == currentWall.gameObject)
-                {
-                    transform.position = hit.point + wallCheckDistance / 2 * -transform.forward;
-                    return true;
-                }
-                else
-                {
-                    currentWall = hit.collider.GetComponent<WallBehaviour>();
-                    return true;
-                }
-            }
+    }
+    bool CheckIfInCurrentWall() {
+        if (currentWall == null) {
+
             return false;
         }
-        #endregion
-        #region helper methods
-        private static float ClampAngle(float lfAngle, float lfMin, float lfMax)
-        {
-            if (lfAngle < -360f) lfAngle += 360f;
-            if (lfAngle > 360f) lfAngle -= 360f;
-            return Mathf.Clamp(lfAngle, lfMin, lfMax);
-        }
-        public Vector2 GetInput()
-        {
-            var keyboard = Keyboard.current;
-            return new Vector2(keyboard.dKey.isPressed ? 1 : keyboard.aKey.isPressed ? -1 : 0,
-                               keyboard.wKey.isPressed ? 1 : keyboard.sKey.isPressed ? -1 : 0);
-        }
-        bool IsPerpendicular(Transform obj1, Transform obj2)
-        {
-            float dot = Vector3.Dot(obj1.forward, obj2.forward);
-            return Mathf.Approximately(dot, 0);
-        }
-        public bool IsProjectionSpaceClear(Vector3 position)
-        {
-            if (dogCollider2D == null) { dogCollider2D = GetComponent<Collider>(); }
-            var boxHits = Physics.OverlapBox(position, dogCollider2D.bounds.extents, Quaternion.identity, LayerMask.GetMask("Walls"));
-            if (boxHits.Length == 0) return true;
-            foreach (var hit in boxHits)
-            {
-                if (hit.TryGetComponent(out WallBehaviour wallB))
-                {
-                    if (!wallB.IsWalkThroughEnabled)
-                        return false;
+        var ray = new Ray(transform.position, -transform.forward);
+        var hits = Physics.RaycastAll(ray, 10f, LayerMask.GetMask("Walls"));
+
+
+
+        if (Physics.Raycast(transform.position, -transform.forward,
+            out var hit, wallCheckDistance, LayerMask.GetMask("Walls"))) {
+            if (hit.collider.gameObject == currentWall.gameObject) {
+
+                return true;
+            }
+            else {
+                var newWallB = hit.collider.GetComponent<WallBehaviour>();
+                if (newWallB.IsWalkThroughEnabled) {
+                    currentWall = hit.collider.GetComponent<WallBehaviour>();
+                    transform.position = hit.point + wallCheckDistance / 4 * transform.forward;
+                    // Debug.Log("player moved closer to wall");
+                    return true;
                 }
-                else
-                {
-                    //something that wasnt a wall is blocking 
-                    Debug.Log("something that wasnt a wall is blocking " + hit.name);
-                    return false;
-                }
-            }
-            return true;
-        }
-        private Vector3 GetOrthogonalVectorTo2DPlayer(Collider collider)
-        {
-            Vector3 closestPoint = collider.ClosestPointOnBounds(transform.position);
-            // Calculate the direction from the closest point to the player
-            Vector3 direction = transform.position - closestPoint;
-            // Zero out the y component to ensure the direction is only in the x or z direction
-            direction.y = 0;
-            // Normalize the vector to make it a unit vector
-            direction.Normalize();
-            // Ensure the vector points outwards from the collider
-            //if (Vector3.Dot(direction, collider.transform.forward) > 0) {
-            //    direction = -direction;
-            //}
-            return direction;
-        }
-        public void SetCurrentWall(WallBehaviour wall)
-        {
-            currentWallCollider = wall.GetComponent<Collider>();
-            currentWall = wall;
-            if (currentWall is GravityWall)
-            {
-                EnableGravity();
-            }
-            else
-            {
-                DisableGravity();
+                return false;
+
             }
         }
-        public WallBehaviour GetCurrentWall()
-        {
-            return currentWall;
-        }
-        public void SetProjectionState(ProjectionState state)
-        {
-            projectionState = state;
-            switch (projectionState)
-            {
-                case ProjectionState.OutOfRange:
-                    spriteRenderer.sprite = sprites[1];
-                    Is2DPlayerActive = false;
-                    break;
-                case ProjectionState.HoldingObject:
-                    if (PlayerBehaviour.Instance.pickupController.HeldObject is TransferableObject)
-                        spriteRenderer.sprite = sprites[2];
-                    else
-                        spriteRenderer.sprite = sprites[1];
-                    Is2DPlayerActive = false;
-                    break;
-                case ProjectionState.In2D:
-                    spriteRenderer.sprite = sprites[3];
-                    Is2DPlayerActive = true;
-                    break;
-                case ProjectionState.In2DHoldingObject:
-                    spriteRenderer.sprite = sprites[4];
-                    Is2DPlayerActive = true;
-                    break;
-            }
-        }
-        public bool CanTransitionOutOfCurrentWall()
-        {
-            return currentWall.AllowsDimensionTransition;
-        }
-        public bool IsFlipped()
-        {
-            return spriteRenderer.flipX;
-        }
-        public void EnableGravity()
-        {
-            gravityEnabled = true;
-        }
-        public void DisableGravity()
-        {
-            gravityEnabled = false;
-        }
-        #endregion
+        return false;
     }
+    #endregion
+    #region helper methods
+    private static float ClampAngle(float lfAngle, float lfMin, float lfMax) {
+        if (lfAngle < -360f) lfAngle += 360f;
+        if (lfAngle > 360f) lfAngle -= 360f;
+        return Mathf.Clamp(lfAngle, lfMin, lfMax);
+    }
+    public Vector2 GetInput() {
+        var keyboard = Keyboard.current;
+        return new Vector2(keyboard.dKey.isPressed ? 1 : keyboard.aKey.isPressed ? -1 : 0,
+                           keyboard.wKey.isPressed ? 1 : keyboard.sKey.isPressed ? -1 : 0);
+    }
+    bool IsPerpendicular(Transform obj1, Transform obj2) {
+        float dot = Vector3.Dot(obj1.forward, obj2.forward);
+        return Mathf.Approximately(dot, 0);
+    }
+    public bool IsProjectionSpaceClear(Vector3 position) {
+        if (dogCollider2D == null) { dogCollider2D = GetComponent<Collider>(); }
+        var boxHits = Physics.OverlapBox(position, dogCollider2D.bounds.extents, Quaternion.identity, LayerMask.GetMask("Walls"));
+        if (boxHits.Length == 0) return true;
+        foreach (var hit in boxHits) {
+            if (hit.TryGetComponent(out WallBehaviour wallB)) {
+                if (!wallB.IsWalkThroughEnabled)
+                    return false;
+            }
+            else {
+                //something that wasnt a wall is blocking 
+                Debug.Log("something that wasnt a wall is blocking " + hit.name);
+                return false;
+            }
+        }
+        return true;
+    }
+    private Vector3 GetOrthogonalVectorTo2DPlayer(Collider collider) {
+        Vector3 closestPoint = collider.ClosestPointOnBounds(transform.position);
+        // Calculate the direction from the closest point to the player
+        Vector3 direction = transform.position - closestPoint;
+        // Zero out the y component to ensure the direction is only in the x or z direction
+        direction.y = 0;
+        // Normalize the vector to make it a unit vector
+        direction.Normalize();
+        // Ensure the vector points outwards from the collider
+        //if (Vector3.Dot(direction, collider.transform.forward) > 0) {
+        //    direction = -direction;
+        //}
+        return direction;
+    }
+    public void SetCurrentWall(WallBehaviour wall) {
+        currentWallCollider = wall.GetComponent<Collider>();
+        currentWall = wall;
+        if (currentWall is GravityWall) {
+            EnableGravity();
+        }
+        else {
+            DisableGravity();
+        }
+    }
+    public WallBehaviour GetCurrentWall() {
+        return currentWall;
+    }
+    public void SetProjectionState(ProjectionState state) {
+        projectionState = state;
+        switch (projectionState) {
+            case ProjectionState.OutOfRange:
+                spriteRenderer.sprite = sprites[1];
+                Is2DPlayerActive = false;
+                break;
+            case ProjectionState.HoldingObject:
+                if (PlayerBehaviour.Instance.pickupController.HeldObject is TransferableObject)
+                    spriteRenderer.sprite = sprites[2];
+                else
+                    spriteRenderer.sprite = sprites[1];
+                Is2DPlayerActive = false;
+                break;
+            case ProjectionState.In2D:
+                spriteRenderer.sprite = sprites[3];
+                Is2DPlayerActive = true;
+                break;
+            case ProjectionState.In2DHoldingObject:
+                spriteRenderer.sprite = sprites[4];
+                Is2DPlayerActive = true;
+                break;
+        }
+    }
+    public bool CanTransitionOutOfCurrentWall() {
+        return currentWall.AllowsDimensionTransition;
+    }
+    public bool IsFlipped() {
+        return spriteRenderer.flipX;
+    }
+    public void EnableGravity() {
+        gravityEnabled = true;
+    }
+    public void DisableGravity() {
+        gravityEnabled = false;
+    }
+    #endregion
+}
