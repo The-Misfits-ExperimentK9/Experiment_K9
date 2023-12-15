@@ -70,7 +70,7 @@ public class TriggerNarration : MonoBehaviour
     void OnTriggerEnter(Collider other) {
         if (other.gameObject.layer == LayerInfo.PLAYER) {
             PlayNarration();
-            
+            canvases[0].SetActive(true);
         }
     }
 
