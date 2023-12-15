@@ -44,9 +44,6 @@ public class PlayerBehaviour : MonoBehaviour
     [Header("Audio/Barking")]
     [SerializeField] List<AudioClip> barks;
     AudioSource audioSource;
-    int barkIndex;
-    int barkChance;
-    int randomBarkNumber;
     private void Awake()
     {
         audioSource = GetComponent<AudioSource>();
@@ -82,9 +79,6 @@ public class PlayerBehaviour : MonoBehaviour
         {
             Debug.LogError("Missing player 3d when assigning controller scripts");
         }
-        // At the start, the random number the random barking mechanism needs
-        // to hit will be randomly generated.
-        randomBarkNumber = Random.Range(1, 20001);
     }
     public void SetPaused(bool paused)
     {
@@ -101,16 +95,7 @@ public class PlayerBehaviour : MonoBehaviour
             {
                 trigger.StopNarration();
             }
-            // Each frame, barkChance will get assigned to a random number between
-            // 1 and 2000.
-            barkChance = Random.Range(1, 20001);
-            // Regardless of player input, if barkChance lands on the random number
-            // generated, the dog will bark, and the random number gets re-rolled.
-            if (barkChance == randomBarkNumber)
-            {
-                Bark();
-                randomBarkNumber = Random.Range(1, 20001);
-            }
+           
             if (!paused)
             {
                 if (canResetLocation)
@@ -192,12 +177,14 @@ public class PlayerBehaviour : MonoBehaviour
         }
         private void HandleResetInput()
         {
+            
             if (is3D)
             {
                 if (resetKey.wasPressedThisFrame)
                 {
                     ResetPlayerPosition();
                 }
+                
             }
         }
         private void ResetPlayerPosition()
@@ -304,8 +291,7 @@ public class PlayerBehaviour : MonoBehaviour
         }
         public void Bark()
         {
-            barkIndex = Random.Range(0, barks.Count);
-            audioSource.clip = barks[barkIndex];
+            audioSource.clip = barks[Random.Range(0, barks.Count)];
             audioSource.Play();
         }
         //public GameObject GetClosestReciever() {

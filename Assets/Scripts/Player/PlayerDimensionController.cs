@@ -435,6 +435,10 @@ public class PlayerDimensionController : MonoBehaviour {
     }
     //handle enable/disasble of DOG device while in auto mode
     private void HandleAutoModeInput() {
+        if (Keyboard.current.bKey.wasPressedThisFrame) {
+            Debug.Log("bark");
+            PlayerBehaviour.Instance.Bark();
+        }
         if (DOGLeaveKey.wasPressedThisFrame) {
             if (!PlayerBehaviour.Instance.IsIn3D() && movementController_2D.CanTransitionOutOfCurrentWall()) {
                 DOGEnabled = !DOGEnabled;
