@@ -109,10 +109,7 @@ public class MovementController_2D : MonoBehaviour {
             if (CanMove) {
                 Move();
             }
-            //Move2D();
-            if (currentWall.AllowsDimensionTransition && !PlayerBehaviour.Instance.playerDimensionController.DOGEnabled) {
-               // PlayerBehaviour.Instance.playerDimensionController.TransitionTo3D();
-            }
+            
         }
         else {
             //HandleWallCollision
