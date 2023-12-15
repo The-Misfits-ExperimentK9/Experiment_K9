@@ -40,7 +40,7 @@ public class ObjectInteractDisplayController : MonoBehaviour
         {
 
             Rigidbody rb = GetComponent<Rigidbody>();
-            Debug.Log("Collision detected with: " + collision.gameObject.name);
+          //  Debug.Log("Collision detected with: " + collision.gameObject.name);
             if (transferObject.inAir)
             {
                 // If the object hits the ground....
@@ -48,23 +48,23 @@ public class ObjectInteractDisplayController : MonoBehaviour
                 {
                     // The inAir bool is set to false, first and foremost.
                     transferObject.inAir = false;
-                    Debug.Log("It hit the ground!");
+                   // Debug.Log("It hit the ground!");
                 }
                 // The magnitude of RigidBody.velocity determines which of the three clips should play.
                 if (rb.velocity.magnitude < 5.0f)
                 {
                     PlaySound(transferObject.lowDrop, transferObject);
-                    Debug.Log("Playing low drop sound.");
+                  //  Debug.Log("Playing low drop sound.");
                 }
                 else if (rb.velocity.magnitude >= 5.0f && rb.velocity.magnitude < 10.0f)
                 {
                     PlaySound(transferObject.mediumDrop, transferObject);
-                    Debug.Log("Playing medium drop sound.");
+                   // Debug.Log("Playing medium drop sound.");
                 }
                 else
                 {
                     PlaySound(transferObject.highDrop, transferObject);
-                    Debug.Log("Playing high drop sound.");
+                  //  Debug.Log("Playing high drop sound.");
                 }
             }
         }

@@ -22,6 +22,7 @@ public class TransferableObject : GrabbableObject
         if (audioSource == null)
         {
             audioSource = gameObject.AddComponent<AudioSource>();
+            audioSource.spatialBlend = 1;
         }
         if (!Is3D)
         {
