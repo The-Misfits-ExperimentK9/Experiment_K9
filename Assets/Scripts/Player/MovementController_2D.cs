@@ -403,12 +403,12 @@ public class MovementController_2D : MonoBehaviour {
 
             //}
             if (pastwall == null || IsWallAtNewAngle(wallB.transform)) {
-                Debug.Log("1");
+              //  Debug.Log("1");
                 SetCurrentWall(wallB);
                 TransitionToNewAxis(closestPoint, wallB);
             }
             else if (convex) {
-                Debug.Log("2");
+              //  Debug.Log("2");
                 SetCurrentWall(wallB);
                 TransitionToNewAxis(closestPoint, wallB);
             }
@@ -422,7 +422,7 @@ public class MovementController_2D : MonoBehaviour {
         if (PlayerBehaviour.Instance.IsIn3D()) return;
 
         if (collision.gameObject.TryGetComponent(out WallBehaviour wallB)) {
-            Debug.Log("wallB " + wallB.name);
+           // Debug.Log("wallB " + wallB.name);
             //if (wallB.IsWalkThroughEnabled) {
 
             HandleWallCollision(collision.collider, wallB, false);
@@ -437,7 +437,7 @@ public class MovementController_2D : MonoBehaviour {
 
 
             if (currentWall == wallB && !PlayerBehaviour.Instance.IsIn3D()) {
-                Debug.Log(collision.gameObject.name + " exited");
+                //Debug.Log(collision.gameObject.name + " exited");
 
                 UpdateWallStatus();
 
@@ -457,7 +457,7 @@ public class MovementController_2D : MonoBehaviour {
             //do nothing still in the wall
         }
         else {
-            Debug.Log("update wall status exit wall");
+        //    Debug.Log("update wall status exit wall");
             PlayerBehaviour.Instance.playerDimensionController.TransitionTo3D();
         }
     }
@@ -469,9 +469,7 @@ public class MovementController_2D : MonoBehaviour {
         var ray = new Ray(transform.position, -transform.forward);
         var hits = Physics.RaycastAll(ray, 10f, LayerMask.GetMask("Walls"));
 
-        foreach (var item in hits) {
-            Debug.Log("wall hit " + item.rigidbody.gameObject.name);
-        }
+        
 
         if (Physics.Raycast(transform.position, -transform.forward,
             out var hit, wallCheckDistance, LayerMask.GetMask("Walls"))) {
@@ -485,7 +483,7 @@ public class MovementController_2D : MonoBehaviour {
                 {
                     currentWall = hit.collider.GetComponent<WallBehaviour>();
                     transform.position = hit.point + wallCheckDistance / 4 * transform.forward;
-                    Debug.Log("player moved closer to wall");
+                   // Debug.Log("player moved closer to wall");
                     return true;
                 }
                 return false;
