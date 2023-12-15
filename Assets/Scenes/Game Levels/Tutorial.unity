@@ -843,6 +843,9 @@ MonoBehaviour:
   openNegativeRight: 0
   currentState: 0
   goalState: 0
+  doorOpen: {fileID: 0}
+  doorClose: {fileID: 0}
+  audioSource: {fileID: 0}
   numReceiversToActivate: 2
   index: 0
 --- !u!1 &66347915
@@ -8724,7 +8727,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5777044561863398770, guid: fb8c3e8ae224536429ccdea06bdbd743, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -720.41
+      value: -720.78
       objectReference: {fileID: 0}
     - target: {fileID: 5777044561863398770, guid: fb8c3e8ae224536429ccdea06bdbd743, type: 3}
       propertyPath: m_LocalRotation.w
